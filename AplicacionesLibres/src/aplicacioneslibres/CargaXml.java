@@ -7,6 +7,7 @@ package aplicacioneslibres;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 
@@ -15,11 +16,12 @@ import org.jdom2.input.SAXBuilder;
  * @author root
  */
 public class CargaXml {
-    public void cargarXml()
+    public void cargarXml(String name)
 {
     //Se crea un SAXBuilder para poder parsear el archivo
     SAXBuilder builder = new SAXBuilder();
-    File xmlFile = new File( "/home/homero/NetBeansProjects/AplicacionesLibres/src/Facturas/archivo.xml" );
+    
+    File xmlFile = new File( name);
     try
     {
         //Se crea el documento a traves del archivo
@@ -96,6 +98,8 @@ public class CargaXml {
                 System.out.println( parametro);
                 cp.insertar("detalles", parametro);
                 }
+                JOptionPane.showMessageDialog(null, "Ingreso correcto");
+                  
         
     }catch ( IOException io ) {
         System.out.println( io.getMessage() );

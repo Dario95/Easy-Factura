@@ -1,4 +1,4 @@
-package aplicacioneslibres;
+/*package aplicacioneslibres;
 import java.sql.*;
 
        public class AplicacionesLibres {
@@ -6,4 +6,4 @@ import java.sql.*;
               CargaXml cg=new CargaXml();
               cg.cargarXml();
           }
-      }
+      }*/
