@@ -6,15 +6,22 @@ package aplicacioneslibres;
 
 import conexionBDD.Conexion;
 import conexionBDD.Crear;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -51,14 +58,21 @@ public class CargaXml {
             }
 
             //Se obtiene la lista de hijos de la raiz 'comprobante'
-            List list = rootNode.getChildren();
+            //List list = rootNode.getChildren();
             //Se recorre la lista de hijos de 'tables'
             //Se obtiene el elemento 'factura'
-            Element tabla = rootNode.getChild("comprobante").getChild("factura");
+            Element tabla = rootNode.getChild("comprobante");
             //String aux = rootNode.getChild("comprobante").getTextTrim();
             //System.out.println(aux);
             //Element tabla = (Element) list.get(0);
             //System.out.println(tabla.getName());
+
+            String ex = tabla.getText();
+
+            InputStream stream = new ByteArrayInputStream(ex.getBytes("UTF-8"));
+            Document parse = builder.build(stream);
+
+            tabla = parse.getRootElement();
 
             List lista_campos = tabla.getChildren();
             Element campo;
@@ -187,8 +201,8 @@ public class CargaXml {
         }
     }
 
-    /*public static void main(String args[]) {
+    public static void main(String args[]) {
         CargaXml car = new CargaXml();
         car.cargarXml("aldo.xml");
-    }*/
+    }
 }
