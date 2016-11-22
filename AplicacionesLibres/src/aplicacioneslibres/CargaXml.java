@@ -8,7 +8,10 @@ import conexionBDD.Conexion;
 import conexionBDD.Crear;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
@@ -28,95 +31,164 @@ public class CargaXml {
             //Se crea el documento a traves del archivo
             Document document = (Document) builder.build(xmlFile);
             Crear cr = new Crear();
+            Connection con = cr.crearConexion();
             Conexion cp = new Conexion();
 
             //Se obtiene la raiz 'tables'
             Element rootNode = document.getRootElement();
-            
-            // Datos sin cabecera
-            String estado = rootNode.getChild("estado").getTextTrim();
-            String ambiente = rootNode.getChild("ambiente").getTextTrim();
-            
-            //Se obtiene la lista de hijos de la raiz 'comprobante'
-            List list = rootNode.getChildren("comprobante");
 
+            // Datos sin cabecera
+            Element est = (Element) rootNode.getChild("estado");
+            String estado = "";
+            if (est != null) {
+                estado = est.getTextTrim();
+            }
+
+            Element amb = rootNode.getChild("ambiente");
+            String ambiente = "";
+            if (amb != null) {
+                ambiente = amb.getTextTrim();
+            }
+
+            //Se obtiene la lista de hijos de la raiz 'comprobante'
+            List list = rootNode.getChildren();
             //Se recorre la lista de hijos de 'tables'
             //Se obtiene el elemento 'factura'
-            Element tabla = (Element) list.get(0);
+            Element tabla = rootNode.getChild("comprobante").getChild("factura");
+            //String aux = rootNode.getChild("comprobante").getTextTrim();
+            //System.out.println(aux);
+            //Element tabla = (Element) list.get(0);
+            //System.out.println(tabla.getName());
 
-            //Se obtiene el atributo 'nombre' que esta en el tag 'tabla'
-            String nombreTabla = tabla.getAttributeValue("id");
-
-            System.out.println(nombreTabla);
-            //Se obtiene la lista de hijos del tag 'tabla'
             List lista_campos = tabla.getChildren();
+            Element campo;
 
-            System.out.println("\tNombre\t\tfecha\t\tValor" + lista_campos.size());
-            Element campo = (Element) lista_campos.get(0);
-            
+            Element tributaria = (Element) lista_campos.get(0);
+
             // Info Tributaria
-            String nombreEst = campo.getChildTextTrim("razonSocial");
-            String dirMatriz = campo.getChildTextTrim("dirMatriz");
-            String ruc = campo.getChildTextTrim("ruc");
-            
+            String nombreEst = tributaria.getChildTextTrim("razonSocial");
+            String dirMatriz = tributaria.getChildTextTrim("dirMatriz");
+            String ruc = tributaria.getChildTextTrim("ruc");
+
+            String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
+                    + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
+            cp.insertar(con, establecimiento);
+
             //Se obtiene la raiz de la factura
-            Element cabecera = (Element) lista_campos.get(1);
-            
+            Element factura = (Element) lista_campos.get(1);
+
             // Info Factura
-            String fecha = cabecera.getChildTextTrim("fechaEmision");
-            String nombreCli = cabecera.getChildTextTrim("razonSocialComprador");
-            String cedulaCli = cabecera.getChildTextTrim("identificacionComprador");
-            String totalSinImp = cabecera.getChildTextTrim("totalSinImpuestos");
-            
-            List totalConImp = cabecera.getChild("totalConImpuestos").getChildren();
+            String fecha = factura.getChildTextTrim("fechaEmision");
+            String nombreCli = factura.getChildTextTrim("razonSocialComprador");
+            String cedulaCli = factura.getChildTextTrim("identificacionComprador");
+            String totalSinImp = factura.getChildTextTrim("totalSinImpuestos");
+
+            List totalConImp = factura.getChild("totalConImpuestos").getChildren();
             Element totalImp = (Element) totalConImp.get(0);
             String totalConImps = totalImp.getChildTextTrim("valor");
 
-            if (fecha != null && razonSocial != null && direccionEst != null) {
-                int idFactura;
-                if (cp.consultar("facturas") == "") {
-                    idFactura = 0;
-                } else {
-                    idFactura = Integer.parseInt(cp.consultar("facturas"));
-                    idFactura++;
+            Element adicional = (Element) lista_campos.get(3);
+
+            // Info Adicional
+            List campoAdi = adicional.getChildren();
+            Pattern pat;
+            Matcher mat;
+            String emailCli = "";
+            String dirCli = "";
+
+            for (int i = 0; i < campoAdi.size(); i++) {
+                Element attr = (Element) campoAdi.get(i);
+                String actual = attr.getAttributeValue("nombre");
+
+                pat = Pattern.compile("mail");
+                mat = pat.matcher(actual);
+                if (mat.find()) {
+                    emailCli = attr.getTextTrim();
+                    break;
                 }
+
+                pat = Pattern.compile("ireccion");
+                mat = pat.matcher(actual);
+                if (mat.find()) {
+                    dirCli = attr.getTextTrim();
+                    break;
+                }
+            }
+
+            String cliente = "INSERT INTO CLIENTE (id_cliente,nombre_cliente,direccion_cliente,email_cliente)"
+                    + "VALUES ('" + cedulaCli + "','" + nombreCli + "','" + dirCli + "','" + emailCli + "')";
+            cp.insertar(con, cliente);
+
+            /*if (fecha != null && razonSocial != null && direccionEst != null) {
+                
                 String parametro = idFactura + ",'" + fecha + "','" + razonSocial + "','" + direccionEst;
                 System.out.println(parametro);
                 cp.insertar("facturas", parametro);
-            }
+            }*/
             //Cabecera: IDFactura,NombreCliente,FechaEmision,Direccion
             //Detalles: Codigo Producto, Descripcion, Cantidad,precio unitario,descuento
+            int idFactura;
+            if (cp.consultar(con, "FACTURA") == "") {
+                idFactura = 0;
+            } else {
+                idFactura = Integer.parseInt(cp.consultar(con, "FACTURA"));
+                idFactura++;
+            }
+
+            String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,total_con_iva)"
+                    + "VALUES (" + idFactura + ",'" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "','" + totalSinImp + "','" + totalConImps + "')";
+            cp.insertar(con, facturaQ);
 
             Element detalles = (Element) lista_campos.get(2);
             List detalle = detalles.getChildren();
-            //Se obtienen los valores que estan entre los tags '<campo></campo>'
-            //Se obtiene el valor que esta entre los tags '<nombre></nombre>'
+
             for (int j = 0; j < detalle.size(); j++) {
-                //Se obtiene el valor que esta entre los tags '<tipo></tipo>'
+
                 campo = (Element) detalle.get(j);
-                String codigoPrincipal = campo.getChildTextTrim("codigoPrincipal");
+
+                // Detalle
                 String descripcion = campo.getChildTextTrim("descripcion");
-                String cantidad = campo.getChildTextTrim("cantidad");
-                String precioUnitario = campo.getChildTextTrim("precioUnitario");
-                String descuento = campo.getChildTextTrim("descuento");
+                Double cantidad = Double.parseDouble(campo.getChildTextTrim("cantidad"));
+                Double precioUnitario = Double.parseDouble(campo.getChildTextTrim("precioUnitario"));
+                Double total = Double.parseDouble(campo.getChildTextTrim("precioTotalSinImpuesto"));
+
                 int idDetalle;
-                if (cp.consultar("detalles") == "") {
+                if (cp.consultar(con, "DETALLE") == "") {
                     idDetalle = 0;
                 } else {
-                    idDetalle = Integer.parseInt(cp.consultar("detalles"));
+                    idDetalle = Integer.parseInt(cp.consultar(con, "DETALLE"));
                     idDetalle++;
                 }
-                int idFactura = Integer.parseInt(cp.consultar("facturas"));
+
+                int idProducto;
+                if (cp.consultar(con, "PRODUCTO") == "") {
+                    idProducto = 0;
+                } else {
+                    idProducto = Integer.parseInt(cp.consultar(con, "PRODUCTO"));
+                    idProducto++;
+                }
+
+                String producto = "INSERT INTO PRODUCTO (id_producto,descripcion_producto,precio_unitario)"
+                        + "VALUES (" + idProducto + ",'" + descripcion + "'," + precioUnitario + ")";
+                cp.insertar(con, producto);
+
+                String detalleQ = "INSERT INTO DETALLE (id_detalle,id_producto,id_factura,total,cantidad)"
+                        + "VALUES (" + idDetalle + "," + idProducto + "," + idFactura + "," + total + "," + cantidad + ")";
+                cp.insertar(con, detalleQ);
+                /*int idFactura = Integer.parseInt(cp.consultar("facturas"));
                 String parametro = idDetalle + "," + idFactura + ",'" + codigoPrincipal + "','" + descripcion + "'," + precioUnitario + "," + cantidad + "," + descuento;
                 System.out.println(parametro);
-                cp.insertar("detalles", parametro);
+                cp.insertar("detalles", parametro);*/
             }
-            JOptionPane.showMessageDialog(null, "Ingreso correcto");
 
-        } catch (IOException io) {
+            //System.out.println("Email: " + emailCli);
+        } catch (IOException | JDOMException io) {
             System.out.println(io.getMessage());
-        } catch (JDOMException jdomex) {
-            System.out.println(jdomex.getMessage());
         }
     }
+
+    /*public static void main(String args[]) {
+        CargaXml car = new CargaXml();
+        car.cargarXml("aldo.xml");
+    }*/
 }

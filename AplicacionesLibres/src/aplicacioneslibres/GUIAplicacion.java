@@ -271,7 +271,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
                         Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
+                JOptionPane.showMessageDialog(null, "Ingreso correcto");
                 }
                 }
             }

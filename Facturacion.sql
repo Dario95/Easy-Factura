@@ -1,10 +1,10 @@
-/*==============================================================*/
+﻿/*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
 /* Created on:     22/11/2016 15:27:42                          */
 /*==============================================================*/
 
 
-drop index CLIENTE_PK;
+/*drop index CLIENTE_PK;
 
 drop table CLIENTE;
 
@@ -30,7 +30,7 @@ drop table FACTURA;
 
 drop index PRODUCTO_PK;
 
-drop table PRODUCTO;
+drop table PRODUCTO;*/
 
 /*==============================================================*/
 /* Table: CLIENTE                                               */
@@ -89,7 +89,7 @@ ID_PRODUCTO
 create table ESTABLECIMIENTO (
    ID_ESTABLECIMIENTO   CHAR(13)             not null,
    NOMBRE_ESTABLECIMIENTO VARCHAR(20)          not null,
-   DIRECCION_ESTABLECIMIENTO VARCHAR(50)          null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(200)          null,
    constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
 );
 
