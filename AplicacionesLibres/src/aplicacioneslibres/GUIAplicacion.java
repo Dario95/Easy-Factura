@@ -81,6 +81,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jScrollPane1);
 
         buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Supermaxi");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,13 +241,37 @@ public class GUIAplicacion extends javax.swing.JFrame {
         for(int i=0;i<ficherosSeleccionados.size();i++){
             for(int j=0;j<ficheros.length;j++){
             if(ficherosSeleccionados.get(i).toString().equals(ficheros[j].getName())){
-                
+                if(jRadioButton1.isSelected()==true)
+                {
+                System.out.print("Seleccionó opción 1");
                 CargaXml cg=new CargaXml();
                     try {
                         cg.cargarXml(ficheros[j].getCanonicalPath());
                     } catch (IOException ex) {
                         Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+                if(jRadioButton2.isSelected()==true)
+                {
+                System.out.print("Seleccionó opción 2");
+                CargaXml cg=new CargaXml();
+                    try {
+                        cg.cargarXml(ficheros[j].getCanonicalPath());
+                    } catch (IOException ex) {
+                        Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if(jRadioButton3.isSelected()==true)
+                {
+                System.out.print("Seleccionó opción 3");
+                CargaXml cg=new CargaXml();
+                    try {
+                        cg.cargarXml(ficheros[j].getCanonicalPath());
+                    } catch (IOException ex) {
+                        Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
                 }
                 }
             }
