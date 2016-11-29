@@ -1,10 +1,10 @@
-﻿/*==============================================================*/
+/*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     22/11/2016 15:27:42                          */
+/* Created on:     29/11/2016 15:59:00                          */
 /*==============================================================*/
 
 
-/*drop index CLIENTE_PK;
+drop index CLIENTE_PK;
 
 drop table CLIENTE;
 
@@ -30,7 +30,7 @@ drop table FACTURA;
 
 drop index PRODUCTO_PK;
 
-drop table PRODUCTO;*/
+drop table PRODUCTO;
 
 /*==============================================================*/
 /* Table: CLIENTE                                               */
@@ -59,6 +59,7 @@ create table DETALLE (
    ID_FACTURA           INT4                 not null,
    TOTAL                MONEY                null,
    CANTIDAD             INT4                 null,
+   PRECIO_UNITARIO      MONEY                null,
    constraint PK_DETALLE primary key (ID_DETALLE)
 );
 
@@ -89,7 +90,7 @@ ID_PRODUCTO
 create table ESTABLECIMIENTO (
    ID_ESTABLECIMIENTO   CHAR(13)             not null,
    NOMBRE_ESTABLECIMIENTO VARCHAR(20)          not null,
-   DIRECCION_ESTABLECIMIENTO VARCHAR(200)          null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(50)          null,
    constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
 );
 
@@ -111,6 +112,7 @@ create table FACTURA (
    ESTADO_FACTURA       VARCHAR(15)          null,
    AMBIENTE_FACTURA     VARCHAR(15)          null,
    TOTAL_SIN_IVA        MONEY                null,
+   IVA                  MONEY                null,
    TOTAL_CON_IVA        MONEY                null,
    constraint PK_FACTURA primary key (ID_FACTURA)
 );
@@ -142,7 +144,6 @@ ID_CLIENTE
 create table PRODUCTO (
    ID_PRODUCTO          INT4                 not null,
    DESCRIPCION_PRODUCTO VARCHAR(40)          not null,
-   PRECIO_UNITARIO      MONEY                not null,
    constraint PK_PRODUCTO primary key (ID_PRODUCTO)
 );
 
