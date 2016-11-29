@@ -93,11 +93,13 @@ public class CargaXml {
             String fecha = factura.getChildTextTrim(elementos[5]);
             String nombreCli = factura.getChildTextTrim(elementos[6]);
             String cedulaCli = factura.getChildTextTrim(elementos[7]);
-            String totalSinImp = factura.getChildTextTrim(elementos[8]);
+            Double totalSinImp = Double.parseDouble(factura.getChildTextTrim(elementos[8]));
 
             List totalConImp = factura.getChild("totalConImpuestos").getChildren();
             Element totalImp = (Element) totalConImp.get(0);
-            String totalConImps = totalImp.getChildTextTrim(elementos[9]);
+            Double Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos[9]));
+            
+            Double totalConImps = totalSinImp + Imps;
 
             Element adicional = (Element) lista_campos.get(3);
 
@@ -138,8 +140,8 @@ public class CargaXml {
                 idFactura++;
             }
 
-            String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,total_con_iva)"
-                    + "VALUES (" + idFactura + ",'" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "','" + totalSinImp + "','" + totalConImps + "')";
+            String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
+                    + "VALUES (" + idFactura + ",'" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
             cp.insertar(con, facturaQ);
 
             Element detalles = (Element) lista_campos.get(2);
