@@ -182,12 +182,12 @@ public class CargaXml {
                     idProducto++;
                 }
 
-                String producto = "INSERT INTO PRODUCTO (id_producto,descripcion_producto,precio_unitario)"
-                        + "VALUES (" + idProducto + ",'" + descripcion + "'," + precioUnitario + ")";
+                String producto = "INSERT INTO PRODUCTO (id_producto,descripcion_producto)"
+                        + "VALUES (" + idProducto + ",'" + descripcion + "')";
                 cp.insertar(con, producto);
 
-                String detalleQ = "INSERT INTO DETALLE (id_detalle,id_producto,id_factura,total,cantidad)"
-                        + "VALUES (" + idDetalle + "," + idProducto + "," + idFactura + "," + total + "," + cantidad + ")";
+                String detalleQ = "INSERT INTO DETALLE (id_detalle,id_producto,id_factura,total,cantidad,precio_unitario)"
+                        + "VALUES (" + idDetalle + "," + idProducto + "," + idFactura + "," + total + "," + cantidad + "," + precioUnitario + ")";
                 cp.insertar(con, detalleQ);
                 /*int idFactura = Integer.parseInt(cp.consultar("facturas"));
                 String parametro = idDetalle + "," + idFactura + ",'" + codigoPrincipal + "','" + descripcion + "'," + precioUnitario + "," + cantidad + "," + descuento;
@@ -201,8 +201,8 @@ public class CargaXml {
         }
     }
 
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         CargaXml car = new CargaXml();
         car.cargarXml("aldo.xml");
-    }
+    }*/
 }
