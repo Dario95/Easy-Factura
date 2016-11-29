@@ -1,0 +1,16 @@
+estado
+ambiente
+razonSocial
+dirMatriz
+ruc
+fechaEmision
+razonSocialComprador
+identificacionComprador
+totalSinImpuestos
+valor
+Direccion
+Email:
+descripcion
+cantidad
+precioUnitario
+precioTotalSinImpuesto

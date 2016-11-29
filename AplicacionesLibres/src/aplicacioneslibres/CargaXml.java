@@ -6,22 +6,18 @@ package aplicacioneslibres;
 
 import conexionBDD.Conexion;
 import conexionBDD.Crear;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -29,7 +25,7 @@ import org.xml.sax.SAXException;
  */
 public class CargaXml {
 
-    public void cargarXml(String name) {
+    public void cargarXml(String name, String archivo) {
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
 
@@ -40,33 +36,35 @@ public class CargaXml {
             Crear cr = new Crear();
             Connection con = cr.crearConexion();
             Conexion cp = new Conexion();
+            
+            // Abre la plantilla
+            String elemento;
+            String elementos[] = new String[16];
+            FileReader f = new FileReader(archivo);
+            BufferedReader b = new BufferedReader(f);
+            
+            int cont = 0;
+            while((elemento = b.readLine()) != null) {
+                elementos[cont++] = elemento;
+            }
 
             //Se obtiene la raiz 'tables'
             Element rootNode = document.getRootElement();
 
             // Datos sin cabecera
-            Element est = (Element) rootNode.getChild("estado");
+            Element est = (Element) rootNode.getChild(elementos[0]);
             String estado = "";
             if (est != null) {
                 estado = est.getTextTrim();
             }
 
-            Element amb = rootNode.getChild("ambiente");
+            Element amb = rootNode.getChild(elementos[1]);
             String ambiente = "";
             if (amb != null) {
                 ambiente = amb.getTextTrim();
             }
 
-            //Se obtiene la lista de hijos de la raiz 'comprobante'
-            //List list = rootNode.getChildren();
-            //Se recorre la lista de hijos de 'tables'
-            //Se obtiene el elemento 'factura'
             Element tabla = rootNode.getChild("comprobante");
-            //String aux = rootNode.getChild("comprobante").getTextTrim();
-            //System.out.println(aux);
-            //Element tabla = (Element) list.get(0);
-            //System.out.println(tabla.getName());
-
             String ex = tabla.getText();
 
             InputStream stream = new ByteArrayInputStream(ex.getBytes("UTF-8"));
@@ -80,9 +78,9 @@ public class CargaXml {
             Element tributaria = (Element) lista_campos.get(0);
 
             // Info Tributaria
-            String nombreEst = tributaria.getChildTextTrim("razonSocial");
-            String dirMatriz = tributaria.getChildTextTrim("dirMatriz");
-            String ruc = tributaria.getChildTextTrim("ruc");
+            String nombreEst = tributaria.getChildTextTrim(elementos[2]);
+            String dirMatriz = tributaria.getChildTextTrim(elementos[3]);
+            String ruc = tributaria.getChildTextTrim(elementos[4]);
 
             String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
                     + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
@@ -92,14 +90,14 @@ public class CargaXml {
             Element factura = (Element) lista_campos.get(1);
 
             // Info Factura
-            String fecha = factura.getChildTextTrim("fechaEmision");
-            String nombreCli = factura.getChildTextTrim("razonSocialComprador");
-            String cedulaCli = factura.getChildTextTrim("identificacionComprador");
-            String totalSinImp = factura.getChildTextTrim("totalSinImpuestos");
+            String fecha = factura.getChildTextTrim(elementos[5]);
+            String nombreCli = factura.getChildTextTrim(elementos[6]);
+            String cedulaCli = factura.getChildTextTrim(elementos[7]);
+            String totalSinImp = factura.getChildTextTrim(elementos[8]);
 
             List totalConImp = factura.getChild("totalConImpuestos").getChildren();
             Element totalImp = (Element) totalConImp.get(0);
-            String totalConImps = totalImp.getChildTextTrim("valor");
+            String totalConImps = totalImp.getChildTextTrim(elementos[9]);
 
             Element adicional = (Element) lista_campos.get(3);
 
@@ -112,17 +110,16 @@ public class CargaXml {
 
             for (int i = 0; i < campoAdi.size(); i++) {
                 Element attr = (Element) campoAdi.get(i);
-                String actual = attr.getAttributeValue("nombre");
-
+                
                 pat = Pattern.compile("mail");
-                mat = pat.matcher(actual);
+                mat = pat.matcher(elementos[10]);
                 if (mat.find()) {
                     emailCli = attr.getTextTrim();
                     break;
                 }
 
                 pat = Pattern.compile("ireccion");
-                mat = pat.matcher(actual);
+                mat = pat.matcher(elementos[10]);
                 if (mat.find()) {
                     dirCli = attr.getTextTrim();
                     break;
@@ -133,16 +130,8 @@ public class CargaXml {
                     + "VALUES ('" + cedulaCli + "','" + nombreCli + "','" + dirCli + "','" + emailCli + "')";
             cp.insertar(con, cliente);
 
-            /*if (fecha != null && razonSocial != null && direccionEst != null) {
-                
-                String parametro = idFactura + ",'" + fecha + "','" + razonSocial + "','" + direccionEst;
-                System.out.println(parametro);
-                cp.insertar("facturas", parametro);
-            }*/
-            //Cabecera: IDFactura,NombreCliente,FechaEmision,Direccion
-            //Detalles: Codigo Producto, Descripcion, Cantidad,precio unitario,descuento
             int idFactura;
-            if (cp.consultar(con, "FACTURA") == "") {
+            if (cp.consultar(con, "FACTURA").equals("")) {
                 idFactura = 0;
             } else {
                 idFactura = Integer.parseInt(cp.consultar(con, "FACTURA"));
@@ -161,13 +150,13 @@ public class CargaXml {
                 campo = (Element) detalle.get(j);
 
                 // Detalle
-                String descripcion = campo.getChildTextTrim("descripcion");
-                Double cantidad = Double.parseDouble(campo.getChildTextTrim("cantidad"));
-                Double precioUnitario = Double.parseDouble(campo.getChildTextTrim("precioUnitario"));
-                Double total = Double.parseDouble(campo.getChildTextTrim("precioTotalSinImpuesto"));
+                String descripcion = campo.getChildTextTrim(elementos[12]);
+                Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[13]));
+                Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
+                Double total = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
 
                 int idDetalle;
-                if (cp.consultar(con, "DETALLE") == "") {
+                if (cp.consultar(con, "DETALLE").equals("")) {
                     idDetalle = 0;
                 } else {
                     idDetalle = Integer.parseInt(cp.consultar(con, "DETALLE"));
@@ -175,7 +164,7 @@ public class CargaXml {
                 }
 
                 int idProducto;
-                if (cp.consultar(con, "PRODUCTO") == "") {
+                if (cp.consultar(con, "PRODUCTO").equals("")) {
                     idProducto = 0;
                 } else {
                     idProducto = Integer.parseInt(cp.consultar(con, "PRODUCTO"));
@@ -189,20 +178,15 @@ public class CargaXml {
                 String detalleQ = "INSERT INTO DETALLE (id_detalle,id_producto,id_factura,total,cantidad,precio_unitario)"
                         + "VALUES (" + idDetalle + "," + idProducto + "," + idFactura + "," + total + "," + cantidad + "," + precioUnitario + ")";
                 cp.insertar(con, detalleQ);
-                /*int idFactura = Integer.parseInt(cp.consultar("facturas"));
-                String parametro = idDetalle + "," + idFactura + ",'" + codigoPrincipal + "','" + descripcion + "'," + precioUnitario + "," + cantidad + "," + descuento;
-                System.out.println(parametro);
-                cp.insertar("detalles", parametro);*/
             }
 
-            //System.out.println("Email: " + emailCli);
         } catch (IOException | JDOMException io) {
             System.out.println(io.getMessage());
         }
     }
 
-    /*public static void main(String args[]) {
+    public static void main(String args[]) {
         CargaXml car = new CargaXml();
-        car.cargarXml("aldo.xml");
-    }*/
+        car.cargarXml("aldo.xml", "test.txt");
+    }
 }
