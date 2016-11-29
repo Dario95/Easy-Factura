@@ -4,6 +4,7 @@
  */
 package aplicacioneslibres;
 
+import formslibres.Inicio;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,32 +26,28 @@ public class GUIAplicacion extends javax.swing.JFrame {
      */
     ArrayList<String> tiposFacturas=new ArrayList<>();
     public GUIAplicacion() throws IOException {
-        FileReader f = null;
+         
       
         try {
             initComponents();
             setLocationRelativeTo(null);
             String cadena;
-              tiposFacturas.add("Tipo de Factura");
-        jComboBox1.addItem("Tipo de Factura");
-            f = new FileReader("tiposFacturas.txt");
+             tiposFacturas.add("Tipo de Factura");
+             jComboBox1.addItem("Tipo de Factura");
+            FileReader f = new FileReader("src/tiposFacturas.txt");
             BufferedReader b = new BufferedReader(f);
             while((cadena = b.readLine())!=null) {
                 tiposFacturas.add(cadena);
                 jComboBox1.addItem(cadena);
             }
             b.close();
-            tiposFacturas.add("Nueva factura");
-                jComboBox1.addItem("Nueva factura");
+            f.close();
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                f.close();
-            } catch (IOException ex) {
-                Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
+        tiposFacturas.add("Nueva factura");
+            jComboBox1.addItem("Nueva factura");
     }
 
     /**
@@ -224,9 +221,10 @@ public class GUIAplicacion extends javax.swing.JFrame {
             if(ficherosSeleccionados.get(i).toString().equals(ficheros[j].getName())){
                 if(!jComboBox1.getSelectedItem().equals("Tipo de Factura"))
                 {
-                if(!jComboBox1.getSelectedItem().equals("Nueva factura"))
+                if(jComboBox1.getSelectedItem().toString().equals("Nueva factura"))
                 {
-                //Interfaz pato
+                    Inicio init=new Inicio();
+                    init.setVisible(true);
                 }else{
                    
                 System.out.print("Seleccionó opción 1");
@@ -240,7 +238,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
                 }
                 }
                 else{
-                //No se selecciono tipo
+                JOptionPane.showMessageDialog(null, "No se selecciono tipo de factura");
                 }
                 
                 JOptionPane.showMessageDialog(null, "Ingreso correcto");
