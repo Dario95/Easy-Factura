@@ -5,8 +5,6 @@
  */
 package Interfaces;
 
-import Interfaces.Cliente;
-import aplicacioneslibres.GUIAplicacion;
 import aplicacioneslibres.CrearPlantilla;
 import javax.swing.JTextField;
 
