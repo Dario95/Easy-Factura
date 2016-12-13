@@ -19,13 +19,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author root
  */
-public class GUIAplicacion extends javax.swing.JFrame {
+public class FacturaElectronica extends javax.swing.JFrame {
 
     /**
      * Creates new form GUIAplicacion
      */
     ArrayList<String> tiposFacturas=new ArrayList<>();
-    public GUIAplicacion() throws IOException {
+    public FacturaElectronica() throws IOException {
          
       
         try {
@@ -44,7 +44,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
             f.close();
             
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
         }
         tiposFacturas.add("Nueva factura");
             jComboBox1.addItem("Nueva factura");
@@ -158,7 +158,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     fc.setCurrentDirectory(new File("src/Facturas/"));
     fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-           int returnVal = fc.showOpenDialog(GUIAplicacion.this);
+           int returnVal = fc.showOpenDialog(FacturaElectronica.this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             try {
@@ -205,7 +205,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
                 
                 
             } catch (IOException ex) {
-                Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(null,"Open command cancelled by user.","Cancelado",3);
@@ -252,48 +252,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIAplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                try {
-                    new GUIAplicacion().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
+ 
     final JFileChooser fc = new JFileChooser();
     File[] ficheros;
     // Variables declaration - do not modify//GEN-BEGIN:variables
