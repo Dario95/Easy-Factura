@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package formslibres;
+package Interfaces;
 
+import Interfaces.Cliente;
 import javax.swing.JTextField;
 
 /**

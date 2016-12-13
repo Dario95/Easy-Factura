@@ -3,7 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package formslibres;
+package Interfaces;
+
+import static Interfaces.Cliente.cliente;
+import aplicacioneslibres.CargarXMLTotal;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -26,6 +31,17 @@ public class Factura extends javax.swing.JFrame {
      */
     public Factura() {
         initComponents();
+        CargarXMLTotal ct = new CargarXMLTotal();
+        ArrayList aux = ct.cargarTodo("aldo.xml");
+
+        for (Object el : aux) {
+            cbxAmbiente.addItem(el.toString());
+            cbxEstado.addItem(el.toString());
+            cbxFecha.addItem(el.toString());
+            cbxMasImp.addItem(el.toString());
+            cbxMenosImp.addItem(el.toString());
+            cbxRuc.addItem(el.toString());
+        }
     }
 
     /**
@@ -128,36 +144,29 @@ public class Factura extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAtrasFac)
                         .addGap(53, 53, 53)
-                        .addComponent(cbxMenosImp, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxMasImp, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAtrasFac)
-                            .addComponent(jLabel4))
-                        .addGap(53, 53, 53)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbxAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAdelanteFac))))
+                        .addComponent(btnAdelanteFac))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxMenosImp, 0, 408, Short.MAX_VALUE)
+                            .addComponent(cbxMasImp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxAmbiente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxFecha, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxRuc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
@@ -235,12 +244,34 @@ public class Factura extends javax.swing.JFrame {
         Producto pro = new Producto();
         pro.setVisible(true);
         this.dispose();
-        factura[0] = (String) cbxRuc.getSelectedItem();
-        factura[1] = (String) cbxFecha.getSelectedItem();
-        factura[2] = (String) cbxEstado.getSelectedItem();
-        factura[3] = (String) cbxAmbiente.getSelectedItem();
-        factura[4] = (String) cbxMasImp.getSelectedItem();
-        factura[5] = (String) cbxMenosImp.getSelectedItem();
+        
+        StringTokenizer tk;
+        String aux = "";
+        
+        tk = new StringTokenizer(cbxRuc.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        factura[0] = aux;
+        
+        tk = new StringTokenizer(cbxFecha.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        factura[1] = aux;
+        
+        tk = new StringTokenizer(cbxEstado.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        factura[2] = aux;
+        
+        tk = new StringTokenizer(cbxAmbiente.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        factura[3] = aux;
+        
+        tk = new StringTokenizer(cbxMasImp.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        factura[4] = aux;
+        
+        tk = new StringTokenizer(cbxMenosImp.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        factura[5] = aux;
+
     }//GEN-LAST:event_btnAdelanteFacActionPerformed
 
     /**

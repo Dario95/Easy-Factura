@@ -3,7 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package formslibres;
+package Interfaces;
+
+import Interfaces.Cliente;
+import static Interfaces.Cliente.cliente;
+import aplicacioneslibres.CargarXMLTotal;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -26,6 +32,14 @@ public class Detalle extends javax.swing.JFrame {
      */
     public Detalle() {
         initComponents();
+        
+        CargarXMLTotal ct = new CargarXMLTotal();
+        ArrayList aux = ct.cargarTodo("aldo.xml");
+
+        for (Object el : aux) {
+            cbxCantidad.addItem(el.toString());
+            cbxTotal.addItem(el.toString());
+        }
     }
 
     /**
@@ -88,20 +102,21 @@ public class Detalle extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 316, Short.MAX_VALUE)
                         .addComponent(btnAtrasDet)
                         .addGap(108, 108, 108)
-                        .addComponent(btnAdelanteDet)))
+                        .addComponent(btnAdelanteDet))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxCantidad, 0, 431, Short.MAX_VALUE)
+                            .addComponent(cbxTotal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
@@ -148,8 +163,16 @@ public class Detalle extends javax.swing.JFrame {
         fac.setVisible(true);
         this.dispose();
         
-        detalle[0] = (String) cbxTotal.getSelectedItem();
-        detalle[1] = (String) cbxCantidad.getSelectedItem();
+        StringTokenizer tk;
+        String aux = "";
+        
+        tk = new StringTokenizer(cbxCantidad.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        detalle[0] = aux;
+        
+        tk = new StringTokenizer(cbxTotal.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        detalle[1] = aux;
         
     }//GEN-LAST:event_btnAdelanteDetActionPerformed
 

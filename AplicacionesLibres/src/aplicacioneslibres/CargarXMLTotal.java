@@ -12,7 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jdom2.Document;
@@ -25,25 +27,26 @@ import org.jdom2.input.SAXBuilder;
  * @author andreu
  */
 public class CargarXMLTotal {
+    
+    private ArrayList elementosTotales = new ArrayList();
 
-    public void cargarTodo(String name) {
+    public ArrayList cargarTodo(String name) {
         SAXBuilder builder = new SAXBuilder();
+        
 
         File xmlFile = new File(name);
         try {
             //Se crea el documento a traves del archivo
             Document document = (Document) builder.build(xmlFile);
-            Crear cr = new Crear();
-            Connection con = cr.crearConexion();
-            Conexion cp = new Conexion();
-
+            
             //Se obtiene la raiz 'tables'
             Element rootNode = document.getRootElement();
 
             List hijosRoot = rootNode.getChildren();
             for (int i = 0; i < hijosRoot.size() - 2; i++) {
                 Element hijoR = (Element) hijosRoot.get(i);
-                System.out.println("Nombre: " + hijoR.getName() + "\t\tValor: " + hijoR.getTextTrim());
+                String aux = hijoR.getName() + "-" + hijoR.getTextTrim();
+                elementosTotales.add(aux);
             }
 
             Element tabla = rootNode.getChild("comprobante");
@@ -61,6 +64,8 @@ public class CargarXMLTotal {
         } catch (IOException | JDOMException io) {
             System.out.println(io.getMessage());
         }
+        
+        return elementosTotales;
     }
 
     public void recorrerHijos(List lista) {
@@ -74,7 +79,8 @@ public class CargarXMLTotal {
                     String nombre = hijoC.getName();
                     if(nombre.equals("campoAdicional"))
                         nombre = hijoC.getAttributeValue("nombre");
-                    System.out.println("Nombre: " + nombre + "\t\tValor: " + hijoC.getTextTrim());
+                    String aux2 = nombre + "-" + hijoC.getTextTrim();
+                    elementosTotales.add(aux2);
                 } else {
                     recorrerHijos(lista_hijo);
                 }

@@ -3,7 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package formslibres;
+package Interfaces;
+
+import aplicacioneslibres.CargarXMLTotal;
+import Interfaces.Detalle;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -21,12 +28,20 @@ public class Cliente extends javax.swing.JFrame {
         Cliente.cliente = cliente;
     }
 
-
     /**
      * Creates new form Inicio
      */
     public Cliente() {
         initComponents();
+        CargarXMLTotal ct = new CargarXMLTotal();
+        ArrayList aux = ct.cargarTodo("aldo.xml");
+
+        for (Object el : aux) {
+            cbxCedula.addItem(el.toString());
+            cbxDireccion.addItem(el.toString());
+            cbxEmail.addItem(el.toString());
+            cbxNombre.addItem(el.toString());
+        }
     }
 
     /**
@@ -97,31 +112,29 @@ public class Cliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(53, 53, 53)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbxEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAdelanteCli))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAdelanteCli))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxCedula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(51, 51, 51)))
                 .addGap(46, 46, 46))
             .addGroup(layout.createSequentialGroup()
                 .addGap(161, 161, 161)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(441, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,6 +167,7 @@ public class Cliente extends javax.swing.JFrame {
 
     private void cbxCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCedulaActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_cbxCedulaActionPerformed
 
     private void cbxNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNombreActionPerformed
@@ -173,10 +187,25 @@ public class Cliente extends javax.swing.JFrame {
         Detalle det = new Detalle();
         det.setVisible(true);
         this.dispose();
-        cliente[0] = (String) cbxCedula.getSelectedItem();
-        cliente[1] = (String) cbxDireccion.getSelectedItem();
-        cliente[2] = (String) cbxEmail.getSelectedItem();
-        cliente[3] = (String) cbxNombre.getSelectedItem();
+        
+        StringTokenizer tk;
+        String aux = "";
+        
+        tk = new StringTokenizer(cbxCedula.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        cliente[0] = aux;
+        
+        tk = new StringTokenizer(cbxDireccion.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        cliente[1] = aux;
+        
+        tk = new StringTokenizer(cbxEmail.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        cliente[2] = aux;
+        
+        tk = new StringTokenizer(cbxNombre.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        cliente[3] = aux;
 
     }//GEN-LAST:event_btnAdelanteCliActionPerformed
 

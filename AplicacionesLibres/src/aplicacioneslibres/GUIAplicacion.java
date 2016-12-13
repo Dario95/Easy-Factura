@@ -4,7 +4,7 @@
  */
 package aplicacioneslibres;
 
-import formslibres.Inicio;
+import Interfaces.Inicio;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class GUIAplicacion extends javax.swing.JFrame {
             String cadena;
              tiposFacturas.add("Tipo de Factura");
              jComboBox1.addItem("Tipo de Factura");
-            FileReader f = new FileReader("src/tiposFacturas.txt");
+            FileReader f = new FileReader("src/tipoFacturas.txt");
             BufferedReader b = new BufferedReader(f);
             while((cadena = b.readLine())!=null) {
                 tiposFacturas.add(cadena);

@@ -3,11 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package formslibres;
+package Interfaces;
 
+import Interfaces.Cliente;
+import static Interfaces.Cliente.cliente;
+import static Interfaces.Detalle.detalle;
+import aplicacioneslibres.CargarXMLTotal;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +39,14 @@ public class Producto extends javax.swing.JFrame {
      */
     public Producto() {
         initComponents();
+        
+        CargarXMLTotal ct = new CargarXMLTotal();
+        ArrayList aux = ct.cargarTodo("aldo.xml");
+
+        for (Object el : aux) {
+            cbxDesc.addItem(el.toString());
+            cbxPrecio.addItem(el.toString());
+        }        
     }
 
     /**
@@ -94,20 +109,21 @@ public class Producto extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(53, 53, 53)
-                        .addComponent(cbxDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(341, Short.MAX_VALUE)
                         .addComponent(btnAtrasPro)
                         .addGap(108, 108, 108)
-                        .addComponent(btnGuardarPro)))
+                        .addComponent(btnGuardarPro))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxPrecio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxDesc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
@@ -150,16 +166,27 @@ public class Producto extends javax.swing.JFrame {
 
     private void btnGuardarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProActionPerformed
         // TODO add your handling code here:
-        product[0] = (String) cbxDesc.getSelectedItem();
-        product[1] = (String) cbxPrecio.getSelectedItem();
+        StringTokenizer tk;
+        String aux = "";
+        
+        tk = new StringTokenizer(cbxDesc.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        product[0] = aux;
+        
+        tk = new StringTokenizer(cbxPrecio.getSelectedItem().toString(), "-");
+        aux = tk.nextToken();
+        product[1] = aux;
+        
         String nombreFac = Inicio.nombreFac;
 
-        File archivo = new File(nombreFac + ".txt");
-        File facturas = new File("src/tiposfacturas.txt");
+        File archivo = new File("src/" + nombreFac + ".txt");
+        File facturas = new File("src/tipoFacturas.txt");
+
         try {
-            FileWriter writeFac = new FileWriter(facturas,true);
-            writeFac.write(nombreFac);
-            writeFac.close();
+            FileWriter writeFac = new FileWriter(facturas);
+            BufferedWriter bw = new BufferedWriter(writeFac);
+            bw.write(nombreFac);
+            bw.close();
         } catch (IOException ex) {
             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,0 +1,14 @@
+identificacionComprador
+Direccion
+Email:
+razonSocialComprador
+cantidad
+precioTotalSinImpuesto
+ruc
+fechaEmision
+estado
+ambiente
+valor
+totalSinImpuestos
+descripcion
+precioUnitario
