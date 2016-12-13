@@ -88,8 +88,8 @@ public class CargarXMLTotal {
         }
     }
 
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         CargarXMLTotal car = new CargarXMLTotal();
         car.cargarTodo("aldo.xml");
-    }
+    }*/
 }
