@@ -3,11 +3,7 @@
  * and open the template in the editor.
  */
 package Interfaces;
-
-/**
- *
- * @author root
- */
+//veamos si sirve
 public class FacturaManual extends javax.swing.JFrame {
 
     /**
