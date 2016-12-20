@@ -30,7 +30,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
             north.removeMouseMotionListener(action);
         }
         
-        combo_Establecimientos.removeAll();
+        combo_Establecimientos.removeAllItems();
         combo_Establecimientos.addItem("");
         establecimientos = conn.cargarEstablecimiento();
         for(Object est : establecimientos)
@@ -460,7 +460,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarEst;
     private javax.swing.JButton btn_RegistrarFactura;
-    private javax.swing.JComboBox<String> combo_Establecimientos;
+    public static javax.swing.JComboBox<String> combo_Establecimientos;
     private com.toedter.calendar.JDateChooser date_fecha;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;

@@ -5,8 +5,10 @@
  */
 package Interfaces;
 
+import static Interfaces.FacturaManualNew.combo_Establecimientos;
 import conexionBDD.Conexionn;
 import java.awt.HeadlessException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +18,8 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
     String caso;
     Conexionn connEst;
+    
+    ArrayList auxRec = new ArrayList();
 
     public V_Establecimiento(String caso, Conexionn conn) {
         initComponents();
@@ -176,19 +180,30 @@ public class V_Establecimiento extends javax.swing.JFrame {
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
         if (caso.equals("Registrar")) {
             connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento) "
-                    + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "'");
+                    + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "')");
         } else {
             connEst.insertar("UPDATE establecimiento SET nombre_establecimiento='" + txt_nombre.getText() + "',"
                     + "direccion_establecimiento='" + txt_direccion.getText() + "' WHERE id_establecimiento='" + txt_ruc.getText() + "'");
         }
+
+        recargar();
         this.dispose();
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
     private void btn_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarActionPerformed
         connEst.insertar("DELETE FROM establecimiento WHERE id_establecimiento='" + txt_ruc.getText() + "'");
+        recargar();
         this.dispose();
     }//GEN-LAST:event_btn_borrarActionPerformed
 
+    
+    public void recargar() {
+        combo_Establecimientos.removeAllItems();
+        combo_Establecimientos.addItem("");
+        auxRec = connEst.cargarEstablecimiento();
+        for(Object est : auxRec)
+            combo_Establecimientos.addItem(est.toString());
+    }
     /**
      * @param args the command line arguments
      */
