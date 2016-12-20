@@ -14,12 +14,14 @@ import conexionBDD.Conexionn;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     FacturaManualNew fm;
+    FacturaElectronicaNew fe;
     public Conexionn conn;
     
     public VentanaPrincipal() {
         initComponents();
         conn=new Conexionn();
-        fm=new FacturaManualNew(conn);                                
+        fm=new FacturaManualNew(conn);     
+        fe=new FacturaElectronicaNew();
     }
 
     /**
@@ -87,13 +89,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        jDesktopPane.removeAll();        
+        fe.setVisible(false);
         fm.setVisible(true);
         jDesktopPane.add(fm);        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        jDesktopPane.removeAll();
         fm.setVisible(false);
-        jDesktopPane.remove(fm);
+        fe.setVisible(true);
+        jDesktopPane.add(fe);   
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
