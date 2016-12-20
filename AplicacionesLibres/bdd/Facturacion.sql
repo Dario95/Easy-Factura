@@ -78,7 +78,7 @@ ID_PRODUCTO
 /*==============================================================*/
 create table ESTABLECIMIENTO (
    ID_ESTABLECIMIENTO   CHAR(13)             not null,
-   NOMBRE_ESTABLECIMIENTO VARCHAR(20)          not null,
+   NOMBRE_ESTABLECIMIENTO VARCHAR(100)          not null,
    DIRECCION_ESTABLECIMIENTO VARCHAR(50)          null,
    TELEFONO_ESTABLECIMIENTO VARCHAR(11)          null,
    constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
@@ -134,7 +134,7 @@ ID_CLIENTE
 /*==============================================================*/
 create table PRODUCTO (
    ID_PRODUCTO          INT4                 not null,
-   DESCRIPCION_PRODUCTO VARCHAR(40)          not null,
+   DESCRIPCION_PRODUCTO VARCHAR(100)          not null,
    constraint PK_PRODUCTO primary key (ID_PRODUCTO)
 );
 
