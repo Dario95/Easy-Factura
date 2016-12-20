@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     29/11/2016 15:59:00                          */
+/* Created on:     25/12/2016 15:56:37                          */
 /*==============================================================*/
 
 
@@ -11,8 +11,6 @@ drop table CLIENTE;
 drop index RELATIONSHIP_2_FK;
 
 drop index RELATIONSHIP_1_FK;
-
-drop index DETALLE_PK;
 
 drop table DETALLE;
 
@@ -54,20 +52,11 @@ ID_CLIENTE
 /* Table: DETALLE                                               */
 /*==============================================================*/
 create table DETALLE (
-   ID_DETALLE           INT4                 not null,
    ID_PRODUCTO          INT4                 not null,
    ID_FACTURA           INT4                 not null,
-   TOTAL                MONEY                null,
    CANTIDAD             INT4                 null,
    PRECIO_UNITARIO      MONEY                null,
-   constraint PK_DETALLE primary key (ID_DETALLE)
-);
-
-/*==============================================================*/
-/* Index: DETALLE_PK                                            */
-/*==============================================================*/
-create unique index DETALLE_PK on DETALLE (
-ID_DETALLE
+   TOTAL                MONEY                null
 );
 
 /*==============================================================*/
@@ -90,7 +79,8 @@ ID_PRODUCTO
 create table ESTABLECIMIENTO (
    ID_ESTABLECIMIENTO   CHAR(13)             not null,
    NOMBRE_ESTABLECIMIENTO VARCHAR(20)          not null,
-   DIRECCION_ESTABLECIMIENTO VARCHAR(200)          null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(50)          null,
+   TELEFONO_ESTABLECIMIENTO VARCHAR(11)          null,
    constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
 );
 
@@ -111,9 +101,10 @@ create table FACTURA (
    FECHA_EMISION        DATE                 not null,
    ESTADO_FACTURA       VARCHAR(15)          null,
    AMBIENTE_FACTURA     VARCHAR(15)          null,
-   TOTAL_SIN_IVA        MONEY                null,
-   IVA                  MONEY                null,
-   TOTAL_CON_IVA        MONEY                null,
+   TIPO_GASTO           VARCHAR(15)          null,
+   TOTAL_SIN_IVA        MONEY                not null,
+   IVA                  MONEY                not null,
+   TOTAL_CON_IVA        MONEY                not null,
    constraint PK_FACTURA primary key (ID_FACTURA)
 );
 
