@@ -13,7 +13,7 @@ import javax.swing.JTextField;
  * @author patriciochavez
  */
 public class Inicio extends javax.swing.JFrame {
-    public static String nombreFac = new String();
+    private String nombreFac;
 
     public JTextField getTxttype() {
         return txttype;
@@ -21,6 +21,14 @@ public class Inicio extends javax.swing.JFrame {
 
     public void setTxttype(JTextField txttype) {
         this.txttype = txttype;
+    }
+    
+    public void nombreFac(String nombreFac) {
+        this.nombreFac = nombreFac;
+    }
+    
+    public String getFac() {
+        return this.nombreFac;
     }
 
     /**
@@ -107,7 +115,7 @@ public class Inicio extends javax.swing.JFrame {
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         // TODO add your handling code here:
         CrearPlantilla crear = new CrearPlantilla();
-        crear.generarPlantilla("aldo.xml", txttype.getText());
+        crear.generarPlantilla(getFac(), txttype.getText());
         
         nombreFac=txttype.getText();
     }//GEN-LAST:event_btnSiguienteActionPerformed

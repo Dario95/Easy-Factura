@@ -148,11 +148,12 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         List ficherosSeleccionados = jList1.getSelectedValuesList();
         for (int i = 0; i < ficherosSeleccionados.size(); i++) {
-            for (int j = 0; j < ficheros.length; j++) {
-                if (ficherosSeleccionados.get(i).toString().equals(ficheros[j].getName())) {
+            //for (int j = 0; j < ficheros.length; j++) {
+                //if (ficherosSeleccionados.get(i).toString().equals(ficheros[j].getName())) {
                     if (jRadioButton1.isSelected()) {
-       //                 Inicio init = new Inicio(ficheros[j].getAbsolutePath());
-        //                init.setVisible(true);
+                       Inicio init = new Inicio();
+                      init.setVisible(true);
+                      init.nombreFac(ficheros[i].getAbsolutePath());
                     }
                     //System.out.print("Seleccionó opción 1");
                     //CargaXml cg = new CargaXml();
@@ -164,12 +165,12 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                     }
                      */
 
-                } else {
+                /*} else {
                     JOptionPane.showMessageDialog(null, "No se selecciono tipo de factura");
-                }
+                }*/
 
                 //JOptionPane.showMessageDialog(null, "Ingreso correcto");
-            }
+            //}
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
