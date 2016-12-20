@@ -5,16 +5,12 @@
 package Aplicacion;
 
 import Interfaces.AdministradorVentanas;
-import Interfaces.Factura;
-import java.awt.BorderLayout;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+
 
 /**
  *
@@ -26,8 +22,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     public MainWindow() {
-        initComponents(); 
-        this.setLocationRelativeTo(null);
+        initComponents();
+        this.setLocationRelativeTo(null);       
     }
 
     /**
@@ -97,37 +93,32 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-      AdministradorVentanas.mostrarProveedorRegistro(jDesktopPane1, rootPaneCheckingEnabled);
+        AdministradorVentanas.mostrarProveedorRegistro(jDesktopPane1, rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-      int op =  finalizar();
-      if(op == JOptionPane.OK_OPTION)
-        {
+        if (finalizar() == JOptionPane.OK_OPTION) {
             System.exit(0);
         }
-        
+
     }//GEN-LAST:event_formWindowClosing
 
-    public int finalizar()
-    {
+    public int finalizar() {
         return JOptionPane.showConfirmDialog(this, "Si existe algun dato sin guardar "
                 + "se perderán.\n ¿Desea salir del programa?");
     }
-    
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-       
+    /*public static void main(String args[]) {
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainWindow().setVisible(true);
             }
         });
-    }
+    }*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;

@@ -7,15 +7,18 @@ package Interfaces;
 
 import static Interfaces.Cliente.cliente;
 import aplicacioneslibres.CargarXMLTotal;
+import java.awt.Component;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
  * @author patriciochavez
  */
 public class Factura extends javax.swing.JFrame {
-    
+
     public static String factura[] = new String[6];
 
     public static String[] getFactura() {
@@ -69,7 +72,7 @@ public class Factura extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         cbxMenosImp = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(657, 517));
 
         jLabel1.setText("RUC");
 
@@ -244,30 +247,30 @@ public class Factura extends javax.swing.JFrame {
         Producto pro = new Producto();
         pro.setVisible(true);
         this.dispose();
-        
+
         StringTokenizer tk;
         String aux = "";
-        
+
         tk = new StringTokenizer(cbxRuc.getSelectedItem().toString(), "-");
         aux = tk.nextToken();
         factura[0] = aux;
-        
+
         tk = new StringTokenizer(cbxFecha.getSelectedItem().toString(), "-");
         aux = tk.nextToken();
         factura[1] = aux;
-        
+
         tk = new StringTokenizer(cbxEstado.getSelectedItem().toString(), "-");
         aux = tk.nextToken();
         factura[2] = aux;
-        
+
         tk = new StringTokenizer(cbxAmbiente.getSelectedItem().toString(), "-");
         aux = tk.nextToken();
         factura[3] = aux;
-        
+
         tk = new StringTokenizer(cbxMasImp.getSelectedItem().toString(), "-");
         aux = tk.nextToken();
         factura[4] = aux;
-        
+
         tk = new StringTokenizer(cbxMenosImp.getSelectedItem().toString(), "-");
         aux = tk.nextToken();
         factura[5] = aux;
@@ -288,16 +291,24 @@ public class Factura extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Factura.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Factura.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Factura.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Factura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Factura.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
