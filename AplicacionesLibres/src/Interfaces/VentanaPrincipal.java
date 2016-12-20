@@ -15,13 +15,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     FacturaManualNew fm;
     FacturaElectronicaNew fe;
-    public Conexionn conn;
+    String cedula_usuario;
+    Conexionn conn;
     
-    public VentanaPrincipal() {
+    public VentanaPrincipal(String cedula_usuario) {
         initComponents();
         conn=new Conexionn();
-        fm=new FacturaManualNew(conn);     
+        fm=new FacturaManualNew(conn,cedula_usuario);     
         fe=new FacturaElectronicaNew();
+        this.cedula_usuario=cedula_usuario;
+        
     }
 
     /**
@@ -140,7 +143,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPrincipal().setVisible(true);
+                //new VentanaPrincipal().setVisible(true);
             }
         });
     }
