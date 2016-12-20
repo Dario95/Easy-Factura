@@ -53,7 +53,7 @@ ID_CLIENTE
 /*==============================================================*/
 create table DETALLE (
    ID_PRODUCTO          INT4                 not null,
-   ID_FACTURA           INT4                 not null,
+   ID_FACTURA           VARCHAR(10)          not null,
    CANTIDAD             INT4                 null,
    PRECIO_UNITARIO      MONEY                null,
    TOTAL                MONEY                null
@@ -79,7 +79,7 @@ ID_PRODUCTO
 create table ESTABLECIMIENTO (
    ID_ESTABLECIMIENTO   CHAR(13)             not null,
    NOMBRE_ESTABLECIMIENTO VARCHAR(100)          not null,
-   DIRECCION_ESTABLECIMIENTO VARCHAR(50)          null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(200)          null,
    TELEFONO_ESTABLECIMIENTO VARCHAR(11)          null,
    constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
 );
@@ -95,7 +95,7 @@ ID_ESTABLECIMIENTO
 /* Table: FACTURA                                               */
 /*==============================================================*/
 create table FACTURA (
-   ID_FACTURA           INT4                 not null,
+   ID_FACTURA           VARCHAR(10)          not null,
    ID_CLIENTE           VARCHAR(13)          not null,
    ID_ESTABLECIMIENTO   CHAR(13)             not null,
    FECHA_EMISION        DATE                 not null,

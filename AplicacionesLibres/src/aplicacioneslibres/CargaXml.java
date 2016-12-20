@@ -38,7 +38,7 @@ public class CargaXml {
 
             // Abre la plantilla
             String elemento;
-            String elementos[] = new String[16];
+            String elementos[] = new String[17];
             FileReader f = new FileReader(archivo);
             BufferedReader b = new BufferedReader(f);
 
@@ -86,6 +86,7 @@ public class CargaXml {
             String nombreEst = tributaria.getChildTextTrim(elementos[2]);
             String dirMatriz = tributaria.getChildTextTrim(elementos[3]);
             String ruc = tributaria.getChildTextTrim(elementos[4]);
+            String numFact = tributaria.getChildTextTrim(elementos[5]);
 
             String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
                     + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
@@ -95,14 +96,14 @@ public class CargaXml {
             Element factura = (Element) lista_campos.get(1);
 
             // Info Factura
-            String fecha = factura.getChildTextTrim(elementos[5]);
-            String nombreCli = factura.getChildTextTrim(elementos[6]);
-            String cedulaCli = factura.getChildTextTrim(elementos[7]);
-            Double totalSinImp = Double.parseDouble(factura.getChildTextTrim(elementos[8]));
+            String fecha = factura.getChildTextTrim(elementos[6]);
+            String nombreCli = factura.getChildTextTrim(elementos[7]);
+            String cedulaCli = factura.getChildTextTrim(elementos[8]);
+            Double totalSinImp = Double.parseDouble(factura.getChildTextTrim(elementos[9]));
 
             List totalConImp = factura.getChild("totalConImpuestos").getChildren();
             Element totalImp = (Element) totalConImp.get(0);
-            Double Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos[9]));
+            Double Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos[10]));
 
             Double totalConImps = totalSinImp + Imps;
 
@@ -119,14 +120,14 @@ public class CargaXml {
                 Element attr = (Element) campoAdi.get(i);
 
                 pat = Pattern.compile("mail");
-                mat = pat.matcher(elementos[10]);
+                mat = pat.matcher(elementos[11]);
                 if (mat.find()) {
                     emailCli = attr.getTextTrim();
                     break;
                 }
 
                 pat = Pattern.compile("ireccion");
-                mat = pat.matcher(elementos[10]);
+                mat = pat.matcher(elementos[12]);
                 if (mat.find()) {
                     dirCli = attr.getTextTrim();
                     break;
@@ -137,16 +138,8 @@ public class CargaXml {
                     + "VALUES ('" + cedulaCli + "','" + nombreCli + "','" + dirCli + "','" + emailCli + "')";
             cp.insertar(cliente);
 
-            int idFactura;
-            if (cp.consultar("FACTURA").equals("")) {
-                idFactura = 0;
-            } else {
-                idFactura = Integer.parseInt(cp.consultar("FACTURA"));
-                idFactura++;
-            }
-
             String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                    + "VALUES (" + idFactura + ",'" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
+                    + "VALUES ('" + numFact + "','" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
             cp.insertar(facturaQ);
 
             Element detalles = (Element) lista_campos.get(2);
@@ -157,10 +150,10 @@ public class CargaXml {
                 campo = (Element) detalle.get(j);
 
                 // Detalle
-                String descripcion = campo.getChildTextTrim(elementos[12]);
-                Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[13]));
-                Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
-                Double total = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
+                String descripcion = campo.getChildTextTrim(elementos[13]);
+                Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
+                Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
+                Double total = Double.parseDouble(campo.getChildTextTrim(elementos[16]));
 
                 int idProducto;
                 if (cp.consultar("PRODUCTO").equals("")) {
@@ -175,7 +168,7 @@ public class CargaXml {
                 cp.insertar(producto);
 
                 String detalleQ = "INSERT INTO DETALLE (id_producto,id_factura,total,cantidad,precio_unitario)"
-                        + "VALUES (" + idProducto + "," + idFactura + "," + total + "," + cantidad + "," + precioUnitario + ")";
+                        + "VALUES (" + idProducto + ",'" + numFact + "'," + total + "," + cantidad + "," + precioUnitario + ")";
                 cp.insertar(detalleQ);
             }
 
