@@ -7,12 +7,15 @@ package Interfaces;
 
 import conexionBDD.Conexionn;
 import java.awt.Component;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class FacturaManualNew extends javax.swing.JInternalFrame {
 
     Conexionn conn;
+    ArrayList establecimientos;
 
     public FacturaManualNew(Conexionn conn) {
         initComponents();
@@ -26,14 +29,15 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }
-        //conn.ddl("SELECT table_name FROM information_schema.tables WHERE table_schema='public'");
-        //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
-        conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");
-
-    }
-
-    private void cargarEstablecimientos() {
+        
         combo_Establecimientos.removeAll();
+        combo_Establecimientos.addItem("");
+        establecimientos = conn.cargarEstablecimiento();
+        for(Object est : establecimientos)
+            combo_Establecimientos.addItem(est.toString());
+        //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
+        //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
+        //conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");
 
     }
 
@@ -90,7 +94,11 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
-        combo_Establecimientos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Establecimiento 1", "Establecimiento 2" }));
+        combo_Establecimientos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_EstablecimientosItemStateChanged(evt);
+            }
+        });
 
         jButton2.setText("Registrar Nuevo Establecimiento");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -396,15 +404,29 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         datos[1] = txt_direc_est.getText();
         datos[2] = txt_telef.getText();
         datos[3] = txt_ruc_est.getText();
-        for (String s : datos) {
-            System.out.println(s);
-        }
-        new V_Establecimiento("Editar", datos).setVisible(true);
+        
+        new V_Establecimiento("Editar", datos, conn).setVisible(true);
     }//GEN-LAST:event_btnEditarEstActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new V_Establecimiento("Registrar").setVisible(true);
+        new V_Establecimiento("Registrar", conn).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void combo_EstablecimientosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_EstablecimientosItemStateChanged
+        // TODO add your handling code here:
+        ArrayList auxDatosEst;
+        if(evt.getStateChange() == ItemEvent.SELECTED) {
+            if(combo_Establecimientos.getSelectedIndex() != 0) {
+                auxDatosEst = conn.cambiarDatosEstablecimiento(combo_Establecimientos.getSelectedItem().toString());
+                txt_ruc_est.setText(auxDatosEst.get(0).toString());
+                txt_direc_est.setText(auxDatosEst.get(1).toString());
+            }
+            else {
+                txt_ruc_est.setText("");
+                txt_direc_est.setText("");
+            }
+        }
+    }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
 
     /**
      * @param args the command line arguments

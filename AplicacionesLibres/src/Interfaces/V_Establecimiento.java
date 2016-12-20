@@ -5,6 +5,7 @@
  */
 package Interfaces;
 
+import conexionBDD.Conexionn;
 import java.awt.HeadlessException;
 
 /**
@@ -14,20 +15,20 @@ import java.awt.HeadlessException;
 public class V_Establecimiento extends javax.swing.JFrame {
 
     String caso;
+    Conexionn connEst;
 
-    public V_Establecimiento(String caso) {
+    public V_Establecimiento(String caso, Conexionn conn) {
         initComponents();
         this.caso = caso;
+        this.connEst = conn;
         this.btn_borrar.setVisible(false);
         this.btn_Aceptar.setText(caso);
     }
 
-    public V_Establecimiento(String caso, String[] datos) {
+    public V_Establecimiento(String caso, String[] datos, Conexionn conn) {
         initComponents();
         this.caso = caso;
-        for(String s:datos){
-            System.out.println(s);
-        }
+        this.connEst = conn;
         this.btn_Aceptar.setText(caso);
         this.txt_ruc.setEditable(false);
         this.txt_nombre.setText(datos[0]);
@@ -174,14 +175,18 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
         if (caso.equals("Registrar")) {
-            //query para registrar
+            connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento) "
+                    + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "'");
         } else {
-            //query para editar
+            connEst.insertar("UPDATE establecimiento SET nombre_establecimiento='" + txt_nombre.getText() + "',"
+                    + "direccion_establecimiento='" + txt_direccion.getText() + "' WHERE id_establecimiento='" + txt_ruc.getText() + "'");
         }
+        this.dispose();
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
     private void btn_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarActionPerformed
-        //query para borrar
+        connEst.insertar("DELETE FROM establecimiento WHERE id_establecimiento='" + txt_ruc.getText() + "'");
+        this.dispose();
     }//GEN-LAST:event_btn_borrarActionPerformed
 
     /**
