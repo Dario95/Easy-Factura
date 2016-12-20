@@ -191,8 +191,8 @@ public class FacturaElectronica extends javax.swing.JPanel {
             for (int j = 0; j < ficheros.length; j++) {
                 if (ficherosSeleccionados.get(i).toString().equals(ficheros[j].getName())) {
                     if (jRadioButton1.isSelected()) {
-                        Inicio init = new Inicio(ficheros[j].getAbsolutePath());
-                        init.setVisible(true);
+//                        Inicio init = new Inicio(ficheros[j].getAbsolutePath());
+//                        init.setVisible(true);
                     }
                     //System.out.print("Seleccionó opción 1");
                     //CargaXml cg = new CargaXml();
