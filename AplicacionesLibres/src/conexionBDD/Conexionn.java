@@ -68,10 +68,11 @@ public class Conexionn {
         return n;
     }
     
-    public String consultar(String sql) {
+    public String consultar(String tabla) {
         String n = "";
         try {
             Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql = "SELECT count(*) FROM " + tabla + ";";
             ResultSet resultado = comando.executeQuery(sql);
             while (resultado.next()) {
                 n = resultado.getString("count");

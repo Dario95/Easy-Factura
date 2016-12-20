@@ -1,10 +1,10 @@
-/*==============================================================*/
+﻿/*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
 /* Created on:     25/12/2016 15:56:37                          */
 /*==============================================================*/
 
 
-drop index CLIENTE_PK;
+/*drop index CLIENTE_PK;
 
 drop table CLIENTE;
 
@@ -28,7 +28,7 @@ drop table FACTURA;
 
 drop index PRODUCTO_PK;
 
-drop table PRODUCTO;
+drop table PRODUCTO;*/
 
 /*==============================================================*/
 /* Table: CLIENTE                                               */

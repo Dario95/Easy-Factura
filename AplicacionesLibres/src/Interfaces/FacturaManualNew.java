@@ -9,6 +9,7 @@ import conexionBDD.Conexionn;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -206,6 +207,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jLabel15.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel15.setText("Total sin iva:");
 
+        date_fecha.setDateFormatString("yyyy-MM-dd");
         date_fecha.setPreferredSize(new java.awt.Dimension(12, 29));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -387,9 +389,11 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jCheckBox1StateChanged
 
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(sdf.format(date_fecha.getDate()));
         try {
             Integer.parseInt(txt_num_fac.getText());
-            date_fecha.getDate();
+            
             Float.parseFloat(txt_iva.getText());
             Float.parseFloat(txt_sin_iva.getText());
             Float.parseFloat(txt_total.getText());
