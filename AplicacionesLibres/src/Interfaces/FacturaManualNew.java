@@ -17,10 +17,12 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
     Conexionn conn;
     ArrayList establecimientos;
+    String cedula_usuario;
 
-    public FacturaManualNew(Conexionn conn) {
+    public FacturaManualNew(Conexionn conn,String cedula) {
         initComponents();
         this.conn = conn;
+        this.cedula_usuario=cedula;
         jTable1.setVisible(false);
         //Bloquear el movimiento del Frame
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
@@ -53,7 +55,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         jLabel7 = new javax.swing.JLabel();
         panel_establecimiento = new javax.swing.JPanel();
-        combo_Establecimientos = new javax.swing.JComboBox<>();
+        combo_Establecimientos = new javax.swing.JComboBox<String>();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -93,7 +95,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1302, 226, -1, -1));
 
-        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         combo_Establecimientos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -156,7 +158,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(panel_establecimientoLayout.createSequentialGroup()
                                 .addComponent(txt_telef, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
                                 .addComponent(btnEditarEst, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txt_direc_est)))
                     .addGroup(panel_establecimientoLayout.createSequentialGroup()
@@ -191,9 +193,9 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(panel_establecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 750, -1));
+        getContentPane().add(panel_establecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 770, -1));
 
-        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
@@ -274,52 +276,49 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
             panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_establecimiento1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel16))
+                                .addGap(65, 65, 65)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_sin_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txt_iva, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_total, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_establecimiento1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_num_fac, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36)
                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel15)
-                                            .addComponent(jLabel17)
-                                            .addComponent(jLabel16))
-                                        .addGap(65, 65, 65)
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txt_sin_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txt_iva, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txt_total, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_establecimiento1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txt_num_fac, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(36, 36, 36)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jCheckBox2)
+                                    .addComponent(jCheckBox3))
                                 .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
                                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel11)
-                                            .addComponent(jCheckBox2)
-                                            .addComponent(jCheckBox3))
+                                            .addComponent(jCheckBox6)
+                                            .addComponent(jCheckBox4))
+                                        .addGap(36, 36, 36)
                                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                                .addGap(22, 22, 22)
-                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jCheckBox6)
-                                                    .addComponent(jCheckBox4))
-                                                .addGap(36, 36, 36)
-                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jCheckBox5)
-                                                    .addComponent(jCheckBox7)))
-                                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(date_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(jCheckBox8)))
-                            .addComponent(jCheckBox1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE))
-                .addContainerGap())
+                                            .addComponent(jCheckBox5)
+                                            .addComponent(jCheckBox7)))
+                                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(date_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jCheckBox8)))
+                    .addComponent(jCheckBox1)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         panel_establecimiento1Layout.setVerticalGroup(
             panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,7 +362,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                         .addComponent(jCheckBox8)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         getContentPane().add(panel_establecimiento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 770, 380));

@@ -5,6 +5,8 @@
  */
 package Interfaces;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author vengatus
@@ -107,8 +109,10 @@ public class Login extends javax.swing.JFrame {
 
     private void btn_IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IngresarActionPerformed
         if(txt_cedula.getText().equals("1718269671") && txt_pass.getText().equals("123")){
-            new VentanaPrincipal().setVisible(true);
+            new VentanaPrincipal(txt_cedula.getText()).setVisible(true);
             this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Contrasena incorrecta","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_IngresarActionPerformed
 
