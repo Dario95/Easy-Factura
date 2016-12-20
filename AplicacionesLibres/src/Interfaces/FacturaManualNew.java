@@ -389,13 +389,16 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(sdf.format(date_fecha.getDate()));
+        String fecha = sdf.format(date_fecha.getDate());
         try {
-            Integer.parseInt(txt_num_fac.getText());
+            String factura = txt_num_fac.getText();
             
-            Float.parseFloat(txt_iva.getText());
-            Float.parseFloat(txt_sin_iva.getText());
-            Float.parseFloat(txt_total.getText());
+            float iva = Float.parseFloat(txt_iva.getText());
+            float sin = Float.parseFloat(txt_sin_iva.getText());
+            float con = Float.parseFloat(txt_total.getText());
+            
+            conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
+                    + "VALUES('" + factura + "','1000982882','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
         } catch (Exception e) {
             System.err.println(e);
         }
