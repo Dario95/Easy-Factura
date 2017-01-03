@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  */
 public class Inicio extends javax.swing.JFrame {
 
-    private String nombreFac;
+    String nombreFac;
     
     public JTextField getTxttype() {
         return txttype;

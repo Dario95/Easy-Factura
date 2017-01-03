@@ -177,7 +177,7 @@ public class Producto extends javax.swing.JFrame {
         aux = tk.nextToken();
         product[1] = aux;
         
-        String nombreFac = Inicio.nombreFac;
+        String nombreFac = "";//Inicio.nombreFac;
 
         File archivo = new File("src/" + nombreFac + ".txt");
         File facturas = new File("src/tipoFacturas.txt");

@@ -24,16 +24,19 @@ public class Conexionn {
         //conexion=null;
         try {
 
-            conexion = DriverManager.getConnection(
+            /*conexion = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/facturas",
-                            "aplicaciones", "postgres01");
+                            "aplicaciones", "postgres01");*/
+            conexion = DriverManager.getConnection(
+                    "jdbc:postgresql://127.0.0.1:5432/facturacion",
+                    "postgres", "admin");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
-        }        
+        }
 
     }
-    
+
     public ArrayList cargarEstablecimiento() {
         ArrayList n = new ArrayList();
         try {
@@ -46,10 +49,10 @@ public class Conexionn {
             comando.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }        
+        }
         return n;
     }
-    
+
     public ArrayList cambiarDatosEstablecimiento(String est) {
         ArrayList n = new ArrayList();
         try {
@@ -64,10 +67,10 @@ public class Conexionn {
             comando.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }        
+        }
         return n;
     }
-    
+
     public String consultar(String tabla) {
         String n = "";
         try {
@@ -94,20 +97,20 @@ public class Conexionn {
             System.out.println(e.getMessage());
         }
     }
-    
-     public void ddl(String sql) {
-         String n = "";
+
+    public boolean verificar_usuario(String sql) {
+        boolean val=false;
         try {
             Statement comando = conexion.createStatement();
             ResultSet resultado = comando.executeQuery(sql);
-            while (resultado.next()) {
-                System.out.println(resultado.getRow());
-            }            
+            val=resultado.next();
             resultado.close();
             comando.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
+        return val;
+    }    
+    
 
 }

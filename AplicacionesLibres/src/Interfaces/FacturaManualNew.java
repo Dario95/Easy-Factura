@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class FacturaManualNew extends javax.swing.JInternalFrame {
@@ -21,9 +22,9 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
     public FacturaManualNew(Conexionn conn, String cedula) {
         initComponents();
+        
         this.conn = conn;
         this.cedula_usuario = cedula;
-        jTable1.setVisible(false);
         //Bloquear el movimiento del Frame
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
@@ -71,14 +72,11 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         date_fecha = new com.toedter.calendar.JDateChooser();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         txt_iva = new javax.swing.JTextField();
         txt_total = new javax.swing.JTextField();
         txt_sin_iva = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
         txt_num_fac = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jCheckBox2 = new javax.swing.JCheckBox();
@@ -88,6 +86,27 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jCheckBox6 = new javax.swing.JCheckBox();
         jCheckBox7 = new javax.swing.JCheckBox();
         jCheckBox8 = new javax.swing.JCheckBox();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         btn_RegistrarFactura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -159,7 +178,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(panel_establecimientoLayout.createSequentialGroup()
                                 .addComponent(txt_telef, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnEditarEst, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txt_direc_est)))
                     .addGroup(panel_establecimientoLayout.createSequentialGroup()
@@ -167,7 +186,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(combo_Establecimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panel_establecimientoLayout.setVerticalGroup(
@@ -213,30 +232,6 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         date_fecha.setDateFormatString("yyyy-MM-dd");
         date_fecha.setPreferredSize(new java.awt.Dimension(12, 29));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Codigo", "Producto", "Cantidad", "Precio Unitario", "Total"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
         jLabel16.setBackground(java.awt.Color.black);
         jLabel16.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel16.setText("I.V.A:");
@@ -245,42 +240,252 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jLabel17.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel17.setText("Valor total:");
 
-        jCheckBox1.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jCheckBox1.setText("¿Incluir Detalles?");
-        jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox1StateChanged(evt);
-            }
-        });
-
         jLabel11.setBackground(java.awt.Color.black);
         jLabel11.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel11.setText("Tipo de gasto:");
 
         jCheckBox2.setText("Vivienda");
+        jCheckBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox2ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox3.setText("Alimentación");
+        jCheckBox3.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox3StateChanged(evt);
+            }
+        });
+        jCheckBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox3ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox4.setText("Vestimenta");
+        jCheckBox4.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox4StateChanged(evt);
+            }
+        });
+        jCheckBox4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox4ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox5.setText("Educación ");
+        jCheckBox5.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox5StateChanged(evt);
+            }
+        });
+        jCheckBox5.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox5ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox6.setText("Salud");
+        jCheckBox6.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox6StateChanged(evt);
+            }
+        });
+        jCheckBox6.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox6ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox7.setText("Negocio");
+        jCheckBox7.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox7StateChanged(evt);
+            }
+        });
+        jCheckBox7.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox7ItemStateChanged(evt);
+            }
+        });
 
         jCheckBox8.setText("Otros");
+        jCheckBox8.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox8StateChanged(evt);
+            }
+        });
+        jCheckBox8.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox8ItemStateChanged(evt);
+            }
+        });
+
+        jTextField1.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        jTextField1.setEnabled(false);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+
+        jTextField2.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        jTextField2.setEnabled(false);
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
+
+        jTextField3.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        jTextField3.setEnabled(false);
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
+
+        jTextField4.setEnabled(false);
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
+            }
+        });
+
+        jTextField5.setEnabled(false);
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
+            }
+        });
+
+        jTextField6.setEnabled(false);
+        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField6KeyTyped(evt);
+            }
+        });
+
+        jTextField7.setEnabled(false);
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField7KeyTyped(evt);
+            }
+        });
+
+        jButton1.setText("+");
+        jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("+");
+        jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("+");
+        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("+");
+        jButton5.setEnabled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("+");
+        jButton6.setEnabled(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("+");
+        jButton7.setEnabled(false);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("+");
+        jButton8.setEnabled(false);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("0");
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("0");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("0");
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel12.setText("0");
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel13.setText("0");
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel14.setText("0");
+
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel18.setText("0");
 
         javax.swing.GroupLayout panel_establecimiento1Layout = new javax.swing.GroupLayout(panel_establecimiento1);
         panel_establecimiento1.setLayout(panel_establecimiento1Layout);
         panel_establecimiento1Layout.setHorizontalGroup(
             panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addContainerGap()
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_num_fac, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel9)
+                                .addGap(32, 32, 32)
+                                .addComponent(date_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_establecimiento1Layout.createSequentialGroup()
+                                .addGap(0, 443, Short.MAX_VALUE)
                                 .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel15)
                                     .addComponent(jLabel17)
@@ -290,36 +495,59 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                                     .addComponent(txt_sin_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txt_iva, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_total, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_establecimiento1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_num_fac, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(36, 36, 36)
+                                        .addComponent(txt_total, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
                             .addGroup(panel_establecimiento1Layout.createSequentialGroup()
                                 .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jCheckBox2)
-                                    .addComponent(jCheckBox3))
+                                    .addComponent(jCheckBox5)
+                                    .addComponent(jCheckBox8)
+                                    .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jCheckBox3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jCheckBox2)))
+                                .addGap(18, 18, 18)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
                                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jCheckBox4)
                                             .addComponent(jCheckBox6)
-                                            .addComponent(jCheckBox4))
-                                        .addGap(36, 36, 36)
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jCheckBox5)
-                                            .addComponent(jCheckBox7)))
-                                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                            .addComponent(jCheckBox7))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField7))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(date_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jCheckBox8)))
-                    .addComponent(jCheckBox1)
-                    .addComponent(jScrollPane1))
-                .addContainerGap(22, Short.MAX_VALUE))
+                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panel_establecimiento1Layout.setVerticalGroup(
             panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,13 +559,66 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)
                         .addComponent(jLabel9)
                         .addComponent(txt_num_fac, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(txt_sin_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jCheckBox6)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jCheckBox4)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jCheckBox7)
+                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBox2)
+                                    .addComponent(jButton1)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBox3)
+                                    .addComponent(jButton3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBox5)
+                                    .addComponent(jButton6)
+                                    .addComponent(jLabel3)))))
+                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton5)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton7)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8))
+                    .addComponent(jLabel18))
+                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBox8)
+                            .addComponent(jButton4)
+                            .addComponent(jLabel12)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_establecimiento1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(txt_sin_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,25 +626,8 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox1))
-                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox6)
-                            .addComponent(jCheckBox5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox4)
-                            .addComponent(jCheckBox7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox8)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                            .addComponent(jLabel17))))
+                .addContainerGap())
         );
 
         getContentPane().add(panel_establecimiento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 770, 380));
@@ -379,14 +643,6 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
-        if (jCheckBox1.isSelected()) {
-            jTable1.setVisible(true);
-        } else {
-            jTable1.setVisible(false);
-        }
-    }//GEN-LAST:event_jCheckBox1StateChanged
 
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -434,6 +690,261 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
 
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
+     // TODO add your handling code here:
+        jTextField1.setEnabled(!jTextField1.isEnabled());
+        jButton1.setEnabled(jTextField1.isEnabled());
+      if(!jTextField1.isEnabled()){
+         jTextField1.setText("");
+         
+      }
+    }//GEN-LAST:event_jCheckBox2ItemStateChanged
+
+    private void jCheckBox6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox6StateChanged
+ 
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox6StateChanged
+
+    private void jCheckBox5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox5StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox5StateChanged
+
+    private void jCheckBox3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox3StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox3StateChanged
+
+    private void jCheckBox8StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox8StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox8StateChanged
+
+    private void jCheckBox4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox4StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox4StateChanged
+
+    private void jCheckBox7StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox7StateChanged
+         // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox7StateChanged
+
+    private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
+        // TODO add your handling code here:
+        jTextField2.setEnabled(!jTextField2.isEnabled());
+        jButton3.setEnabled(jTextField2.isEnabled());
+      if(!jTextField2.isEnabled()){
+         jTextField2.setText("");
+      }
+    }//GEN-LAST:event_jCheckBox3ItemStateChanged
+
+    private void jCheckBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox8ItemStateChanged
+jTextField3.setEnabled(!jTextField3.isEnabled());
+jButton4.setEnabled(jTextField3.isEnabled());
+      if(!jTextField3.isEnabled()){
+         jTextField3.setText("");
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox8ItemStateChanged
+
+    private void jCheckBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox6ItemStateChanged
+jTextField4.setEnabled(!jTextField4.isEnabled());
+jButton5.setEnabled(jTextField4.isEnabled());
+      if(!jTextField4.isVisible()){
+         jTextField4.setText("");
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox6ItemStateChanged
+
+    private void jCheckBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox4ItemStateChanged
+jTextField5.setEnabled(!jTextField5.isEnabled());
+jButton7.setEnabled(jTextField5.isEnabled());
+      if(!jTextField5.isEnabled()){
+         jTextField5.setText("");
+      }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox4ItemStateChanged
+
+    private void jCheckBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox5ItemStateChanged
+    jTextField6.setEnabled(!jTextField6.isEnabled());
+    jButton6.setEnabled(jTextField6.isEnabled());
+      if(!jTextField6.isEnabled()){
+         jTextField6.setText("");
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox5ItemStateChanged
+
+    private void jCheckBox7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox7ItemStateChanged
+jTextField7.setEnabled(!jTextField7.isEnabled());
+jButton8.setEnabled(jTextField7.isEnabled());
+      if(!jTextField7.isEnabled()){
+         jTextField7.setText("");
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox7ItemStateChanged
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+      char c=evt.getKeyChar();
+      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
+          getToolkit();
+          evt.consume();
+      }
+      if(( c=='-' )&& (jTextField1.getText().length()>1)){
+      getToolkit();
+      evt.consume();
+      }
+      
+      if(( c=='.' )&& (jTextField1.getText().contains("."))){
+      getToolkit();
+      evt.consume();
+      }
+      // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+ char c=evt.getKeyChar();
+      if(!Character.isDigit(c) && !(c=='.') && !(c=='-') ){
+          getToolkit();
+          evt.consume();
+      }
+      if(( c=='-' )&& (jTextField2.getText().length()>1)){
+      getToolkit();
+      evt.consume();
+      }
+      if((c=='.' )&& (jTextField2.getText().contains("."))){
+      getToolkit();
+      evt.consume();
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void jTextField6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyTyped
+ char c=evt.getKeyChar();
+      if(!Character.isDigit(c)&& !(c=='.') && !(c=='-') ){
+          getToolkit();
+          evt.consume();
+      }
+      if(( c=='-' )&& (jTextField6.getText().length()>1)){
+      getToolkit();
+      evt.consume();
+      }
+      if(( c=='.' )&& (jTextField6.getText().contains("."))){
+      getToolkit();
+      evt.consume();
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6KeyTyped
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+ char c=evt.getKeyChar();
+      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
+          getToolkit();
+          evt.consume();
+      }
+      if(( c=='-' )&& (jTextField3.getText().length()>1)){
+      getToolkit();
+      evt.consume();
+      }
+      if(( c=='.' )&& (jTextField3.getText().contains("."))){
+      getToolkit();
+      evt.consume();
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3KeyTyped
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+ char c=evt.getKeyChar();
+      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
+          getToolkit();
+          evt.consume();
+      }
+      if(( c=='-' )&& (jTextField4.getText().length()>1)){
+      getToolkit();
+      evt.consume();
+      }
+      if((c=='.' )&& (jTextField4.getText().contains("."))){
+      getToolkit();
+      evt.consume();
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
+ char c=evt.getKeyChar();
+      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
+          getToolkit();
+          evt.consume();
+      }
+      if(( c=='-' )&& (jTextField5.getText().length()>1)){
+      getToolkit();
+      evt.consume();
+      }
+      if(( c=='.' )&& (jTextField5.getText().contains("."))){
+      getToolkit();
+      evt.consume();
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5KeyTyped
+
+    private void jTextField7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyTyped
+ char c=evt.getKeyChar();
+      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
+          getToolkit();
+          evt.consume();
+      }
+      if(( c=='-' )&& (jTextField7.getText().length()>1)){
+      getToolkit();
+      evt.consume();
+      }
+      if((c=='.' )&& (jTextField7.getText().contains("."))){
+      getToolkit();
+      evt.consume();
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7KeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        double res=Double.parseDouble(jLabel1.getText())+Double.parseDouble(jTextField1.getText());
+        if(res>0){
+        jLabel1.setText(res+"");}
+        jTextField1.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+double res=Double.parseDouble(jLabel2.getText())+Double.parseDouble(jTextField2.getText());
+        if(res>0){jLabel2.setText(res+"");}
+        jTextField2.setText("");// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+double res=Double.parseDouble(jLabel3.getText())+Double.parseDouble(jTextField6.getText());
+        if(res>0){jLabel3.setText(res+"");}
+        jTextField6.setText("");// TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+  double res=Double.parseDouble(jLabel12.getText())+Double.parseDouble(jTextField3.getText());
+        if(res>0){jLabel12.setText(res+"");} 
+        jTextField3.setText("");// TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+double res=Double.parseDouble(jLabel13.getText())+Double.parseDouble(jTextField4.getText());
+        if(res>0){jLabel13.setText(res+"");}
+        jTextField4.setText("");// TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+double res=Double.parseDouble(jLabel14.getText())+Double.parseDouble(jTextField5.getText());
+        if(res>0){jLabel14.setText(res+"");}
+        jTextField5.setText("");// TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+     double res=Double.parseDouble(jLabel17.getText())+Double.parseDouble(jTextField7.getText());
+        if(res>0){jLabel17.setText(res+"");}
+        jTextField7.setText("");// TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -468,8 +979,14 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_RegistrarFactura;
     public static javax.swing.JComboBox<String> combo_Establecimientos;
     private com.toedter.calendar.JDateChooser date_fecha;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
@@ -477,19 +994,31 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JCheckBox jCheckBox7;
     private javax.swing.JCheckBox jCheckBox8;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     private javax.swing.JPanel panel_establecimiento;
     private javax.swing.JPanel panel_establecimiento1;
     private javax.swing.JTextField txt_direc_est;
