@@ -3,6 +3,7 @@ ambiente
 razonSocial
 dirMatriz
 ruc
+secuencial
 fechaEmision
 razonSocialComprador
 identificacionComprador

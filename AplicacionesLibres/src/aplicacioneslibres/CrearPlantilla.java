@@ -5,9 +5,6 @@
  */
 package aplicacioneslibres;
 
-import Interfaces.Cliente;
-import Interfaces.Detalle;
-import Interfaces.Factura;
 import Interfaces.Producto;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,26 +23,26 @@ import java.util.regex.Pattern;
  */
 public class CrearPlantilla {
 
-    private CargarXMLTotal xmlTotal = new CargarXMLTotal();
+    private final CargarXMLTotal xmlTotal = new CargarXMLTotal();
     private ArrayList arrayTotal;
-    private ArrayList arrayElem = new ArrayList();
+    private final ArrayList arrayElem = new ArrayList();
 
     public void generarPlantilla(String factura, String nomFactura) {
         cargarElementos();
         arrayTotal = xmlTotal.cargarTodo(factura);
 
-        File archivo = new File("src/" + nomFactura + ".txt");
-        File facturas = new File("src/tipoFacturas.txt");
+        File archivo = new File("src/Plantillas/" + nomFactura + ".txt");
+        File facturas = new File("src/Plantillas/tipoFacturas.txt");
 
         StringTokenizer tk;
-        String aux = "";
-        String act = "";
+        String aux;
+        String act;
 
         Pattern pat;
         Matcher mat;
 
         try {
-            FileWriter writeFac = new FileWriter(facturas);
+            FileWriter writeFac = new FileWriter(facturas, true);
             BufferedWriter bw = new BufferedWriter(writeFac);
             bw.write(nomFactura);
             bw.close();
@@ -90,6 +87,7 @@ public class CrearPlantilla {
         arrayElem.add("razonSocial");
         arrayElem.add("dirMatriz");
         arrayElem.add("ruc");
+        arrayElem.add("secuencial");
         arrayElem.add("fechaEmision");
         arrayElem.add("razonSocialComprador");
         arrayElem.add("identificacionComprador");

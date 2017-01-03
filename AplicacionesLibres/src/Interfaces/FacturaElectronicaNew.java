@@ -4,7 +4,9 @@
  */
 package Interfaces;
 
+import aplicacioneslibres.CargaXml;
 import java.awt.Component;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,9 +27,10 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     final JFileChooser fc = new JFileChooser();
     File[] ficheros;
+
     public FacturaElectronicaNew() {
         initComponents();
-         //Bloquear el movimiento del Frame
+        //Bloquear el movimiento del Frame
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
         MouseMotionListener[] actions
@@ -46,6 +49,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jComboBox1 = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
@@ -67,9 +71,16 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
         jLabel2.setText("Archivos Disponibles:");
 
+        buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
         jRadioButton2.setText("Cargar Plantilla de Factura");
+        jRadioButton2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioButton2ItemStateChanged(evt);
+            }
+        });
 
+        buttonGroup1.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
         jRadioButton1.setText("Crear Plantilla de Factura");
 
@@ -114,7 +125,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2))
-                        .addContainerGap())))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,31 +157,22 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        List ficherosSeleccionados = jList1.getSelectedValuesList();
-        for (int i = 0; i < ficherosSeleccionados.size(); i++) {
-            //for (int j = 0; j < ficheros.length; j++) {
-                //if (ficherosSeleccionados.get(i).toString().equals(ficheros[j].getName())) {
-                    if (jRadioButton1.isSelected()) {
-                       Inicio init = new Inicio();
-                      init.setVisible(true);
-                      init.nombreFac(ficheros[i].getAbsolutePath());
-                    }
-                    //System.out.print("Seleccionó opción 1");
-                    //CargaXml cg = new CargaXml();
-                    /*
-                     * try { cg.cargarXml(ficheros[j].getCanonicalPath()); }
-                     * catch (IOException ex) {
-                     * Logger.getLogger(GUIAplicacion.class.getName()).log(Level.SEVERE,
-                     * null, ex);
-                    }
-                     */
-
-                /*} else {
-                    JOptionPane.showMessageDialog(null, "No se selecciono tipo de factura");
-                }*/
-
-                //JOptionPane.showMessageDialog(null, "Ingreso correcto");
-            //}
+        if (jRadioButton1.isSelected()) {
+            String ficheroSeleccionado = jList1.getSelectedValue().toString();
+            Inicio init = new Inicio();
+            init.setVisible(true);
+            init.nombreFac(jTextField1.getText() + "/" + ficheroSeleccionado);
+        } else if (jRadioButton2.isSelected()) {
+            if (jComboBox1.getSelectedIndex() != 0) {
+                List ficherosSeleccionados = jList1.getSelectedValuesList();
+                for (Object ficheroSeleccionado : ficherosSeleccionados) {
+                    CargaXml carga = new CargaXml();
+                    carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
+                            "src/Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se selecciono un tipo de factura");
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -210,9 +212,10 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                         DefaultListModel modelo = new DefaultListModel();
                         for (int x = 0; x < ficheros.length; x++) {
                             modelo.addElement(ficheros[x].getName());
-                            System.out.println(ficheros[x].getName());
+                            //System.out.println(ficheros[x].getName());
                         }
                         jList1.setModel(modelo);
+
                     }
                 }
 
@@ -224,6 +227,16 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jRadioButton2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButton2ItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            cargarTipos();
+            jComboBox1.setEnabled(true);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            jComboBox1.setEnabled(false);
+        }
+    }//GEN-LAST:event_jRadioButton2ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -243,16 +256,21 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaElectronicaNew.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -266,7 +284,26 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
             }
         });
     }
+
+    private void cargarTipos() {
+        try {
+            FileReader f = new FileReader("src/Plantillas/tipoFacturas.txt");
+            BufferedReader b = new BufferedReader(f);
+
+            String elemento;
+            jComboBox1.removeAllItems();
+            jComboBox1.addItem("");
+            while ((elemento = b.readLine()) != null) {
+                jComboBox1.addItem(elemento);
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FacturaElectronicaNew.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;

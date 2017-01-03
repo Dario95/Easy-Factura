@@ -117,7 +117,9 @@ public class Inicio extends javax.swing.JFrame {
         CrearPlantilla crear = new CrearPlantilla();
         crear.generarPlantilla(getFac(), txttype.getText());
         
-        nombreFac=txttype.getText();
+        this.dispose();
+        
+        //nombreFac=txttype.getText();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     /**

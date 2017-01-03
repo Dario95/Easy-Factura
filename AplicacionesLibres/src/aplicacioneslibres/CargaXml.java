@@ -4,16 +4,13 @@
  */
 package aplicacioneslibres;
 
-import conexionBDD.Conexion;
 import conexionBDD.Conexionn;
-import conexionBDD.Crear;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -177,8 +174,8 @@ public class CargaXml {
         }
     }
 
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         CargaXml car = new CargaXml();
         car.cargarXml("test.xml", "test.txt");
-    }
+    }*/
 }
