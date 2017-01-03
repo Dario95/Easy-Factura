@@ -70,7 +70,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
         jLabel4.setBackground(java.awt.Color.black);
         jLabel4.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel4.setText("Nombre/Razon Social:");
+        jLabel4.setText("*Nombre/Razon Social:");
 
         jLabel5.setBackground(java.awt.Color.black);
         jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
@@ -138,7 +138,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
                         .addComponent(btn_borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(btn_Aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,22 +223,31 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
         if (caso.equals("Registrar")) {
-            if (validarRuc(txt_ruc.getText())) {
-                connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento) "
-                        + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "')");
-                recargar();
-                this.dispose();
+            if (txt_nombre.getText().equals("") || txt_ruc.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Es necesario llenar los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "RUC incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+
+                if (validarRuc(txt_ruc.getText())) {
+                    if (connEst.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + txt_ruc.getText() + "'")) {
+                        JOptionPane.showMessageDialog(null, "RUC de establecimiento ya existente", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento) "
+                                + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "')");
+                        recargar();
+                        this.dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "RUC incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
             }
+
         } else {
             connEst.insertar("UPDATE establecimiento SET nombre_establecimiento='" + txt_nombre.getText() + "',"
                     + "direccion_establecimiento='" + txt_direccion.getText() + "' WHERE id_establecimiento='" + txt_ruc.getText() + "'");
             recargar();
             this.dispose();
         }
-
-
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
     private void btn_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarActionPerformed
