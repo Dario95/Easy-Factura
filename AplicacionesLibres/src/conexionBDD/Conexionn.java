@@ -24,18 +24,23 @@ public class Conexionn {
         //conexion=null;
         try {
 
-            /*conexion = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/facturas",
-                            "aplicaciones", "postgres01");*/
             conexion = DriverManager.getConnection(
+                    "jdbc:postgresql://127.0.0.1:5432/facturas",
+                            "aplicaciones", "postgres01");
+            /*conexion = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/facturacion",
-                    "postgres", "admin");
+<<<<<<< HEAD
+                    "postgres", "admin");*/
+=======
+                    "aplicaciones", "postgres01");
+>>>>>>> 9664c7ddfa2443b787b6f588de3eaa70b67bad32
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
         }
 
     }
+    
 
     public ArrayList cargarEstablecimiento() {
         ArrayList n = new ArrayList();

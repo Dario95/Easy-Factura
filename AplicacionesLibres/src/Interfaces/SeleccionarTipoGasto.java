@@ -5,12 +5,14 @@
  */
 package Interfaces;
 
+import conexionBDD.Conexionn;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -23,17 +25,24 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
     final JComboBox comboBox;
     JTable tablaProductos;
     String tipoEstado[] = new String[7];
-    
+
     String evtTipo = "";
     int filaTipo = -1;
+
+    Conexionn conTipo;
+    String numFac;
 
     /**
      * Creates new form SeleccionarTipoGasto
      *
+     * @param conn
      * @param tipos
+     * @param factura
      */
-    public SeleccionarTipoGasto(Object[][] tipos) {
+    public SeleccionarTipoGasto(Conexionn conn, Object[][] tipos, String factura) {
         initComponents();
+        this.conTipo = conn;
+        this.numFac = factura;
 
         String nombreCabeceras[] = {"Descripcion", "Precio Total", "Tipo de Gasto"};
 
@@ -58,12 +67,12 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
 
                     //evtTipo = ie.getItem().toString();
                     //filaTipo = tablaProductos.getSelectedRow();
-                    System.out.print(ie.getItem());
-                    System.out.println(" - " + tablaProductos.getSelectedRow());
+                    // System.out.print(ie.getItem());
+                    // System.out.println(" - " + tablaProductos.getSelectedRow());
 
                     if (ie.getItem().toString().equals("")) {
                         evtTipo = "";
-                    } 
+                    }
 
                     if (opc != 0) {
                         if (evtTipo.equals("")) {
@@ -284,6 +293,89 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int filasTotales = tablaProductos.getRowCount();
+        boolean validado = true;
+
+        for (int i = 0; i < filasTotales; i++) {
+            if (tablaProductos.getValueAt(i, 2).equals("")) {
+                validado = false;
+                break;
+            }
+        }
+
+        if (validado == true) {
+            String query = "";
+            Double total;
+
+            if (!jTextField1.getText().equals("0")) {
+                total = Double.parseDouble(jTextField1.getText());
+                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                        + "VALUES('" + numFac + "','" + jLabel2.getText() + "'," + total + ")";
+                
+                conTipo.insertar(query);
+            }
+            if (!jTextField2.getText().equals("0")) {
+                total = Double.parseDouble(jTextField2.getText());
+                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                        + "VALUES('" + numFac + "','" + jLabel3.getText() + "'," + total + ")";
+                
+                conTipo.insertar(query);
+            }
+            if (!jTextField3.getText().equals("0")) {
+                total = Double.parseDouble(jTextField3.getText());
+                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                        + "VALUES('" + numFac + "','" + jLabel4.getText() + "'," + total + ")";
+                
+                conTipo.insertar(query);
+            }
+            if (!jTextField4.getText().equals("0")) {
+                total = Double.parseDouble(jTextField4.getText());
+                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                        + "VALUES('" + numFac + "','" + jLabel5.getText() + "'," + total + ")";
+                
+                conTipo.insertar(query);
+            }
+            if (!jTextField5.getText().equals("0")) {
+                total = Double.parseDouble(jTextField5.getText());
+                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                        + "VALUES('" + numFac + "','" + jLabel6.getText() + "'," + total + ")";
+                
+                conTipo.insertar(query);
+            }
+            if (!jTextField6.getText().equals("0")) {
+                total = Double.parseDouble(jTextField6.getText());
+                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                        + "VALUES('" + numFac + "','" + jLabel7.getText() + "'," + total + ")";
+                
+                conTipo.insertar(query);
+            }
+            if (!jTextField7.getText().equals("0")) {
+                total = Double.parseDouble(jTextField7.getText());
+                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                        + "VALUES('" + numFac + "','" + jLabel8.getText() + "'," + total + ")";
+                
+                conTipo.insertar(query);
+            }
+            
+            this.dispose();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "No se ha seleccionado el tipo para cada producto");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

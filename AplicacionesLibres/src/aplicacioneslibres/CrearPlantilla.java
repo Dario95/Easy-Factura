@@ -44,7 +44,7 @@ public class CrearPlantilla {
         try {
             FileWriter writeFac = new FileWriter(facturas, true);
             BufferedWriter bw = new BufferedWriter(writeFac);
-            bw.write(nomFactura);
+            bw.write(nomFactura + "\n");
             bw.close();
         } catch (IOException ex) {
             System.err.println(ex);
@@ -87,17 +87,13 @@ public class CrearPlantilla {
         arrayElem.add("razonSocial");
         arrayElem.add("dirMatriz");
         arrayElem.add("ruc");
+        arrayElem.add("estab");
+        arrayElem.add("ptoEmi");
         arrayElem.add("secuencial");
         arrayElem.add("fechaEmision");
-        arrayElem.add("razonSocialComprador");
-        arrayElem.add("identificacionComprador");
         arrayElem.add("totalSinImpuestos");
         arrayElem.add("valor");
-        arrayElem.add("ireccion");
-        arrayElem.add("mail");
         arrayElem.add("descripcion");
-        arrayElem.add("cantidad");
-        arrayElem.add("precioUnitario");
         arrayElem.add("precioTotalSinImpuesto");
     }
 

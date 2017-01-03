@@ -82,19 +82,25 @@ public class CargaXml {
             String nombreEst = tributaria.getChildTextTrim(elementos[2]);
             String dirMatriz = tributaria.getChildTextTrim(elementos[3]);
             String ruc = tributaria.getChildTextTrim(elementos[4]);
-            String numFact = tributaria.getChildTextTrim(elementos[5]);
-
-            /*String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
-                    + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
-            cp.insertar(establecimiento);*/
+            String estab = tributaria.getChildTextTrim(elementos[5]);
+            String emision = tributaria.getChildTextTrim(elementos[6]);
+            String secuencial = tributaria.getChildTextTrim(elementos[7]);
+            
+            String numFact = estab + "-" + emision + "-" + secuencial;
+            
+            if(!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
+                String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
+                        + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
+                cp.insertar(establecimiento);
+            }
 
             //Se obtiene la raiz de la factura
             Element factura = (Element) lista_campos.get(1);
 
             // Info Factura
-            String fecha = factura.getChildTextTrim(elementos[6]);
-            String nombreCli = factura.getChildTextTrim(elementos[7]);
-            String cedulaClip = factura.getChildTextTrim(elementos[8]);
+            String fecha = factura.getChildTextTrim(elementos[8]);
+            // String nombreCli = factura.getChildTextTrim(elementos[7]);
+            // String cedulaClip = factura.getChildTextTrim(elementos[8]);
             Double totalSinImp = Double.parseDouble(factura.getChildTextTrim(elementos[9]));
 
             List totalConImp = factura.getChild("totalConImpuestos").getChildren();
@@ -132,11 +138,11 @@ public class CargaXml {
 
             /*String cliente = "INSERT INTO CLIENTE (id_cliente,nombre_cliente)"
                     + "VALUES ('" + cedulaClip + "','" + nombreCli + "')";
-            cp.insertar(cliente);
+            cp.insertar(cliente);*/
 
             String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                    + "VALUES ('" + numFact + "','" + cedulaClip + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
-            cp.insertar(facturaQ);*/
+                    + "VALUES ('" + numFact + "','" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
+            cp.insertar(facturaQ);
 
             Element detalles = (Element) lista_campos.get(2);
             List detalle = detalles.getChildren();
@@ -148,10 +154,10 @@ public class CargaXml {
                 campo = (Element) detalle.get(j);
 
                 // Detalle
-                String descripcion = campo.getChildTextTrim(elementos[13]);
+                String descripcion = campo.getChildTextTrim(elementos[11]);
                 // Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
                 // Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
-                Double total = Double.parseDouble(campo.getChildTextTrim(elementos[16]));
+                Double total = Double.parseDouble(campo.getChildTextTrim(elementos[12]));
                 
                 datosProducto[j][0] = descripcion;
                 datosProducto[j][1] = total;
@@ -174,7 +180,7 @@ public class CargaXml {
                 cp.insertar(detalleQ);*/
             }
             
-            SeleccionarTipoGasto seleccionar = new SeleccionarTipoGasto(datosProducto);
+            SeleccionarTipoGasto seleccionar = new SeleccionarTipoGasto(cp, datosProducto, numFact);
             seleccionar.setVisible(true);
 
         } catch (IOException | JDOMException io) {
