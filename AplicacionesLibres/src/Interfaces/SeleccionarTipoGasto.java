@@ -63,11 +63,10 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
 
                     if (ie.getItem().toString().equals("")) {
                         evtTipo = "";
-                        filaTipo = -1;
                     } 
 
                     if (opc != 0) {
-                        if (evtTipo.equals("") && tablaProductos.getSelectedRow() != filaTipo) {
+                        if (evtTipo.equals("")) {
 
                             Double total;
                             evtTipo = ie.getItem().toString();
