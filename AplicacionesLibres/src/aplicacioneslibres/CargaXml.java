@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 
@@ -68,9 +69,8 @@ public class CargaXml {
                 Document parse = builder.build(stream);
 
                 tabla = parse.getRootElement();
-            }
-            else {
-                tabla = rootNode; 
+            } else {
+                tabla = rootNode;
             }
 
             List lista_campos = tabla.getChildren();
@@ -85,10 +85,10 @@ public class CargaXml {
             String estab = tributaria.getChildTextTrim(elementos[5]);
             String emision = tributaria.getChildTextTrim(elementos[6]);
             String secuencial = tributaria.getChildTextTrim(elementos[7]);
-            
+
             String numFact = estab + "-" + emision + "-" + secuencial;
-            
-            if(!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
+
+            if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
                 String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
                         + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
                 cp.insertar(establecimiento);
@@ -110,7 +110,6 @@ public class CargaXml {
             Double totalConImps = totalSinImp + Imps;
 
             // Element adicional = (Element) lista_campos.get(3);
-
             // Info Adicional
             /*List campoAdi = adicional.getChildren();
             Pattern pat;
@@ -136,34 +135,34 @@ public class CargaXml {
                 }
             }*/
 
-            /*String cliente = "INSERT INTO CLIENTE (id_cliente,nombre_cliente)"
+ /*String cliente = "INSERT INTO CLIENTE (id_cliente,nombre_cliente)"
                     + "VALUES ('" + cedulaClip + "','" + nombreCli + "')";
             cp.insertar(cliente);*/
+            if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
+                String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
+                        + "VALUES ('" + numFact + "','" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
+                cp.insertar(facturaQ);
 
-            String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                    + "VALUES ('" + numFact + "','" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
-            cp.insertar(facturaQ);
+                Element detalles = (Element) lista_campos.get(2);
+                List detalle = detalles.getChildren();
 
-            Element detalles = (Element) lista_campos.get(2);
-            List detalle = detalles.getChildren();
-            
-            Object datosProducto[][] = new Object[detalle.size()][3];
+                Object datosProducto[][] = new Object[detalle.size()][3];
 
-            for (int j = 0; j < detalle.size(); j++) {
+                for (int j = 0; j < detalle.size(); j++) {
 
-                campo = (Element) detalle.get(j);
+                    campo = (Element) detalle.get(j);
 
-                // Detalle
-                String descripcion = campo.getChildTextTrim(elementos[11]);
-                // Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
-                // Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
-                Double total = Double.parseDouble(campo.getChildTextTrim(elementos[12]));
-                
-                datosProducto[j][0] = descripcion;
-                datosProducto[j][1] = total;
-                datosProducto[j][2] = "";
+                    // Detalle
+                    String descripcion = campo.getChildTextTrim(elementos[11]);
+                    // Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
+                    // Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
+                    Double total = Double.parseDouble(campo.getChildTextTrim(elementos[12]));
 
-                /*int idProducto;
+                    datosProducto[j][0] = descripcion;
+                    datosProducto[j][1] = total;
+                    datosProducto[j][2] = "";
+
+                    /*int idProducto;
                 if (cp.consultar("PRODUCTO").equals("")) {
                     idProducto = 0;
                 } else {
@@ -178,10 +177,13 @@ public class CargaXml {
                 String detalleQ = "INSERT INTO DETALLE (id_producto,id_factura,total,cantidad,precio_unitario)"
                         + "VALUES (" + idProducto + ",'" + numFact + "'," + total + "," + cantidad + "," + precioUnitario + ")";
                 cp.insertar(detalleQ);*/
+                }
+
+                SeleccionarTipoGasto seleccionar = new SeleccionarTipoGasto(cp, datosProducto, numFact);
+                seleccionar.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
             }
-            
-            SeleccionarTipoGasto seleccionar = new SeleccionarTipoGasto(cp, datosProducto, numFact);
-            seleccionar.setVisible(true);
 
         } catch (IOException | JDOMException io) {
             System.out.println(io.getMessage());

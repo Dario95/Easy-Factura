@@ -987,6 +987,9 @@ double res=Double.parseDouble(jLabel14.getText())+Double.parseDouble(jTextField5
              Double.parseDouble(jLabel3.getText())+Double.parseDouble(jLabel12.getText())+
              Double.parseDouble(jLabel13.getText())+Double.parseDouble(jLabel14.getText())+Double.parseDouble(jLabel18.getText());
         txt_sin_iva.setText(totalNoIva+"");   // TODO add your handling code here:
+        if(txt_iva.getText().isEmpty()){
+            txt_iva.setText("0");
+        } 
         double totalIVA=totalNoIva+Double.parseDouble(txt_iva.getText());
         txt_total.setText(totalIVA+"");
     }//GEN-LAST:event_jButton9ActionPerformed

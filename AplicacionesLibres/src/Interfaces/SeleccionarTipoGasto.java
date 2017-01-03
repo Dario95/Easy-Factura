@@ -141,6 +141,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
 
         setLocationRelativeTo(getParent());
         setResizable(false);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
