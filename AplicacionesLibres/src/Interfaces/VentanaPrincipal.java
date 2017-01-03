@@ -6,6 +6,8 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -17,13 +19,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     FacturaElectronicaNew fe;
     String cedula_usuario;
     Conexionn conn;
-    
+
     public VentanaPrincipal(String cedula_usuario) {
         initComponents();
-        conn=new Conexionn();
-        fm=new FacturaManualNew(conn,cedula_usuario);     
-        fe=new FacturaElectronicaNew(cedula_usuario);
-        this.cedula_usuario=cedula_usuario;
+        conn = new Conexionn();
+        fm = new FacturaManualNew(conn, cedula_usuario);
+        fe = new FacturaElectronicaNew(cedula_usuario);
+        this.cedula_usuario = cedula_usuario;
         setResizable(false);
         setLocationRelativeTo(null);
     }
@@ -43,6 +45,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         m_FactFisic = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        m_Usuario = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ordenador de Facturas");
@@ -73,6 +77,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(m_FactFisic);
 
+        m_Usuario.setText("Usuario");
+
+        jMenuItem3.setText("Darme de baja del sistema");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        m_Usuario.add(jMenuItem3);
+
+        jMenuBar1.add(m_Usuario);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -85,26 +101,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        jDesktopPane.removeAll();        
+        jDesktopPane.removeAll();
         fe.setVisible(false);
         fm.setVisible(true);
-        jDesktopPane.add(fm);        
+        jDesktopPane.add(fm);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         jDesktopPane.removeAll();
         fm.setVisible(false);
         fe.setVisible(true);
-        jDesktopPane.add(fe);   
+        jDesktopPane.add(fe);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Esta seguro que desea darse de baja del sistema?", "Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+            JPasswordField pf = new JPasswordField();
+            int okCxl = JOptionPane.showConfirmDialog(null, pf, "Por favor, ingrese su contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (okCxl == JOptionPane.OK_OPTION) {
+                if (conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s' and contrasena='%s'", cedula_usuario, String.valueOf(pf.getPassword())))) {                                                            
+                    conn.insertar(String.format("select borrarCliente('%s')", cedula_usuario));                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,7 +183,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
+    private javax.swing.JMenu m_Usuario;
     // End of variables declaration//GEN-END:variables
 }
