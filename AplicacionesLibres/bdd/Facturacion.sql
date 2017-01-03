@@ -1,24 +1,16 @@
-﻿/*==============================================================*/
+/*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     25/12/2016 15:56:37                          */
+/* Created on:     2/1/2017 20:52:21                            */
 /*==============================================================*/
 
 
-/*drop index CLIENTE_PK;
+drop index CLIENTE_PK;
 
 drop table CLIENTE;
-
-drop index RELATIONSHIP_2_FK;
-
-drop index RELATIONSHIP_1_FK;
-
-drop table DETALLE;
 
 drop index ESTABLECIMIENTO_PK;
 
 drop table ESTABLECIMIENTO;
-
-drop index RELATIONSHIP_4_FK;
 
 drop index RELATIONSHIP_3_FK;
 
@@ -26,15 +18,16 @@ drop index FACTURA_PK;
 
 drop table FACTURA;
 
-drop index PRODUCTO_PK;
+drop index RELATIONSHIP_1_FK;
 
-drop table PRODUCTO;*/
+drop table TIPO_GASTO;
 
 /*==============================================================*/
 /* Table: CLIENTE                                               */
 /*==============================================================*/
 create table CLIENTE (
    ID_CLIENTE           VARCHAR(13)          not null,
+   CONTRASENA           VARCHAR(30)          not null,
    NOMBRE_CLIENTE       VARCHAR(50)          not null,
    DIRECCION_CLIENTE    VARCHAR(50)          null,
    EMAIL_CLIENTE        VARCHAR(30)          null,
@@ -49,38 +42,13 @@ ID_CLIENTE
 );
 
 /*==============================================================*/
-/* Table: DETALLE                                               */
-/*==============================================================*/
-create table DETALLE (
-   ID_PRODUCTO          INT4                 not null,
-   ID_FACTURA           VARCHAR(10)          not null,
-   CANTIDAD             INT4                 null,
-   PRECIO_UNITARIO      MONEY                null,
-   TOTAL                MONEY                null
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_1_FK                                     */
-/*==============================================================*/
-create  index RELATIONSHIP_1_FK on DETALLE (
-ID_FACTURA
-);
-
-/*==============================================================*/
-/* Index: RELATIONSHIP_2_FK                                     */
-/*==============================================================*/
-create  index RELATIONSHIP_2_FK on DETALLE (
-ID_PRODUCTO
-);
-
-/*==============================================================*/
 /* Table: ESTABLECIMIENTO                                       */
 /*==============================================================*/
 create table ESTABLECIMIENTO (
-   ID_ESTABLECIMIENTO   CHAR(13)             not null,
-   NOMBRE_ESTABLECIMIENTO VARCHAR(100)          not null,
-   DIRECCION_ESTABLECIMIENTO VARCHAR(200)          null,
-   TELEFONO_ESTABLECIMIENTO VARCHAR(11)          null,
+   ID_ESTABLECIMIENTO   VARCHAR(13)          not null,
+   NOMBRE_ESTABLECIMIENTO VARCHAR(20)          not null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(50)          null,
+   TELEFONO_ESTABLECIMIENTO VARCHAR(10)          null,
    constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
 );
 
@@ -95,9 +63,9 @@ ID_ESTABLECIMIENTO
 /* Table: FACTURA                                               */
 /*==============================================================*/
 create table FACTURA (
-   ID_FACTURA           VARCHAR(10)          not null,
+   ID_FACTURA           INT4                 not null,
    ID_CLIENTE           VARCHAR(13)          not null,
-   ID_ESTABLECIMIENTO   CHAR(13)             not null,
+   ID_ESTABLECIMIENTO   VARCHAR(13)          not null,
    FECHA_EMISION        DATE                 not null,
    ESTADO_FACTURA       VARCHAR(15)          null,
    AMBIENTE_FACTURA     VARCHAR(15)          null,
@@ -123,37 +91,20 @@ ID_ESTABLECIMIENTO
 );
 
 /*==============================================================*/
-/* Index: RELATIONSHIP_4_FK                                     */
+/* Table: TIPO_GASTO                                            */
 /*==============================================================*/
-create  index RELATIONSHIP_4_FK on FACTURA (
-ID_CLIENTE
+create table TIPO_GASTO (
+   ID_FACTURA           INT4                 not null,
+   TIPO                 VARCHAR(12)          not null,
+   TOTAL                MONEY                not null
 );
 
 /*==============================================================*/
-/* Table: PRODUCTO                                              */
+/* Index: RELATIONSHIP_1_FK                                     */
 /*==============================================================*/
-create table PRODUCTO (
-   ID_PRODUCTO          INT4                 not null,
-   DESCRIPCION_PRODUCTO VARCHAR(100)          not null,
-   constraint PK_PRODUCTO primary key (ID_PRODUCTO)
+create  index RELATIONSHIP_1_FK on TIPO_GASTO (
+ID_FACTURA
 );
-
-/*==============================================================*/
-/* Index: PRODUCTO_PK                                           */
-/*==============================================================*/
-create unique index PRODUCTO_PK on PRODUCTO (
-ID_PRODUCTO
-);
-
-alter table DETALLE
-   add constraint FK_DETALLE_RELATIONS_FACTURA foreign key (ID_FACTURA)
-      references FACTURA (ID_FACTURA)
-      on delete restrict on update restrict;
-
-alter table DETALLE
-   add constraint FK_DETALLE_RELATIONS_PRODUCTO foreign key (ID_PRODUCTO)
-      references PRODUCTO (ID_PRODUCTO)
-      on delete restrict on update restrict;
 
 alter table FACTURA
    add constraint FK_FACTURA_RELATIONS_ESTABLEC foreign key (ID_ESTABLECIMIENTO)
@@ -163,5 +114,10 @@ alter table FACTURA
 alter table FACTURA
    add constraint FK_FACTURA_RELATIONS_CLIENTE foreign key (ID_CLIENTE)
       references CLIENTE (ID_CLIENTE)
+      on delete restrict on update restrict;
+
+alter table TIPO_GASTO
+   add constraint FK_TIPO_GAS_RELATIONS_FACTURA foreign key (ID_FACTURA)
+      references FACTURA (ID_FACTURA)
       on delete restrict on update restrict;
 
