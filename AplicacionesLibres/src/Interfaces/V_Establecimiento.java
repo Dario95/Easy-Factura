@@ -9,6 +9,7 @@ import static Interfaces.FacturaManualNew.combo_Establecimientos;
 import conexionBDD.Conexionn;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +19,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
     String caso;
     Conexionn connEst;
-    
+
     ArrayList auxRec = new ArrayList();
 
     public V_Establecimiento(String caso, Conexionn conn) {
@@ -177,17 +178,67 @@ public class V_Establecimiento extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
+    private boolean validarRuc(String ruc) {
+
+        if (ruc.length() != 13) {
+            return false;
+        }
+        String cedula = ruc.substring(0, 10);
+        String fin = ruc.substring(10, 13);
+
+        if (!(fin.equals("001") || fin.equals("002"))) {
+            return false;
+        }
+
+        boolean cedulaCorrecta = false;
+        try {
+            int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
+            if (tercerDigito < 6) {
+                int[] coefValCedula = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+                int verificador = Integer.parseInt(cedula.substring(9, 10));
+                int suma = 0;
+                int digito = 0;
+                for (int i = 0; i < (cedula.length() - 1); i++) {
+                    digito = Integer.parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
+                    suma += ((digito % 10) + (digito / 10));
+                }
+
+                if ((suma % 10 == 0) && (suma % 10 == verificador)) {
+                    cedulaCorrecta = true;
+                } else if ((10 - (suma % 10)) == verificador) {
+                    cedulaCorrecta = true;
+                } else {
+                    cedulaCorrecta = false;
+                }
+            } else {
+                cedulaCorrecta = false;
+            }
+        } catch (NumberFormatException nfe) {
+            cedulaCorrecta = false;
+        } catch (Exception err) {
+            cedulaCorrecta = false;
+        }
+        return cedulaCorrecta;
+    }
+
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
         if (caso.equals("Registrar")) {
-            connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento) "
-                    + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "')");
+            if (validarRuc(txt_ruc.getText())) {
+                connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento) "
+                        + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "')");
+                recargar();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "RUC incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             connEst.insertar("UPDATE establecimiento SET nombre_establecimiento='" + txt_nombre.getText() + "',"
                     + "direccion_establecimiento='" + txt_direccion.getText() + "' WHERE id_establecimiento='" + txt_ruc.getText() + "'");
+            recargar();
+            this.dispose();
         }
 
-        recargar();
-        this.dispose();
+
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
     private void btn_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarActionPerformed
@@ -196,14 +247,15 @@ public class V_Establecimiento extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_borrarActionPerformed
 
-    
     public void recargar() {
         combo_Establecimientos.removeAllItems();
         combo_Establecimientos.addItem("");
         auxRec = connEst.cargarEstablecimiento();
-        for(Object est : auxRec)
+        for (Object est : auxRec) {
             combo_Establecimientos.addItem(est.toString());
+        }
     }
+
     /**
      * @param args the command line arguments
      */
