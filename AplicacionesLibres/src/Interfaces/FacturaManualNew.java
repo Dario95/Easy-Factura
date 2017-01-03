@@ -9,6 +9,8 @@ import conexionBDD.Conexionn;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -674,33 +676,60 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
             try {
                 String factura = txt_num_fac.getText();
                 double totalVivienda = Double.parseDouble(jLabel1.getText());
+                totalVivienda = BigDecimal.valueOf(totalVivienda).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 double totalAlimento = Double.parseDouble(jLabel2.getText());
+                totalAlimento = BigDecimal.valueOf(totalAlimento).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 double totalEducacion = Double.parseDouble(jLabel3.getText());
+                totalEducacion = BigDecimal.valueOf(totalEducacion).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 double totalSalud = Double.parseDouble(jLabel13.getText());
+                totalSalud = BigDecimal.valueOf(totalSalud).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 double totalVestimenta = Double.parseDouble(jLabel14.getText());
+                totalVestimenta = BigDecimal.valueOf(totalVestimenta).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 double totalNegocio = Double.parseDouble(jLabel18.getText());
+                totalNegocio = BigDecimal.valueOf(totalNegocio).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 double totalOtros = Double.parseDouble(jLabel12.getText());
+                totalOtros = BigDecimal.valueOf(totalOtros).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 float iva = Float.parseFloat(txt_iva.getText());
                 float sin = Float.parseFloat(txt_sin_iva.getText());
                 float con = Float.parseFloat(txt_total.getText());
 
-                conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                        + "VALUES('" + factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
-                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                        + "VALUES('" + factura + "','Vivienda','" + totalVivienda + "')");
-                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                        + "VALUES('" + factura + "','Alimentacion,'" + totalAlimento + "')");
-                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                        + "VALUES('" + factura + "','Educacion','" + totalEducacion + "')");
-                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                        + "VALUES('" + factura + "','Salud','" + totalSalud + "')");
-                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                        + "VALUES('" + factura + "','Vestimenta,'" + totalVestimenta + "')");
-                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                        + "VALUES('" + factura + "','Negocio','" + totalNegocio + "')");
-                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                        + "VALUES('" + factura + "','Otros','" + totalOtros + "')");
-                JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
+                if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + factura + "'")) {
+
+                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
+                            + "VALUES('" + factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
+
+                    if (totalVivienda != 0) {
+                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                                + "VALUES('" + factura + "','Vivienda'," + totalVivienda + ")");
+                    }
+                    if (totalAlimento != 0) {
+                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                                + "VALUES('" + factura + "','Alimentacion'," + totalAlimento + "')");
+                    }
+                    if (totalEducacion != 0) {
+                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                                + "VALUES('" + factura + "','Educacion','" + totalEducacion + "')");
+                    }
+                    if (totalSalud != 0) {
+                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                                + "VALUES('" + factura + "','Salud','" + totalSalud + "')");
+                    }
+                    if (totalVestimenta != 0) {
+                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                                + "VALUES('" + factura + "','Vestimenta'," + totalVestimenta + "')");
+                    }
+                    if (totalNegocio != 0) {
+                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                                + "VALUES('" + factura + "','Negocio','" + totalNegocio + "')");
+                    }
+                    if (totalOtros != 0) {
+                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                                + "VALUES('" + factura + "','Otro','" + totalOtros + "')");
+                    }
+                    JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
+                }
             } catch (Exception e) {
                 System.err.println(e);
             }

@@ -218,15 +218,14 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
             }
         }
         
-        /*String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
         for (char p : pass) {
-            if(Character.getType(p) == Character.CONNECTOR_PUNCTUATION) {
+            if(Character.getType(p) == Character.CONNECTOR_PUNCTUATION || Character.getType(p) == Character.DASH_PUNCTUATION) {
                 esSim = true;
                 break;
             }
-        }*/
+        }
         
-        if(esMayus == true && esNum == true) {
+        if(esMayus == true && esNum == true && esSim == true) {
             passCorrecto = true;
         }
         
@@ -252,7 +251,7 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "La cedula no es valida", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "La cedula debe contener una letra mayuscula y un numero", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos una letra mayuscula, un numero, un \'-\' o \'_\'", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);

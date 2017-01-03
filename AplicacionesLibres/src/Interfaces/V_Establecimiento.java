@@ -7,7 +7,6 @@ package Interfaces;
 
 import static Interfaces.FacturaManualNew.combo_Establecimientos;
 import conexionBDD.Conexionn;
-import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -228,11 +227,11 @@ public class V_Establecimiento extends javax.swing.JFrame {
             } else {
 
                 if (validarRuc(txt_ruc.getText())) {
-                    if (connEst.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + txt_ruc.getText() + "'")) {
+                    if (!connEst.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + txt_ruc.getText() + "'")) {
                         JOptionPane.showMessageDialog(null, "RUC de establecimiento ya existente", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento) "
-                                + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "')");
+                        connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento, telefono_establecimiento) "
+                                + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "','" + txt_telef.getText() + "')");
                         recargar();
                         this.dispose();
                     }
@@ -244,7 +243,8 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
         } else {
             connEst.insertar("UPDATE establecimiento SET nombre_establecimiento='" + txt_nombre.getText() + "',"
-                    + "direccion_establecimiento='" + txt_direccion.getText() + "' WHERE id_establecimiento='" + txt_ruc.getText() + "'");
+                    + "direccion_establecimiento='" + txt_direccion.getText() + "',"
+                    + "telefono_establecimiento='" + txt_telef.getText() + "' WHERE id_establecimiento='" + txt_ruc.getText() + "'");
             recargar();
             this.dispose();
         }
