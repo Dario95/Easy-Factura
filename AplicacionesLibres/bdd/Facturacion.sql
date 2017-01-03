@@ -1,4 +1,4 @@
-/*==============================================================*/
+﻿/*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
 /* Created on:     2/1/2017 20:52:21                            */
 /*==============================================================*/
@@ -46,8 +46,8 @@ ID_CLIENTE
 /*==============================================================*/
 create table ESTABLECIMIENTO (
    ID_ESTABLECIMIENTO   VARCHAR(13)          not null,
-   NOMBRE_ESTABLECIMIENTO VARCHAR(20)          not null,
-   DIRECCION_ESTABLECIMIENTO VARCHAR(50)          null,
+   NOMBRE_ESTABLECIMIENTO VARCHAR(300)          not null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(300)          null,
    TELEFONO_ESTABLECIMIENTO VARCHAR(10)          null,
    constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
 );
@@ -63,13 +63,12 @@ ID_ESTABLECIMIENTO
 /* Table: FACTURA                                               */
 /*==============================================================*/
 create table FACTURA (
-   ID_FACTURA           INT4                 not null,
+   ID_FACTURA           VARCHAR(20)          not null,
    ID_CLIENTE           VARCHAR(13)          not null,
    ID_ESTABLECIMIENTO   VARCHAR(13)          not null,
    FECHA_EMISION        DATE                 not null,
    ESTADO_FACTURA       VARCHAR(15)          null,
    AMBIENTE_FACTURA     VARCHAR(15)          null,
-   TIPO_GASTO           VARCHAR(15)          null,
    TOTAL_SIN_IVA        MONEY                not null,
    IVA                  MONEY                not null,
    TOTAL_CON_IVA        MONEY                not null,
@@ -94,7 +93,7 @@ ID_ESTABLECIMIENTO
 /* Table: TIPO_GASTO                                            */
 /*==============================================================*/
 create table TIPO_GASTO (
-   ID_FACTURA           INT4                 not null,
+   ID_FACTURA           VARCHAR(20)          not null,
    TIPO                 VARCHAR(12)          not null,
    TOTAL                MONEY                not null
 );
