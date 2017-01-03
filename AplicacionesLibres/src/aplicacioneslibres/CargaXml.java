@@ -23,7 +23,7 @@ import org.jdom2.input.SAXBuilder;
  */
 public class CargaXml {
 
-    public void cargarXml(String name, String archivo) {
+    public void cargarXml(String name, String archivo, String cedulaCli) {
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
 
@@ -94,8 +94,8 @@ public class CargaXml {
 
             // Info Factura
             String fecha = factura.getChildTextTrim(elementos[6]);
-            String nombreCli = factura.getChildTextTrim(elementos[7]);
-            String cedulaCli = factura.getChildTextTrim(elementos[8]);
+            // String nombreCli = factura.getChildTextTrim(elementos[7]);
+            // String cedulaCli = factura.getChildTextTrim(elementos[8]);
             Double totalSinImp = Double.parseDouble(factura.getChildTextTrim(elementos[9]));
 
             List totalConImp = factura.getChild("totalConImpuestos").getChildren();
@@ -104,10 +104,10 @@ public class CargaXml {
 
             Double totalConImps = totalSinImp + Imps;
 
-            Element adicional = (Element) lista_campos.get(3);
+            // Element adicional = (Element) lista_campos.get(3);
 
             // Info Adicional
-            List campoAdi = adicional.getChildren();
+            /*List campoAdi = adicional.getChildren();
             Pattern pat;
             Matcher mat;
             String emailCli = "";
@@ -129,11 +129,11 @@ public class CargaXml {
                     dirCli = attr.getTextTrim();
                     break;
                 }
-            }
+            }*/
 
-            String cliente = "INSERT INTO CLIENTE (id_cliente,nombre_cliente,direccion_cliente,email_cliente)"
+            /*String cliente = "INSERT INTO CLIENTE (id_cliente,nombre_cliente,direccion_cliente,email_cliente)"
                     + "VALUES ('" + cedulaCli + "','" + nombreCli + "','" + dirCli + "','" + emailCli + "')";
-            cp.insertar(cliente);
+            cp.insertar(cliente);*/
 
             String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
                     + "VALUES ('" + numFact + "','" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
@@ -148,11 +148,11 @@ public class CargaXml {
 
                 // Detalle
                 String descripcion = campo.getChildTextTrim(elementos[13]);
-                Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
-                Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
+                // Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
+                // Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
                 Double total = Double.parseDouble(campo.getChildTextTrim(elementos[16]));
 
-                int idProducto;
+                /*int idProducto;
                 if (cp.consultar("PRODUCTO").equals("")) {
                     idProducto = 0;
                 } else {
@@ -166,7 +166,7 @@ public class CargaXml {
 
                 String detalleQ = "INSERT INTO DETALLE (id_producto,id_factura,total,cantidad,precio_unitario)"
                         + "VALUES (" + idProducto + ",'" + numFact + "'," + total + "," + cantidad + "," + precioUnitario + ")";
-                cp.insertar(detalleQ);
+                cp.insertar(detalleQ);*/
             }
 
         } catch (IOException | JDOMException io) {

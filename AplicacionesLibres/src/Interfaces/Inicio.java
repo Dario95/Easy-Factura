@@ -6,6 +6,8 @@
 package Interfaces;
 
 import aplicacioneslibres.CrearPlantilla;
+import java.awt.event.ComponentAdapter;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 /**
@@ -13,12 +15,13 @@ import javax.swing.JTextField;
  * @author patriciochavez
  */
 public class Inicio extends javax.swing.JFrame {
-    private String nombreFac;
 
+    private String nombreFac;
+    
     public JTextField getTxttype() {
         return txttype;
     }
-
+    
     public void setTxttype(JTextField txttype) {
         this.txttype = txttype;
     }
@@ -36,8 +39,10 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
-                
-        setLocationRelativeTo(null);
+        
+        setResizable(false);
+        setLocationRelativeTo(getParent());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -118,7 +123,7 @@ public class Inicio extends javax.swing.JFrame {
         crear.generarPlantilla(getFac(), txttype.getText());
         
         this.dispose();
-        
+
         //nombreFac=txttype.getText();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 

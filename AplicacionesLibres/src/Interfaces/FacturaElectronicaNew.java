@@ -10,11 +10,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +25,11 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     final JFileChooser fc = new JFileChooser();
     File[] ficheros;
+    String cedula_usuario;
 
-    public FacturaElectronicaNew() {
+    public FacturaElectronicaNew(String cedula) {
         initComponents();
+        this.cedula_usuario = cedula;
         //Bloquear el movimiento del Frame
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
@@ -168,7 +168,8 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                 for (Object ficheroSeleccionado : ficherosSeleccionados) {
                     CargaXml carga = new CargaXml();
                     carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
-                            "src/Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt");
+                            "src/Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt",
+                            cedula_usuario);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No se selecciono un tipo de factura");
@@ -280,7 +281,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new FacturaElectronicaNew().setVisible(true);
+                //new FacturaElectronicaNew().setVisible(true);
             }
         });
     }

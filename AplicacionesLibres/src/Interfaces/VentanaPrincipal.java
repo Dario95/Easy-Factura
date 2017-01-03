@@ -22,9 +22,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         conn=new Conexionn();
         fm=new FacturaManualNew(conn,cedula_usuario);     
-        fe=new FacturaElectronicaNew();
+        fe=new FacturaElectronicaNew(cedula_usuario);
         this.cedula_usuario=cedula_usuario;
-        
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -4,7 +4,7 @@
 /*==============================================================*/
 
 
-drop index CLIENTE_PK;
+/*drop index CLIENTE_PK;
 
 drop table CLIENTE;
 
@@ -14,13 +14,15 @@ drop table ESTABLECIMIENTO;
 
 drop index RELATIONSHIP_3_FK;
 
+drop index RELATIONSHIP_4_FK;
+
 drop index FACTURA_PK;
 
 drop table FACTURA;
 
 drop index RELATIONSHIP_1_FK;
 
-drop table TIPO_GASTO;
+drop table TIPO_GASTO;*/
 
 /*==============================================================*/
 /* Table: CLIENTE                                               */
@@ -87,6 +89,13 @@ ID_FACTURA
 /*==============================================================*/
 create  index RELATIONSHIP_3_FK on FACTURA (
 ID_ESTABLECIMIENTO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_4_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_4_FK on FACTURA (
+ID_CLIENTE
 );
 
 /*==============================================================*/

@@ -19,10 +19,10 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     ArrayList establecimientos;
     String cedula_usuario;
 
-    public FacturaManualNew(Conexionn conn,String cedula) {
+    public FacturaManualNew(Conexionn conn, String cedula) {
         initComponents();
         this.conn = conn;
-        this.cedula_usuario=cedula;
+        this.cedula_usuario = cedula;
         jTable1.setVisible(false);
         //Bloquear el movimiento del Frame
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
@@ -32,12 +32,13 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }
-        
+
         combo_Establecimientos.removeAllItems();
         combo_Establecimientos.addItem("");
         establecimientos = conn.cargarEstablecimiento();
-        for(Object est : establecimientos)
+        for (Object est : establecimientos) {
             combo_Establecimientos.addItem(est.toString());
+        }
         //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
         //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
         //conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");
@@ -392,11 +393,11 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         String fecha = sdf.format(date_fecha.getDate());
         try {
             String factura = txt_num_fac.getText();
-            
+
             float iva = Float.parseFloat(txt_iva.getText());
             float sin = Float.parseFloat(txt_sin_iva.getText());
             float con = Float.parseFloat(txt_total.getText());
-            
+
             conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
                     + "VALUES('" + factura + "','1000982882','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
         } catch (Exception e) {
@@ -410,7 +411,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         datos[1] = txt_direc_est.getText();
         datos[2] = txt_telef.getText();
         datos[3] = txt_ruc_est.getText();
-        
+
         new V_Establecimiento("Editar", datos, conn).setVisible(true);
     }//GEN-LAST:event_btnEditarEstActionPerformed
 
@@ -421,13 +422,12 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     private void combo_EstablecimientosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_EstablecimientosItemStateChanged
         // TODO add your handling code here:
         ArrayList auxDatosEst;
-        if(evt.getStateChange() == ItemEvent.SELECTED) {
-            if(combo_Establecimientos.getSelectedIndex() != 0) {
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            if (combo_Establecimientos.getSelectedIndex() != 0) {
                 auxDatosEst = conn.cambiarDatosEstablecimiento(combo_Establecimientos.getSelectedItem().toString());
                 txt_ruc_est.setText(auxDatosEst.get(0).toString());
                 txt_direc_est.setText(auxDatosEst.get(1).toString());
-            }
-            else {
+            } else {
                 txt_ruc_est.setText("");
                 txt_direc_est.setText("");
             }
