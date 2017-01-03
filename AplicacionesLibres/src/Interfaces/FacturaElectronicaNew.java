@@ -221,7 +221,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                 }
 
             } catch (IOException ex) {
-                Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FacturaElectronicaNew.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Open command cancelled by user.", "Cancelado", 3);

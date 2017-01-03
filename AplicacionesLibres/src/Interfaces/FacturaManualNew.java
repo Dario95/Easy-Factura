@@ -57,7 +57,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         jLabel7 = new javax.swing.JLabel();
         panel_establecimiento = new javax.swing.JPanel();
-        combo_Establecimientos = new javax.swing.JComboBox<String>();
+        combo_Establecimientos = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -107,6 +107,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         btn_RegistrarFactura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -115,7 +116,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1302, 226, -1, -1));
 
-        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         combo_Establecimientos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -215,7 +216,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         getContentPane().add(panel_establecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 770, -1));
 
-        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
@@ -467,6 +468,13 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel18.setText("0");
 
+        jButton9.setText("Calcular");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_establecimiento1Layout = new javax.swing.GroupLayout(panel_establecimiento1);
         panel_establecimiento1.setLayout(panel_establecimiento1Layout);
         panel_establecimiento1Layout.setHorizontalGroup(
@@ -514,38 +522,41 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                                     .addComponent(jTextField3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panel_establecimiento1Layout.createSequentialGroup()
                                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jCheckBox4)
-                                            .addComponent(jCheckBox6)
-                                            .addComponent(jCheckBox7))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField7))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jCheckBox4)
+                                                    .addComponent(jCheckBox6)
+                                                    .addComponent(jCheckBox7))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                                                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jTextField7))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                                                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -606,15 +617,8 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton8))
                     .addComponent(jLabel18))
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox8)
-                            .addComponent(jButton4)
-                            .addComponent(jLabel12)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_establecimiento1Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
@@ -626,8 +630,18 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17))))
-                .addContainerGap())
+                            .addComponent(jLabel17))
+                        .addContainerGap())
+                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBox8)
+                            .addComponent(jButton4)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))))
         );
 
         getContentPane().add(panel_establecimiento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 770, 380));
@@ -645,6 +659,14 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
+        double totalVivienda=Double.parseDouble(jLabel1.getText());
+        double totalAlimento=Double.parseDouble(jLabel2.getText());;
+        double totalEducacion=Double.parseDouble(jLabel3.getText());;
+        double totalSalud=Double.parseDouble(jLabel13.getText());;
+        double totalVestimenta=Double.parseDouble(jLabel14.getText());;
+        double totalNegocio=Double.parseDouble(jLabel18.getText());;
+        double totalOtros=Double.parseDouble(jLabel12.getText());;
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fecha = sdf.format(date_fecha.getDate());
         try {
@@ -945,6 +967,15 @@ double res=Double.parseDouble(jLabel14.getText())+Double.parseDouble(jTextField5
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+     double totalNoIva= Double.parseDouble(jLabel1.getText())+Double.parseDouble(jLabel2.getText())+
+             Double.parseDouble(jLabel3.getText())+Double.parseDouble(jLabel12.getText())+
+             Double.parseDouble(jLabel13.getText())+Double.parseDouble(jLabel14.getText())+Double.parseDouble(jLabel18.getText());
+        txt_sin_iva.setText(totalNoIva+"");   // TODO add your handling code here:
+        double totalIVA=totalNoIva+Double.parseDouble(txt_sin_iva.getText());
+        txt_total.setText(totalIVA+"");
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -987,6 +1018,7 @@ double res=Double.parseDouble(jLabel14.getText())+Double.parseDouble(jTextField5
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
