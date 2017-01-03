@@ -57,7 +57,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         jLabel7 = new javax.swing.JLabel();
         panel_establecimiento = new javax.swing.JPanel();
-        combo_Establecimientos = new javax.swing.JComboBox<String>();
+        combo_Establecimientos = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -116,7 +116,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1302, 226, -1, -1));
 
-        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         combo_Establecimientos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -216,7 +216,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         getContentPane().add(panel_establecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 770, -1));
 
-        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N

@@ -5,7 +5,7 @@
  */
 package aplicacioneslibres;
 
-import Interfaces.Producto;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -47,7 +47,7 @@ public class CrearPlantilla {
             bw.write(nomFactura);
             bw.close();
         } catch (IOException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
         }
 
         try {
@@ -77,7 +77,7 @@ public class CrearPlantilla {
             escribir.close();
             //System.out.println("Ya se guardo");
         } catch (IOException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
         }
     }
 
