@@ -3,15 +3,11 @@ ambiente
 razonSocial
 dirMatriz
 ruc
+estab
+ptoEmi
 secuencial
 fechaEmision
-razonSocialComprador
-identificacionComprador
 totalSinImpuestos
 valor
-Direccion
-Email:
 descripcion
-cantidad
-precioUnitario
 precioTotalSinImpuesto
