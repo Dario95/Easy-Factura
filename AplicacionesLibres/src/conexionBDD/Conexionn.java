@@ -24,13 +24,17 @@ public class Conexionn {
         //conexion=null;
         try {
 
-            conexion = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/facturas",
-                            "aplicaciones", "postgres01");
             /*conexion = DriverManager.getConnection(
+                    "jdbc:postgresql://127.0.0.1:5432/facturas",
+                            "aplicaciones", "postgres01");*/
+            conexion = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/facturacion",
+<<<<<<< HEAD
                     "postgres", "admin");*/
 
+=======
+                    "postgres", "admin");
+>>>>>>> 1e42dbad17d63c54d58df57a4ecb8784b5c647d0
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
