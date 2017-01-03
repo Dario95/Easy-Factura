@@ -5,10 +5,8 @@
  */
 package Interfaces;
 
-import static Interfaces.FacturaManualNew.combo_Establecimientos;
 import conexionBDD.Conexionn;
-import java.awt.HeadlessException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,11 +15,8 @@ import javax.swing.JOptionPane;
  */
 public class V_RegistroUsuario extends javax.swing.JFrame {
 
-       
-    
-    
     public V_RegistroUsuario() {
-        initComponents();        
+        initComponents();
     }
 
     /**
@@ -199,35 +194,68 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
             }
         } catch (NumberFormatException nfe) {
             cedulaCorrecta = false;
-        } catch (Exception err) {           
+        } catch (Exception err) {
             cedulaCorrecta = false;
         }
         return cedulaCorrecta;
     }
     
+    private boolean validarPassword(char[] pass) {
+        boolean passCorrecto = false;
+        boolean esMayus = false, esNum = false, esSim = false;
+        
+        for (char p : pass) {
+            if(Character.isUpperCase(p)) {
+                esMayus = true;
+                break;
+            }
+        }
+        
+        for (char p : pass) {
+            if(Character.isDigit(p)) {
+                esNum = true;
+                break;
+            }
+        }
+        
+        /*String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
+        for (char p : pass) {
+            if(Character.getType(p) == Character.CONNECTOR_PUNCTUATION) {
+                esSim = true;
+                break;
+            }
+        }*/
+        
+        if(esMayus == true && esNum == true) {
+            passCorrecto = true;
+        }
+        
+        return passCorrecto;
+    }
+
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         if (txt_cedula.getText().equals("") || txt_nombre.getText().equals("") || txt_pass1.getText().equals("") || txt_pass2.getText().equals("") || txt_correo.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Error", "Es necesario llenar todos los campos", JOptionPane.ERROR_MESSAGE);
-        } else {                                    
-            if (txt_pass1.getText().equals(txt_pass2.getText())) {
-                if(validadorDeCedula(txt_cedula.getText())){
-                    conexionBDD.Conexionn conn=new Conexionn();                
-                    if(!conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'", txt_cedula.getText()))){
+        } else if (Arrays.equals(txt_pass1.getPassword(), txt_pass2.getPassword())) {
+            if (validarPassword(txt_pass1.getPassword())) {
+                if (validadorDeCedula(txt_cedula.getText())) {
+                    conexionBDD.Conexionn conn = new Conexionn();
+                    if (!conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'", txt_cedula.getText()))) {
                         //
-                        conn.insertar(String.format("insert into cliente values('%s','%s','%s','','%s')", txt_cedula.getText(),txt_pass1.getText(),txt_nombre.getText(),txt_correo.getText()));
+                        conn.insertar(String.format("insert into cliente values('%s','%s','%s','','%s')", txt_cedula.getText(), txt_pass1.getText(), txt_nombre.getText(), txt_correo.getText()));
                         JOptionPane.showMessageDialog(null, "Usuario registrado con exito");
                         btn_salirActionPerformed(evt);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Usuario ya existente", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
-                    JOptionPane.showMessageDialog(null, "La cedula no es valida","Error",  JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "La cedula no es valida", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
             } else {
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La cedula debe contener una letra mayuscula y un numero", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
+        } else {
+            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btn_registrarActionPerformed

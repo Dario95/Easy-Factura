@@ -23,7 +23,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
     public FacturaManualNew(Conexionn conn, String cedula) {
         initComponents();
-        
+
         this.conn = conn;
         this.cedula_usuario = cedula;
         //Bloquear el movimiento del Frame
@@ -58,7 +58,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         jLabel7 = new javax.swing.JLabel();
         panel_establecimiento = new javax.swing.JPanel();
-        combo_Establecimientos = new javax.swing.JComboBox<String>();
+        combo_Establecimientos = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -117,7 +117,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1302, 226, -1, -1));
 
-        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         combo_Establecimientos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -217,7 +217,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         getContentPane().add(panel_establecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 770, -1));
 
-        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", 0, 0, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
@@ -241,6 +241,12 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jLabel17.setBackground(java.awt.Color.black);
         jLabel17.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel17.setText("Valor total:");
+
+        txt_iva.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_ivaKeyTyped(evt);
+            }
+        });
 
         jLabel11.setBackground(java.awt.Color.black);
         jLabel11.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
@@ -660,42 +666,48 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha = sdf.format(date_fecha.getDate());
-        try {
-            String factura = txt_num_fac.getText();
-            double totalVivienda=Double.parseDouble(jLabel1.getText());
-            double totalAlimento=Double.parseDouble(jLabel2.getText());
-            double totalEducacion=Double.parseDouble(jLabel3.getText());
-            double totalSalud=Double.parseDouble(jLabel13.getText());
-            double totalVestimenta=Double.parseDouble(jLabel14.getText());
-            double totalNegocio=Double.parseDouble(jLabel18.getText());
-            double totalOtros=Double.parseDouble(jLabel12.getText());
-            float iva = Float.parseFloat(txt_iva.getText());
-            float sin = Float.parseFloat(txt_sin_iva.getText());
-            float con = Float.parseFloat(txt_total.getText());
 
-            conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                    + "VALUES('" + factura + "','"+cedula_usuario+"','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
-            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + factura + "','Vivienda','" +totalVivienda+"')");
-            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + factura + "','Alimentacion,'" +totalAlimento+"')");
-            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + factura + "','Educacion','" +totalEducacion+"')");
-            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + factura + "','Salud','" +totalSalud+"')");
-            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + factura + "','Vestimenta,'" +totalVestimenta+"')");
-            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + factura + "','Negocio','" +totalNegocio+"')");
-            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + factura + "','Otros','" +totalOtros+"')");
-            JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
-        } catch (Exception e) {
-            System.err.println(e);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha;
+        if (date_fecha.getDate() != null || txt_num_fac.equals("")) {
+            fecha = sdf.format(date_fecha.getDate());
+            try {
+                String factura = txt_num_fac.getText();
+                double totalVivienda = Double.parseDouble(jLabel1.getText());
+                double totalAlimento = Double.parseDouble(jLabel2.getText());
+                double totalEducacion = Double.parseDouble(jLabel3.getText());
+                double totalSalud = Double.parseDouble(jLabel13.getText());
+                double totalVestimenta = Double.parseDouble(jLabel14.getText());
+                double totalNegocio = Double.parseDouble(jLabel18.getText());
+                double totalOtros = Double.parseDouble(jLabel12.getText());
+                float iva = Float.parseFloat(txt_iva.getText());
+                float sin = Float.parseFloat(txt_sin_iva.getText());
+                float con = Float.parseFloat(txt_total.getText());
+
+                conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
+                        + "VALUES('" + factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
+                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                        + "VALUES('" + factura + "','Vivienda','" + totalVivienda + "')");
+                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                        + "VALUES('" + factura + "','Alimentacion,'" + totalAlimento + "')");
+                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                        + "VALUES('" + factura + "','Educacion','" + totalEducacion + "')");
+                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                        + "VALUES('" + factura + "','Salud','" + totalSalud + "')");
+                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                        + "VALUES('" + factura + "','Vestimenta,'" + totalVestimenta + "')");
+                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                        + "VALUES('" + factura + "','Negocio','" + totalNegocio + "')");
+                conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                        + "VALUES('" + factura + "','Otros','" + totalOtros + "')");
+                JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Informacion Incompleta");
         }
+
     }//GEN-LAST:event_btn_RegistrarFacturaActionPerformed
 
     private void btnEditarEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEstActionPerformed
@@ -736,17 +748,17 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
-     // TODO add your handling code here:
+        // TODO add your handling code here:
         jTextField1.setEnabled(!jTextField1.isEnabled());
         jButton1.setEnabled(jTextField1.isEnabled());
-      if(!jTextField1.isEnabled()){
-         jTextField1.setText("");
-         
-      }
+        if (!jTextField1.isEnabled()) {
+            jTextField1.setText("");
+
+        }
     }//GEN-LAST:event_jCheckBox2ItemStateChanged
 
     private void jCheckBox6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox6StateChanged
- 
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox6StateChanged
 
@@ -767,214 +779,227 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jCheckBox4StateChanged
 
     private void jCheckBox7StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox7StateChanged
-         // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox7StateChanged
 
     private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
         // TODO add your handling code here:
         jTextField2.setEnabled(!jTextField2.isEnabled());
         jButton3.setEnabled(jTextField2.isEnabled());
-      if(!jTextField2.isEnabled()){
-         jTextField2.setText("");
-      }
+        if (!jTextField2.isEnabled()) {
+            jTextField2.setText("");
+        }
     }//GEN-LAST:event_jCheckBox3ItemStateChanged
 
     private void jCheckBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox8ItemStateChanged
-jTextField3.setEnabled(!jTextField3.isEnabled());
-jButton4.setEnabled(jTextField3.isEnabled());
-      if(!jTextField3.isEnabled()){
-         jTextField3.setText("");
-      }        // TODO add your handling code here:
+        jTextField3.setEnabled(!jTextField3.isEnabled());
+        jButton4.setEnabled(jTextField3.isEnabled());
+        if (!jTextField3.isEnabled()) {
+            jTextField3.setText("");
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox8ItemStateChanged
 
     private void jCheckBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox6ItemStateChanged
-jTextField4.setEnabled(!jTextField4.isEnabled());
-jButton5.setEnabled(jTextField4.isEnabled());
-      if(!jTextField4.isVisible()){
-         jTextField4.setText("");
-      }        // TODO add your handling code here:
+        jTextField4.setEnabled(!jTextField4.isEnabled());
+        jButton5.setEnabled(jTextField4.isEnabled());
+        if (!jTextField4.isVisible()) {
+            jTextField4.setText("");
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox6ItemStateChanged
 
     private void jCheckBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox4ItemStateChanged
-jTextField5.setEnabled(!jTextField5.isEnabled());
-jButton7.setEnabled(jTextField5.isEnabled());
-      if(!jTextField5.isEnabled()){
-         jTextField5.setText("");
-      }
+        jTextField5.setEnabled(!jTextField5.isEnabled());
+        jButton7.setEnabled(jTextField5.isEnabled());
+        if (!jTextField5.isEnabled()) {
+            jTextField5.setText("");
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox4ItemStateChanged
 
     private void jCheckBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox5ItemStateChanged
-    jTextField6.setEnabled(!jTextField6.isEnabled());
-    jButton6.setEnabled(jTextField6.isEnabled());
-      if(!jTextField6.isEnabled()){
-         jTextField6.setText("");
-      }        // TODO add your handling code here:
+        jTextField6.setEnabled(!jTextField6.isEnabled());
+        jButton6.setEnabled(jTextField6.isEnabled());
+        if (!jTextField6.isEnabled()) {
+            jTextField6.setText("");
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox5ItemStateChanged
 
     private void jCheckBox7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox7ItemStateChanged
-jTextField7.setEnabled(!jTextField7.isEnabled());
-jButton8.setEnabled(jTextField7.isEnabled());
-      if(!jTextField7.isEnabled()){
-         jTextField7.setText("");
-      }        // TODO add your handling code here:
+        jTextField7.setEnabled(!jTextField7.isEnabled());
+        jButton8.setEnabled(jTextField7.isEnabled());
+        if (!jTextField7.isEnabled()) {
+            jTextField7.setText("");
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox7ItemStateChanged
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-      char c=evt.getKeyChar();
-      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
-          getToolkit();
-          evt.consume();
-      }
-      if(( c=='-' )&& (jTextField1.getText().length()>1)){
-      getToolkit();
-      evt.consume();
-      }
-      
-      if(( c=='.' )&& (jTextField1.getText().contains("."))){
-      getToolkit();
-      evt.consume();
-      }
-      // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '-') && (jTextField1.getText().length() > 1)) {
+            getToolkit();
+            evt.consume();
+        }
+
+        if ((c == '.') && (jTextField1.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
- char c=evt.getKeyChar();
-      if(!Character.isDigit(c) && !(c=='.') && !(c=='-') ){
-          getToolkit();
-          evt.consume();
-      }
-      if(( c=='-' )&& (jTextField2.getText().length()>1)){
-      getToolkit();
-      evt.consume();
-      }
-      if((c=='.' )&& (jTextField2.getText().contains("."))){
-      getToolkit();
-      evt.consume();
-      }        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '-') && (jTextField2.getText().length() > 1)) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '.') && (jTextField2.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2KeyTyped
 
     private void jTextField6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyTyped
- char c=evt.getKeyChar();
-      if(!Character.isDigit(c)&& !(c=='.') && !(c=='-') ){
-          getToolkit();
-          evt.consume();
-      }
-      if(( c=='-' )&& (jTextField6.getText().length()>1)){
-      getToolkit();
-      evt.consume();
-      }
-      if(( c=='.' )&& (jTextField6.getText().contains("."))){
-      getToolkit();
-      evt.consume();
-      }        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '-') && (jTextField6.getText().length() > 1)) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '.') && (jTextField6.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6KeyTyped
 
     private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
- char c=evt.getKeyChar();
-      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
-          getToolkit();
-          evt.consume();
-      }
-      if(( c=='-' )&& (jTextField3.getText().length()>1)){
-      getToolkit();
-      evt.consume();
-      }
-      if(( c=='.' )&& (jTextField3.getText().contains("."))){
-      getToolkit();
-      evt.consume();
-      }        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '-') && (jTextField3.getText().length() > 1)) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '.') && (jTextField3.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3KeyTyped
 
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
- char c=evt.getKeyChar();
-      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
-          getToolkit();
-          evt.consume();
-      }
-      if(( c=='-' )&& (jTextField4.getText().length()>1)){
-      getToolkit();
-      evt.consume();
-      }
-      if((c=='.' )&& (jTextField4.getText().contains("."))){
-      getToolkit();
-      evt.consume();
-      }        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '-') && (jTextField4.getText().length() > 1)) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '.') && (jTextField4.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4KeyTyped
 
     private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
- char c=evt.getKeyChar();
-      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
-          getToolkit();
-          evt.consume();
-      }
-      if(( c=='-' )&& (jTextField5.getText().length()>1)){
-      getToolkit();
-      evt.consume();
-      }
-      if(( c=='.' )&& (jTextField5.getText().contains("."))){
-      getToolkit();
-      evt.consume();
-      }        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '-') && (jTextField5.getText().length() > 1)) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '.') && (jTextField5.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5KeyTyped
 
     private void jTextField7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyTyped
- char c=evt.getKeyChar();
-      if(!Character.isDigit(c) && !(c=='.') && !(c=='-')){
-          getToolkit();
-          evt.consume();
-      }
-      if(( c=='-' )&& (jTextField7.getText().length()>1)){
-      getToolkit();
-      evt.consume();
-      }
-      if((c=='.' )&& (jTextField7.getText().contains("."))){
-      getToolkit();
-      evt.consume();
-      }        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '-') && (jTextField7.getText().length() > 1)) {
+            getToolkit();
+            evt.consume();
+        }
+        if ((c == '.') && (jTextField7.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7KeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        double res=Double.parseDouble(jLabel1.getText())+Double.parseDouble(jTextField1.getText());
-        if(res>=0){
-        jLabel1.setText(res+"");}
+        double res = Double.parseDouble(jLabel1.getText()) + Double.parseDouble(jTextField1.getText());
+        if (res >= 0) {
+            jLabel1.setText(res + "");
+        }
         jTextField1.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-double res=Double.parseDouble(jLabel2.getText())+Double.parseDouble(jTextField2.getText());
-        if(res>=0){jLabel2.setText(res+"");}
+        double res = Double.parseDouble(jLabel2.getText()) + Double.parseDouble(jTextField2.getText());
+        if (res >= 0) {
+            jLabel2.setText(res + "");
+        }
         jTextField2.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-double res=Double.parseDouble(jLabel3.getText())+Double.parseDouble(jTextField6.getText());
-        if(res>=0){jLabel3.setText(res+"");}
+        double res = Double.parseDouble(jLabel3.getText()) + Double.parseDouble(jTextField6.getText());
+        if (res >= 0) {
+            jLabel3.setText(res + "");
+        }
         jTextField6.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-  double res=Double.parseDouble(jLabel12.getText())+Double.parseDouble(jTextField3.getText());
-        if(res>=0){jLabel12.setText(res+"");} 
+        double res = Double.parseDouble(jLabel12.getText()) + Double.parseDouble(jTextField3.getText());
+        if (res >= 0) {
+            jLabel12.setText(res + "");
+        }
         jTextField3.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-double res=Double.parseDouble(jLabel13.getText())+Double.parseDouble(jTextField4.getText());
-        if(res>=0){jLabel13.setText(res+"");}
+        double res = Double.parseDouble(jLabel13.getText()) + Double.parseDouble(jTextField4.getText());
+        if (res >= 0) {
+            jLabel13.setText(res + "");
+        }
         jTextField4.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-double res=Double.parseDouble(jLabel14.getText())+Double.parseDouble(jTextField5.getText());
-        if(res>=0){jLabel14.setText(res+"");}
+        double res = Double.parseDouble(jLabel14.getText()) + Double.parseDouble(jTextField5.getText());
+        if (res >= 0) {
+            jLabel14.setText(res + "");
+        }
         jTextField5.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-     double res=Double.parseDouble(jLabel17.getText())+Double.parseDouble(jTextField7.getText());
-        if(res>=0){jLabel17.setText(res+"");}
+        double res = Double.parseDouble(jLabel17.getText()) + Double.parseDouble(jTextField7.getText());
+        if (res >= 0) {
+            jLabel17.setText(res + "");
+        }
         jTextField7.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -983,16 +1008,32 @@ double res=Double.parseDouble(jLabel14.getText())+Double.parseDouble(jTextField5
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-     double totalNoIva= Double.parseDouble(jLabel1.getText())+Double.parseDouble(jLabel2.getText())+
-             Double.parseDouble(jLabel3.getText())+Double.parseDouble(jLabel12.getText())+
-             Double.parseDouble(jLabel13.getText())+Double.parseDouble(jLabel14.getText())+Double.parseDouble(jLabel18.getText());
-        txt_sin_iva.setText(totalNoIva+"");   // TODO add your handling code here:
-        if(txt_iva.getText().isEmpty()){
+        double totalNoIva = Double.parseDouble(jLabel1.getText()) + Double.parseDouble(jLabel2.getText())
+                + Double.parseDouble(jLabel3.getText()) + Double.parseDouble(jLabel12.getText())
+                + Double.parseDouble(jLabel13.getText()) + Double.parseDouble(jLabel14.getText()) + Double.parseDouble(jLabel18.getText());
+        txt_sin_iva.setText(totalNoIva + "");   // TODO add your handling code here:
+        if (txt_iva.getText().isEmpty()) {
             txt_iva.setText("0");
-        } 
-        double totalIVA=totalNoIva+Double.parseDouble(txt_iva.getText());
-        txt_total.setText(totalIVA+"");
+        }
+        double totalIVA = totalNoIva + Double.parseDouble(txt_iva.getText());
+        txt_total.setText(totalIVA + "");
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void txt_ivaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ivaKeyTyped
+        // TODO add your handling code here:
+
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '.')) {
+            getToolkit();
+            evt.consume();
+        }
+
+        if ((c == '.') && (txt_iva.getText().contains("."))) {
+            getToolkit();
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txt_ivaKeyTyped
 
     /**
      * @param args the command line arguments
