@@ -17,22 +17,12 @@ import javax.swing.JOptionPane;
  */
 public class V_Registro extends javax.swing.JFrame {
 
-    String caso;
-    Conexionn connEst;
-
-    ArrayList auxRec = new ArrayList();
-
-    public V_Registro() {
+       
+    
+    Login login;
+    public V_Registro(Login login) {
         initComponents();
-
-    }
-
-    public V_Registro(String caso, String[] datos, Conexionn conn) {
-        initComponents();
-        this.caso = caso;
-        this.connEst = conn;
-        this.txt_cedula.setText(datos[0]);
-        this.txt_correo.setText(datos[2]);
+        this.login=login;
     }
 
     /**
@@ -133,8 +123,8 @@ public class V_Registro extends javax.swing.JFrame {
                                     .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txt_nombre)
-                                        .addComponent(txt_correo)
-                                        .addComponent(txt_pass2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                                        .addComponent(txt_correo, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                                        .addComponent(txt_pass2)
                                         .addComponent(txt_pass1)))))
                         .addGap(0, 13, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -175,7 +165,7 @@ public class V_Registro extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public boolean validadorDeCedula(String cedula) {
+    private boolean validadorDeCedula(String cedula) {
         boolean cedulaCorrecta = false;
 
         try {
@@ -210,13 +200,8 @@ public class V_Registro extends javax.swing.JFrame {
             }
         } catch (NumberFormatException nfe) {
             cedulaCorrecta = false;
-        } catch (Exception err) {
-            JOptionPane.showMessageDialog(null,"Una excepcion ocurrio en el proceso de validadcion");
+        } catch (Exception err) {           
             cedulaCorrecta = false;
-        }
-
-        if (!cedulaCorrecta) {
-            JOptionPane.showMessageDialog(null,"La Cédula ingresada es Incorrecta");
         }
         return cedulaCorrecta;
     }
@@ -226,7 +211,19 @@ public class V_Registro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error", "Es necesario llenar todos los campos", JOptionPane.ERROR_MESSAGE);
         } else {                                    
             if (txt_pass1.getText().equals(txt_pass2.getText())) {
-                
+                if(validadorDeCedula(txt_cedula.getText())){
+                    conexionBDD.Conexionn conn=new Conexionn();                
+                    if(!conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'", txt_cedula.getText()))){
+                        //
+                        conn.insertar(String.format("insert into cliente values('%s','%s','%s','','%s')", txt_cedula.getText(),txt_pass1.getText(),txt_nombre.getText(),txt_correo.getText()));
+                        JOptionPane.showMessageDialog(null, "Usuario registrado con exito");
+                        btn_salirActionPerformed(evt);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Error", "Usuario ya existente", JOptionPane.ERROR_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error", "La cedula no es valida", JOptionPane.ERROR_MESSAGE);
+                }
                 
             } else {
                 JOptionPane.showMessageDialog(null, "Error", "Las contraseñas no coinciden", JOptionPane.ERROR_MESSAGE);
@@ -237,7 +234,8 @@ public class V_Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-
+        this.login.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void txt_nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreKeyTyped
@@ -250,15 +248,6 @@ public class V_Registro extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_txt_nombreKeyTyped
-
-    public void recargar() {
-        combo_Establecimientos.removeAllItems();
-        combo_Establecimientos.addItem("");
-        auxRec = connEst.cargarEstablecimiento();
-        for (Object est : auxRec) {
-            combo_Establecimientos.addItem(est.toString());
-        }
-    }
 
     /**
      * @param args the command line arguments

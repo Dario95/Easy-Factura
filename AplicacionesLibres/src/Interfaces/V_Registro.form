@@ -49,8 +49,8 @@
                                   <Component id="txt_cedula" min="-2" pref="217" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="txt_nombre" max="32767" attributes="0"/>
-                                      <Component id="txt_correo" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txt_pass2" alignment="0" pref="217" max="32767" attributes="0"/>
+                                      <Component id="txt_correo" alignment="0" pref="217" max="32767" attributes="0"/>
+                                      <Component id="txt_pass2" alignment="0" max="32767" attributes="0"/>
                                       <Component id="txt_pass1" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>

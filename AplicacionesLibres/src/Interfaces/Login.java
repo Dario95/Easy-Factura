@@ -138,7 +138,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_IngresarActionPerformed
 
     private void btn_Ingresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Ingresar1ActionPerformed
-        // TODO add your handling code here:
+        new V_Registro(this).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btn_Ingresar1ActionPerformed
 
     /**
