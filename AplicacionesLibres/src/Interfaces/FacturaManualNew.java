@@ -12,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class FacturaManualNew extends javax.swing.JInternalFrame {
@@ -676,7 +677,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
             float con = Float.parseFloat(txt_total.getText());
 
             conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                    + "VALUES('" + factura + "','1000982882','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
+                    + "VALUES('" + factura + "','"+cedula_usuario+"','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
                     + "VALUES('" + factura + "','Vivienda','" +totalVivienda+"')");
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
@@ -691,6 +692,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                     + "VALUES('" + factura + "','Negocio','" +totalNegocio+"')");
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
                     + "VALUES('" + factura + "','Otros','" +totalOtros+"')");
+            JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -985,7 +987,7 @@ double res=Double.parseDouble(jLabel14.getText())+Double.parseDouble(jTextField5
              Double.parseDouble(jLabel3.getText())+Double.parseDouble(jLabel12.getText())+
              Double.parseDouble(jLabel13.getText())+Double.parseDouble(jLabel14.getText())+Double.parseDouble(jLabel18.getText());
         txt_sin_iva.setText(totalNoIva+"");   // TODO add your handling code here:
-        double totalIVA=totalNoIva+Double.parseDouble(txt_sin_iva.getText());
+        double totalIVA=totalNoIva+Double.parseDouble(txt_iva.getText());
         txt_total.setText(totalIVA+"");
     }//GEN-LAST:event_jButton9ActionPerformed
 
