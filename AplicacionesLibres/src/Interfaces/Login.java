@@ -20,7 +20,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         //this.setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -38,7 +38,7 @@ public class Login extends javax.swing.JFrame {
         btn_Ingresar = new javax.swing.JButton();
         txt_pass = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        btn_Ingresar1 = new javax.swing.JButton();
+        btn_Registrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -58,10 +58,10 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setForeground(java.awt.Color.black);
         jLabel3.setText("LOGIN");
 
-        btn_Ingresar1.setText("Registrarse");
-        btn_Ingresar1.addActionListener(new java.awt.event.ActionListener() {
+        btn_Registrar.setText("Registrarse");
+        btn_Registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_Ingresar1ActionPerformed(evt);
+                btn_RegistrarActionPerformed(evt);
             }
         });
 
@@ -75,7 +75,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_Ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(btn_Ingresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -111,7 +111,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Ingresar1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -120,27 +120,32 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IngresarActionPerformed
-        conexionBDD.Conexionn conn=new Conexionn();                
-        
-        if(conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'and contrasena='%s'",txt_cedula.getText(),txt_pass.getText()))){
-            new VentanaPrincipal(txt_cedula.getText()).setVisible(true);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "Error","Error en la autenticacion",JOptionPane.ERROR_MESSAGE);
+        conexionBDD.Conexionn conn = new Conexionn();
+
+        if (txt_cedula.getText().equals("") || txt_pass.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Es necesario llenar los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'", txt_cedula.getText()))) {
+                if (conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'and contrasena='%s'", txt_cedula.getText(), txt_pass.getText()))) {
+                    new VentanaPrincipal(txt_cedula.getText()).setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null,  "Contraseña incorrecta", "Error",JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                if (JOptionPane.showConfirmDialog(null, "Usuario no existente.\nDesea registrarse en el sistema?", "Error", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    btn_RegistrarActionPerformed(evt);
+                }
+            }
         }
-        /*
-        if(txt_cedula.getText().equals("1718269671") && txt_pass.getText().equals("123")){
-            new VentanaPrincipal(txt_cedula.getText()).setVisible(true);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "Contrasena incorrecta","Error",JOptionPane.ERROR_MESSAGE);
-        }*/
+
+
     }//GEN-LAST:event_btn_IngresarActionPerformed
 
-    private void btn_Ingresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Ingresar1ActionPerformed
-        new V_Registro(this).setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btn_Ingresar1ActionPerformed
+    private void btn_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarActionPerformed
+        new V_Registro().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_RegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,7 +184,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Ingresar;
-    private javax.swing.JButton btn_Ingresar1;
+    private javax.swing.JButton btn_Registrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

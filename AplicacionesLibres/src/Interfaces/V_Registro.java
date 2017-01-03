@@ -19,10 +19,9 @@ public class V_Registro extends javax.swing.JFrame {
 
        
     
-    Login login;
-    public V_Registro(Login login) {
-        initComponents();
-        this.login=login;
+    
+    public V_Registro() {
+        initComponents();        
     }
 
     /**
@@ -219,14 +218,14 @@ public class V_Registro extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Usuario registrado con exito");
                         btn_salirActionPerformed(evt);
                     }else{
-                        JOptionPane.showMessageDialog(null, "Error", "Usuario ya existente", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Usuario ya existente", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Error", "La cedula no es valida", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "La cedula no es valida","Error",  JOptionPane.ERROR_MESSAGE);
                 }
                 
             } else {
-                JOptionPane.showMessageDialog(null, "Error", "Las contraseñas no coinciden", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         }
@@ -234,7 +233,7 @@ public class V_Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        this.login.setVisible(true);
+        new Login().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
 
