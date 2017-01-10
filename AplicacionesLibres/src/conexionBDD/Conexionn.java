@@ -8,9 +8,11 @@ package conexionBDD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -37,7 +39,6 @@ public class Conexionn {
         }
 
     }
-    
 
     public ArrayList cargarEstablecimiento() {
         ArrayList n = new ArrayList();
@@ -101,18 +102,37 @@ public class Conexionn {
     }
 
     public boolean verificar_usuario(String sql) {
-        boolean val=false;
+        boolean val = false;
         try {
             Statement comando = conexion.createStatement();
             ResultSet resultado = comando.executeQuery(sql);
-            val=resultado.next();
+            val = resultado.next();
             resultado.close();
             comando.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return val;
-    }    
-    
+    }
+
+    public ArrayList ddl(String sql) {
+    ArrayList salida=new ArrayList();
+        try {
+            Statement comando = conexion.createStatement();
+            ResultSet resultado = comando.executeQuery(sql);
+            ResultSetMetaData mt=resultado.getMetaData();
+            
+            if(resultado.next()){                
+                for (int i = 1; i <= mt.getColumnCount(); i++) {
+                    salida.add(resultado.getString(i));      
+               }                            
+            }                        
+            resultado.close();
+            comando.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return salida;
+    }
 
 }

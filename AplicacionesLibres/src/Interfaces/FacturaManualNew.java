@@ -43,11 +43,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         establecimientos = conn.cargarEstablecimiento();
         for (Object est : establecimientos) {
             combo_Establecimientos.addItem(est.toString());
-        }
-        //date_fecha.setMinSelectableDate(new Date(anio, 1, 1));
-        //date_fecha.setMaxSelectableDate(new Date(anio, 12, 31));        
-        System.out.println(new Date(anio-1900, 0, 1));        
-        System.out.println(new Date(anio-1900, 11, 31).toString());        
+        }     
         
         //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
         //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
