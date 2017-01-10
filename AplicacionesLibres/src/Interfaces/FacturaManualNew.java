@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -23,7 +24,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     ArrayList establecimientos;
     String cedula_usuario;
 
-    public FacturaManualNew(Conexionn conn, String cedula) {
+    public FacturaManualNew(Conexionn conn, String cedula, int anio) {
         initComponents();
 
         this.conn = conn;
@@ -43,6 +44,11 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         for (Object est : establecimientos) {
             combo_Establecimientos.addItem(est.toString());
         }
+        //date_fecha.setMinSelectableDate(new Date(anio, 1, 1));
+        //date_fecha.setMaxSelectableDate(new Date(anio, 12, 31));        
+        System.out.println(new Date(anio-1900, 0, 1));        
+        System.out.println(new Date(anio-1900, 11, 31).toString());        
+        
         //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
         //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
         //conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");

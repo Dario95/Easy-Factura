@@ -4,10 +4,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/andreu/NetBeansProjects/AplicacionesLibres/src/Interfaces/SeleccionarTipoGasto.java</file>
             <file>file:/home/andreu/NetBeansProjects/AplicacionesLibres/src/aplicacioneslibres/CargaXml.java</file>
             <file>file:/home/andreu/NetBeansProjects/AplicacionesLibres/src/Aplicacion/App.java</file>
             <file>file:/home/andreu/NetBeansProjects/AplicacionesLibres/src/Interfaces/FacturaManualNew.java</file>
+=======
+            <file>file:/home/vengatus/Documentos/Libres/NetBeansProjects/AplicacionesLibres/src/conexionBDD/Conexionn.java</file>
+            <file>file:/home/vengatus/Documentos/Libres/NetBeansProjects/AplicacionesLibres/src/Interfaces/VentanaPrincipal.java</file>
+            <file>file:/home/vengatus/Documentos/Libres/NetBeansProjects/AplicacionesLibres/src/Aplicacion/App.java</file>
+            <file>file:/home/vengatus/Documentos/Libres/NetBeansProjects/AplicacionesLibres/src/Interfaces/Login.java</file>
+            <file>file:/home/vengatus/Documentos/Libres/NetBeansProjects/AplicacionesLibres/src/Interfaces/Inicio.java</file>
+            <file>file:/home/vengatus/Documentos/Libres/NetBeansProjects/AplicacionesLibres/src/Interfaces/FacturaManualNew.java</file>
+>>>>>>> 62e71005bcb5cdfd9d46eb16ff1f40b5d8a191a2
         </group>
     </open-files>
 </project-private>
