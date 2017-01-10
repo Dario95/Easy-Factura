@@ -177,48 +177,6 @@ public class V_Establecimiento extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
-    private boolean validarRuc(String ruc) {
-
-        if (ruc.length() != 13) {
-            return false;
-        }
-        String cedula = ruc.substring(0, 10);
-        String fin = ruc.substring(10, 13);
-
-        if (!(fin.equals("001") || fin.equals("002"))) {
-            return false;
-        }
-
-        boolean cedulaCorrecta = false;
-        try {
-            int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
-            if (tercerDigito < 6) {
-                int[] coefValCedula = {2, 1, 2, 1, 2, 1, 2, 1, 2};
-                int verificador = Integer.parseInt(cedula.substring(9, 10));
-                int suma = 0;
-                int digito = 0;
-                for (int i = 0; i < (cedula.length() - 1); i++) {
-                    digito = Integer.parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
-                    suma += ((digito % 10) + (digito / 10));
-                }
-
-                if ((suma % 10 == 0) && (suma % 10 == verificador)) {
-                    cedulaCorrecta = true;
-                } else if ((10 - (suma % 10)) == verificador) {
-                    cedulaCorrecta = true;
-                } else {
-                    cedulaCorrecta = false;
-                }
-            } else {
-                cedulaCorrecta = false;
-            }
-        } catch (NumberFormatException nfe) {
-            cedulaCorrecta = false;
-        } catch (Exception err) {
-            cedulaCorrecta = false;
-        }
-        return cedulaCorrecta;
-    }
 
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
         if (caso.equals("Registrar")) {
@@ -226,17 +184,13 @@ public class V_Establecimiento extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Es necesario llenar los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
 
-                if (validarRuc(txt_ruc.getText())) {
-                    if (!connEst.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + txt_ruc.getText() + "'")) {
-                        JOptionPane.showMessageDialog(null, "RUC de establecimiento ya existente", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento, telefono_establecimiento) "
-                                + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "','" + txt_telef.getText() + "')");
-                        recargar();
-                        this.dispose();
-                    }
+                if (!connEst.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + txt_ruc.getText() + "'")) {
+                    JOptionPane.showMessageDialog(null, "RUC de establecimiento ya existente", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "RUC incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                    connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento, telefono_establecimiento) "
+                            + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "','" + txt_telef.getText() + "')");
+                    recargar();
+                    this.dispose();
                 }
 
             }
