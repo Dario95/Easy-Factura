@@ -6,15 +6,21 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -24,7 +30,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
 
     final JComboBox comboBox;
     JTable tablaProductos;
-    String tipoEstado[] = new String[7];
+    String tipoEstado[];
 
     String evtTipo = "";
     int filaTipo = -1;
@@ -45,8 +51,18 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         this.numFac = factura;
 
         String nombreCabeceras[] = {"Descripcion", "Precio Total", "Tipo de Gasto"};
+        
+        tipoEstado = new String[tipos.length];
+        for (int i=0; i<tipos.length; i++) {
+            tipoEstado[i] = "";
+        }
 
-        tablaProductos = new JTable(tipos, nombreCabeceras);
+        tablaProductos = new JTable(tipos, nombreCabeceras) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 2;
+            }
+        };
         jScrollPane1.setViewportView(tablaProductos);
 
         comboBox = new JComboBox();
@@ -59,85 +75,124 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         comboBox.addItem("Negocio");
         comboBox.addItem("Otro");
 
-        comboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent ie) {
-                if (ie.getStateChange() == ItemEvent.SELECTED) {
-                    int opc = comboBox.getSelectedIndex();
-
-                    //evtTipo = ie.getItem().toString();
-                    //filaTipo = tablaProductos.getSelectedRow();
-                    // System.out.print(ie.getItem());
-                    // System.out.println(" - " + tablaProductos.getSelectedRow());
-
-                    if (ie.getItem().toString().equals("")) {
-                        evtTipo = "";
-                    }
-
-                    if (opc != 0) {
-                        if (evtTipo.equals("")) {
-
-                            Double total;
-                            evtTipo = ie.getItem().toString();
-                            filaTipo = tablaProductos.getSelectedRow();
-
-                            switch (opc) {
-                                case 1:
-                                    total = Double.parseDouble(jTextField1.getText());
-                                    total += (Double) tablaProductos.getValueAt(filaTipo, 1);
-                                    total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                                    jTextField1.setText(String.valueOf(total));
-                                    break;
-                                case 2:
-                                    total = Double.parseDouble(jTextField2.getText());
-                                    total += (Double) tablaProductos.getValueAt(filaTipo, 1);
-                                    total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                                    jTextField2.setText(String.valueOf(total));
-                                    break;
-                                case 3:
-                                    total = Double.parseDouble(jTextField3.getText());
-                                    total += (Double) tablaProductos.getValueAt(filaTipo, 1);
-                                    total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                                    jTextField3.setText(String.valueOf(total));
-                                    break;
-                                case 4:
-                                    total = Double.parseDouble(jTextField4.getText());
-                                    total += (Double) tablaProductos.getValueAt(filaTipo, 1);
-                                    total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                                    jTextField4.setText(String.valueOf(total));
-                                    break;
-                                case 5:
-                                    total = Double.parseDouble(jTextField5.getText());
-                                    total += (Double) tablaProductos.getValueAt(filaTipo, 1);
-                                    total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                                    jTextField5.setText(String.valueOf(total));
-                                    break;
-                                case 6:
-                                    total = Double.parseDouble(jTextField6.getText());
-                                    total += (Double) tablaProductos.getValueAt(filaTipo, 1);
-                                    total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                                    jTextField6.setText(String.valueOf(total));
-                                    break;
-                                case 7:
-                                    total = Double.parseDouble(jTextField7.getText());
-                                    total += (Double) tablaProductos.getValueAt(filaTipo, 1);
-                                    total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                                    jTextField7.setText(String.valueOf(total));
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
         DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
         alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
         tablaProductos.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
 
         tablaProductos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboBox));
+
+        tablaProductos.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent tme) {
+                int row = tme.getFirstRow();
+                int column = tme.getColumn();
+
+                TableModel model = (TableModel) tme.getSource();
+                Object data = model.getValueAt(row, column);
+
+                if (!data.equals("") && column == 2) {
+                    //int opc = comboBox.getSelectedIndex();
+                    //System.out.println(row);
+                    double total;
+
+                    if (!tipoEstado[row].equals("")) {
+                        if (tipoEstado[row].equals("Vivienda")) {
+                            total = Double.parseDouble(jTextField1.getText());
+                            total -= (Double) tablaProductos.getValueAt(row, 1);
+                            total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                            jTextField1.setText(String.valueOf(total));
+                        }
+                        if (tipoEstado[row].equals("Salud")) {
+                            total = Double.parseDouble(jTextField2.getText());
+                            total -= (Double) tablaProductos.getValueAt(row, 1);
+                            total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                            jTextField2.setText(String.valueOf(total));
+                        }
+                        if (tipoEstado[row].equals("Educacion")) {
+                            total = Double.parseDouble(jTextField3.getText());
+                            total -= (Double) tablaProductos.getValueAt(row, 1);
+                            total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                            jTextField3.setText(String.valueOf(total));
+                        }
+                        if (tipoEstado[row].equals("Alimentacion")) {
+                            total = Double.parseDouble(jTextField4.getText());
+                            total -= (Double) tablaProductos.getValueAt(row, 1);
+                            total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                            jTextField4.setText(String.valueOf(total));
+                        }
+                        if (tipoEstado[row].equals("Vestimenta")) {
+                            total = Double.parseDouble(jTextField5.getText());
+                            total -= (Double) tablaProductos.getValueAt(row, 1);
+                            total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                            jTextField5.setText(String.valueOf(total));
+                        }
+                        if (tipoEstado[row].equals("Negocio")) {
+                            total = Double.parseDouble(jTextField6.getText());
+                            total -= (Double) tablaProductos.getValueAt(row, 1);
+                            total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                            jTextField6.setText(String.valueOf(total));
+                        }
+                        if (tipoEstado[row].equals("Otro")) {
+                            total = Double.parseDouble(jTextField7.getText());
+                            total -= (Double) tablaProductos.getValueAt(row, 1);
+                            total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                            jTextField7.setText(String.valueOf(total));
+                        }
+                    }
+
+                    if (data.equals("Vivienda")) {
+                        total = Double.parseDouble(jTextField1.getText());
+                        total += (Double) tablaProductos.getValueAt(row, 1);
+                        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                        jTextField1.setText(String.valueOf(total));
+                        tipoEstado[row] = "Vivienda";
+                    }
+                    if (data.equals("Salud")) {
+                        total = Double.parseDouble(jTextField2.getText());
+                        total += (Double) tablaProductos.getValueAt(row, 1);
+                        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                        jTextField2.setText(String.valueOf(total));
+                        tipoEstado[row] = "Salud";
+                    }
+                    if (data.equals("Educacion")) {
+                        total = Double.parseDouble(jTextField3.getText());
+                        total += (Double) tablaProductos.getValueAt(row, 1);
+                        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                        jTextField3.setText(String.valueOf(total));
+                        tipoEstado[row] = "Educacion";
+                    }
+                    if (data.equals("Alimentacion")) {
+                        total = Double.parseDouble(jTextField4.getText());
+                        total += (Double) tablaProductos.getValueAt(row, 1);
+                        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                        jTextField4.setText(String.valueOf(total));
+                        tipoEstado[row] = "Alimentacion";
+                    }
+                    if (data.equals("Vestimenta")) {
+                        total = Double.parseDouble(jTextField5.getText());
+                        total += (Double) tablaProductos.getValueAt(row, 1);
+                        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                        jTextField5.setText(String.valueOf(total));
+                        tipoEstado[row] = "Vestimenta";
+                    }
+                    if (data.equals("Negocio")) {
+                        total = Double.parseDouble(jTextField6.getText());
+                        total += (Double) tablaProductos.getValueAt(row, 1);
+                        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                        jTextField6.setText(String.valueOf(total));
+                        tipoEstado[row] = "Negocio";
+                    }
+                    if (data.equals("Otro")) {
+                        total = Double.parseDouble(jTextField7.getText());
+                        total += (Double) tablaProductos.getValueAt(row, 1);
+                        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+                        jTextField7.setText(String.valueOf(total));
+                        tipoEstado[row] = "Otro";
+                    }
+                }
+
+            }
+        });
 
         setLocationRelativeTo(getParent());
         setResizable(false);
@@ -191,25 +246,25 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         jLabel5.setText("Alimentacion");
 
         jTextField1.setEditable(false);
-        jTextField1.setText("0");
+        jTextField1.setText("0.0");
 
         jTextField2.setEditable(false);
-        jTextField2.setText("0");
+        jTextField2.setText("0.0");
 
         jTextField3.setEditable(false);
-        jTextField3.setText("0");
+        jTextField3.setText("0.0");
 
         jTextField4.setEditable(false);
-        jTextField4.setText("0");
+        jTextField4.setText("0.0");
 
         jTextField5.setEditable(false);
-        jTextField5.setText("0");
+        jTextField5.setText("0.0");
 
         jTextField6.setEditable(false);
-        jTextField6.setText("0");
+        jTextField6.setText("0.0");
 
         jTextField7.setEditable(false);
-        jTextField7.setText("0");
+        jTextField7.setText("0.0");
 
         jLabel6.setText("Vestimenta");
 
@@ -308,73 +363,72 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
             String query = "";
             Double total;
 
-            if (!jTextField1.getText().equals("0")) {
+            if (!jTextField1.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField1.getText());
                 total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
 
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel2.getText() + "'," + total + ")";
-                
+
                 conTipo.insertar(query);
             }
-            if (!jTextField2.getText().equals("0")) {
+            if (!jTextField2.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField2.getText());
                 total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
 
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel3.getText() + "'," + total + ")";
-                
+
                 conTipo.insertar(query);
             }
-            if (!jTextField3.getText().equals("0")) {
+            if (!jTextField3.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField3.getText());
                 total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
 
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel4.getText() + "'," + total + ")";
-                
+
                 conTipo.insertar(query);
             }
-            if (!jTextField4.getText().equals("0")) {
+            if (!jTextField4.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField4.getText());
                 total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
 
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel5.getText() + "'," + total + ")";
-                
+
                 conTipo.insertar(query);
             }
-            if (!jTextField5.getText().equals("0")) {
+            if (!jTextField5.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField5.getText());
                 total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
 
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel6.getText() + "'," + total + ")";
-                
+
                 conTipo.insertar(query);
             }
-            if (!jTextField6.getText().equals("0")) {
+            if (!jTextField6.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField6.getText());
                 total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
 
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel7.getText() + "'," + total + ")";
-                
+
                 conTipo.insertar(query);
             }
-            if (!jTextField7.getText().equals("0")) {
+            if (!jTextField7.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField7.getText());
                 total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
 
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel8.getText() + "'," + total + ")";
-                
+
                 conTipo.insertar(query);
             }
-            
+
             this.dispose();
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado el tipo para cada producto");
         }
     }//GEN-LAST:event_jButton1ActionPerformed

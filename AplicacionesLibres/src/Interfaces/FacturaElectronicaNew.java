@@ -163,8 +163,8 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
             init.setVisible(true);
             init.nombreFac(jTextField1.getText() + "/" + ficheroSeleccionado);
         } else if (jRadioButton2.isSelected()) {
-            if (jComboBox1.getSelectedIndex() != 0) {
-                List ficherosSeleccionados = jList1.getSelectedValuesList();
+            List ficherosSeleccionados = jList1.getSelectedValuesList();
+            if (jComboBox1.getSelectedIndex() != 0 && !ficherosSeleccionados.isEmpty()) {
                 for (Object ficheroSeleccionado : ficherosSeleccionados) {
                     CargaXml carga = new CargaXml();
                     carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
