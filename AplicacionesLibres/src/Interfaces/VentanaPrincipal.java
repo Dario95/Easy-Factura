@@ -20,10 +20,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     String cedula_usuario;
     Conexionn conn;
 
-    public VentanaPrincipal(String cedula_usuario) {
+    public VentanaPrincipal(String cedula_usuario,int anio) {
         initComponents();
         conn = new Conexionn();
-        fm = new FacturaManualNew(conn, cedula_usuario);
+        fm = new FacturaManualNew(conn, cedula_usuario,anio);
         fe = new FacturaElectronicaNew(cedula_usuario);
         this.cedula_usuario = cedula_usuario;
         setResizable(false);
