@@ -183,8 +183,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
             if (txt_nombre.getText().equals("") || txt_ruc.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Es necesario llenar los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-
-                if (!connEst.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + txt_ruc.getText() + "'")) {
+                if (connEst.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + txt_ruc.getText() + "'")) {
                     JOptionPane.showMessageDialog(null, "RUC de establecimiento ya existente", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento, telefono_establecimiento) "
@@ -208,6 +207,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
         System.out.println(connEst.verificar_usuario(String.format("select id_establecimiento from factura where id_establecimiento='%s'",  txt_ruc.getText())));
         if (!connEst.verificar_usuario(String.format("select id_establecimiento from factura where id_establecimiento='%s'",  txt_ruc.getText()))) {
             connEst.insertar("DELETE FROM establecimiento WHERE id_establecimiento='" + txt_ruc.getText() + "'");
+            JOptionPane.showMessageDialog(null, "Establecimiento borrado con éxito");
             recargar();
             this.dispose();
         } else {
