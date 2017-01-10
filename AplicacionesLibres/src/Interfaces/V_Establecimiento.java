@@ -203,13 +203,12 @@ public class V_Establecimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
     private void btn_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarActionPerformed
-        System.out.println(String.format("select id_establecimiento from factura where id_establecimiento='%s'",  txt_ruc.getText()) );
-        System.out.println(connEst.verificar_usuario(String.format("select id_establecimiento from factura where id_establecimiento='%s'",  txt_ruc.getText())));
+                
         if (!connEst.verificar_usuario(String.format("select id_establecimiento from factura where id_establecimiento='%s'",  txt_ruc.getText()))) {
-            connEst.insertar("DELETE FROM establecimiento WHERE id_establecimiento='" + txt_ruc.getText() + "'");
-            JOptionPane.showMessageDialog(null, "Establecimiento borrado con éxito");
+            connEst.insertar("DELETE FROM establecimiento WHERE id_establecimiento='" + txt_ruc.getText() + "'");            
             recargar();
             this.dispose();
+            JOptionPane.showMessageDialog(null, "Establecimiento borrado con éxito");
         } else {
             JOptionPane.showMessageDialog(null, "No es posible borrar dicho establecimiento ya que existen facturas ligadas al mismo", "Error", JOptionPane.ERROR_MESSAGE);
         }
