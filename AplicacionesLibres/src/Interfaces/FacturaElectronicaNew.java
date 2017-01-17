@@ -26,10 +26,12 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
     final JFileChooser fc = new JFileChooser();
     File[] ficheros;
     String cedula_usuario;
+    int anio;
 
-    public FacturaElectronicaNew(String cedula) {
+    public FacturaElectronicaNew(String cedula, int anio) {
         initComponents();
         this.cedula_usuario = cedula;
+        this.anio = anio;
         //Bloquear el movimiento del Frame
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
@@ -169,7 +171,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                     CargaXml carga = new CargaXml();
                     carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
                             "src/Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt",
-                            cedula_usuario);
+                            cedula_usuario, anio);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No se selecciono un tipo de factura");

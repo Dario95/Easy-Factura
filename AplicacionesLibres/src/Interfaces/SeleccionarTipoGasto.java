@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
@@ -37,6 +38,8 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
 
     Conexionn conTipo;
     String numFac;
+    int anio;
+    String cedula;
 
     /**
      * Creates new form SeleccionarTipoGasto
@@ -44,11 +47,15 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
      * @param conn
      * @param tipos
      * @param factura
+     * @param anio
+     * @param cedula
      */
-    public SeleccionarTipoGasto(Conexionn conn, Object[][] tipos, String factura) {
+    public SeleccionarTipoGasto(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula) {
         initComponents();
         this.conTipo = conn;
         this.numFac = factura;
+        this.anio = anio;
+        this.cedula = cedula;
 
         String nombreCabeceras[] = {"Descripcion", "Precio Total", "Tipo de Gasto"};
         
@@ -362,6 +369,8 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         if (validado == true) {
             String query = "";
             Double total;
+            
+            double totales[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
             if (!jTextField1.getText().equals("0.0")) {
                 total = Double.parseDouble(jTextField1.getText());
@@ -370,6 +379,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel2.getText() + "'," + total + ")";
 
+                totales[0] = total;
                 conTipo.insertar(query);
             }
             if (!jTextField2.getText().equals("0.0")) {
@@ -379,6 +389,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel3.getText() + "'," + total + ")";
 
+                totales[1] = total;
                 conTipo.insertar(query);
             }
             if (!jTextField3.getText().equals("0.0")) {
@@ -388,6 +399,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel4.getText() + "'," + total + ")";
 
+                totales[2] = total;
                 conTipo.insertar(query);
             }
             if (!jTextField4.getText().equals("0.0")) {
@@ -397,6 +409,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel5.getText() + "'," + total + ")";
 
+                totales[3] = total;
                 conTipo.insertar(query);
             }
             if (!jTextField5.getText().equals("0.0")) {
@@ -406,6 +419,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel6.getText() + "'," + total + ")";
 
+                totales[4] = total;
                 conTipo.insertar(query);
             }
             if (!jTextField6.getText().equals("0.0")) {
@@ -415,6 +429,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel7.getText() + "'," + total + ")";
 
+                totales[5] = total;
                 conTipo.insertar(query);
             }
             if (!jTextField7.getText().equals("0.0")) {
@@ -424,8 +439,34 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
                         + "VALUES('" + numFac + "','" + jLabel8.getText() + "'," + total + ")";
 
+                totales[6] = total;
                 conTipo.insertar(query);
             }
+            
+            if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
+                /*ArrayList valoresAntiguos = conTipo.obtenerHistorial(cedula, anio);
+                
+                totales[3] += Double.parseDouble(valoresAntiguos.get(0).toString());
+                totales[1] += Double.parseDouble(valoresAntiguos.get(1).toString());
+                totales[0] += Double.parseDouble(valoresAntiguos.get(2).toString());
+                totales[2] += Double.parseDouble(valoresAntiguos.get(3).toString());
+                totales[4] += Double.parseDouble(valoresAntiguos.get(4).toString());
+                totales[5] += Double.parseDouble(valoresAntiguos.get(5).toString());
+                totales[6] += Double.parseDouble(valoresAntiguos.get(6).toString());*/
+                
+                query = "UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+"+totales[3]+"::money,"
+                        + "total_salud=total_salud+"+totales[1]+"::money,"
+                        + "total_vivienda=total_vivienda+"+totales[0]+"::money,"
+                        + "total_educacion=total_educacion+"+totales[2]+"::money,"
+                        + "total_vestimenta=total_vestimenta+"+totales[4]+"::money,"
+                        + "total_negocios=total_negocios+"+totales[5]+"::money,"
+                        + "total_otros=total_otros+"+totales[6]+"::money WHERE anio_historial="+anio+" AND id_cliente='"+cedula+"'";
+                System.out.println(query);
+            } else {
+                query = "INSERT INTO HISTORIAL_PAGOS VALUES ("+anio+",'"+cedula+"',"+totales[3]+","+totales[1]+","+totales[0]+","+totales[2]+","+totales[4]+","+totales[5]+","+totales[6]+")";
+            }
+            
+            conTipo.insertar(query);
 
             this.dispose();
         } else {

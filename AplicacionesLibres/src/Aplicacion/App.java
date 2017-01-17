@@ -13,11 +13,8 @@ import Interfaces.*;
  */
 public class App {
     public static void main(String args[]) {
-        //new Login().setVisible(true);
-<<<<<<< HEAD
-        new VentanaPrincipal("1723123459").setVisible(true);
-=======
-        new VentanaPrincipal("1718269671",2017).setVisible(true);
->>>>>>> 62e71005bcb5cdfd9d46eb16ff1f40b5d8a191a2
+        new Login().setVisible(true);
+        //new VentanaPrincipal("1723123459",2016).setVisible(true);
+
     }    
 }

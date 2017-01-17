@@ -1,36 +1,36 @@
-/*==============================================================*/
+﻿/*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
 /* Created on:     10/1/2017 15:26:50                           */
 /*==============================================================*/
 
 
-drop index CLIENTE_PK;
-
-drop table CLIENTE;
-
-drop index ESTABLECIMIENTO_PK;
-
-drop table ESTABLECIMIENTO;
-
-drop index RELATIONSHIP_3_FK;
-
-drop index FACTURA_PK;
-
-drop table FACTURA;
-
-drop index GASTOSANUALESPERSONALES_PK;
-
-drop table GASTOSANUALESPERSONALES;
-
-drop index RELATIONSHIP_5_FK;
-
-drop index HISTORIAL_PAGOS_PK;
-
-drop table HISTORIAL_PAGOS;
-
-drop index RELATIONSHIP_1_FK;
-
-drop table TIPO_GASTO;
+-- drop index CLIENTE_PK;
+-- 
+-- drop table CLIENTE;
+-- 
+-- drop index ESTABLECIMIENTO_PK;
+-- 
+-- drop table ESTABLECIMIENTO;
+-- 
+-- drop index RELATIONSHIP_3_FK;
+-- 
+-- drop index FACTURA_PK;
+-- 
+-- drop table FACTURA;
+-- 
+-- drop index GASTOSANUALESPERSONALES_PK;
+-- 
+-- drop table GASTOSANUALESPERSONALES;
+-- 
+-- drop index RELATIONSHIP_5_FK;
+-- 
+-- drop index HISTORIAL_PAGOS_PK;
+-- 
+-- drop table HISTORIAL_PAGOS;
+-- 
+-- drop index RELATIONSHIP_1_FK;
+-- 
+-- drop table TIPO_GASTO;
 
 /*==============================================================*/
 /* Table: CLIENTE                                               */
@@ -96,6 +96,13 @@ ID_FACTURA
 /*==============================================================*/
 create  index RELATIONSHIP_3_FK on FACTURA (
 ID_ESTABLECIMIENTO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_4_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_4_FK on FACTURA (
+ID_CLIENTE
 );
 
 /*==============================================================*/

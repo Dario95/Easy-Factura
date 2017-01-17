@@ -241,7 +241,7 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
                     conexionBDD.Conexionn conn = new Conexionn();
                     if (!conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'", txt_cedula.getText()))) {
                         //
-                        conn.insertar(String.format("insert into cliente values('%s','%s','%s','','%s')", txt_cedula.getText(), txt_pass1.getText(), txt_nombre.getText(), txt_correo.getText()));
+                        conn.insertar(String.format("insert into cliente values('%s','%s','%s','%s')", txt_cedula.getText(), txt_pass1.getText(), txt_nombre.getText(), txt_correo.getText()));
                         JOptionPane.showMessageDialog(null, "Usuario registrado con exito");
                         btn_salirActionPerformed(evt);
                     } else {
