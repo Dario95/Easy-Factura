@@ -24,10 +24,11 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     Conexionn conn;
     ArrayList establecimientos;
     String cedula_usuario;
+    int anio;
 
     public FacturaManualNew(Conexionn conn, String cedula, int anio) {
         initComponents();
-
+        this.anio = anio;
         this.conn = conn;
         this.cedula_usuario = cedula;
         //Bloquear el movimiento del Frame
@@ -145,7 +146,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         jLabel4.setBackground(java.awt.Color.black);
         jLabel4.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel4.setText("Nombre/Razon Social:");
+        jLabel4.setText("*Nombre/Razon Social:");
 
         jLabel5.setBackground(java.awt.Color.black);
         jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
@@ -199,7 +200,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(combo_Establecimientos, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panel_establecimientoLayout.setVerticalGroup(
@@ -233,21 +234,21 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel8.setText("Número de Factura:");
+        jLabel8.setText("*Número de Factura:");
         panel_establecimiento1.add(jLabel8);
-        jLabel8.setBounds(30, 40, 157, 17);
+        jLabel8.setBounds(20, 40, 170, 17);
 
         jLabel9.setBackground(java.awt.Color.black);
         jLabel9.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel9.setText("Fecha de Emision:");
+        jLabel9.setText("*Fecha de Emision:");
         panel_establecimiento1.add(jLabel9);
-        jLabel9.setBounds(410, 40, 143, 17);
+        jLabel9.setBounds(400, 40, 150, 17);
 
         jLabel15.setBackground(java.awt.Color.black);
         jLabel15.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel15.setText("Total sin iva:");
+        jLabel15.setText("*Total sin iva:");
         panel_establecimiento1.add(jLabel15);
-        jLabel15.setBounds(500, 270, 100, 17);
+        jLabel15.setBounds(500, 270, 110, 17);
 
         date_fecha.setDateFormatString("yyyy-MM-dd");
         date_fecha.setPreferredSize(new java.awt.Dimension(12, 29));
@@ -262,9 +263,9 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
 
         jLabel17.setBackground(java.awt.Color.black);
         jLabel17.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel17.setText("Valor total:");
+        jLabel17.setText("*Valor total:");
         panel_establecimiento1.add(jLabel17);
-        jLabel17.setBounds(500, 350, 87, 17);
+        jLabel17.setBounds(500, 350, 100, 17);
 
         txt_iva.setText("0.0");
         txt_iva.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -576,76 +577,118 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean validar_vacios() {
+        return ((combo_Establecimientos.getSelectedItem().equals("") || txt_num_fac.getText().equals("") || txt_total.getText().equals("") || txt_sin_iva.getText().equals("") || date_fecha.getDate() == null));
+
+    }
+
+    private double dar_formato(String valor) {
+        return BigDecimal.valueOf(Double.parseDouble(valor)).setScale(3, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    private void registrar_gastos(String num_factura) {
+
+        double totalVivienda = dar_formato(lbl_vivienda.getText()),
+                totalAlimento = dar_formato(lbl_alimentacion.getText()),
+                totalEducacion = dar_formato(lbl_educacion.getText()),
+                totalSalud = dar_formato(lbl_salud.getText()),
+                totalVestimenta = dar_formato(lbl_vestimenta.getText()),
+                totalNegocio = dar_formato(lbl_negocio.getText()),
+                totalOtros = dar_formato(lbl_otros.getText());
+
+        if (totalVivienda != 0) {
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Vivienda'," + totalVivienda + ")");
+        }
+        if (totalAlimento != 0) {    //        
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Alimentacion'," + totalAlimento + ")");
+        }
+        if (totalEducacion != 0) {
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Educacion'," + totalEducacion + ")");
+        }
+        if (totalSalud != 0) {
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Salud'," + totalSalud + ")");
+        }
+        if (totalVestimenta != 0) {//
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Vestimenta'," + totalVestimenta + ")");
+        }
+        if (totalNegocio != 0) {
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Negocio'," + totalNegocio + ")");
+        }
+        if (totalOtros != 0) {
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Otro'," + totalOtros + ")");
+        }
+
+        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
+            conn.insertar("UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+" + totalAlimento + "::money,"
+                    + "total_salud=total_salud+" + totalSalud + "::money,"
+                    + "total_vivienda=total_vivienda+" + totalVivienda + "::money,"
+                    + "total_educacion=total_educacion+" + totalEducacion + "::money,"
+                    + "total_vestimenta=total_vestimenta+" + totalVestimenta + "::money,"
+                    + "total_negocios=total_negocios+" + totalNegocio + "::money,"
+                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+
+        } else {
+            conn.insertar("INSERT INTO HISTORIAL_PAGOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalAlimento + "," + totalSalud + "," + totalVivienda + "," + totalEducacion + "," + totalVestimenta + "," + totalNegocio + "," + totalOtros + ")");
+        }
+
+        JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
+    }
+
+    private void borrar_campos() {
+        combo_Establecimientos.setSelectedIndex(0);
+        txt_num_fac.setText(null);
+        date_fecha.setDate(null);
+        JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_negocio, lbl_otros, lbl_salud};
+        for (int i = 0; i < 7; i++) {
+            labels[i].setText("0.0");
+        }
+        txt_sin_iva.setText(null);
+        txt_iva.setText("0.0");
+        txt_total.setText(null);
+
+    }
+
+    private void validar_iva() {
+        double total_aux = dar_formato(txt_iva.getText()) + dar_formato(txt_sin_iva.getText()),
+                total_con_iva = dar_formato(txt_total.getText());
+        if (total_con_iva != total_aux) {
+            txt_total.setText(total_aux + "");
+        }
+    }
+
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha;
-        if (date_fecha.getDate() != null || txt_num_fac.equals("")) {
-            fecha = sdf.format(date_fecha.getDate());
+        if (!validar_vacios()) {
             try {
-                String factura = txt_num_fac.getText();
-                double totalVivienda = Double.parseDouble(lbl_vivienda.getText());
-                totalVivienda = BigDecimal.valueOf(totalVivienda).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalAlimento = Double.parseDouble(lbl_alimentacion.getText());
-                totalAlimento = BigDecimal.valueOf(totalAlimento).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalEducacion = Double.parseDouble(lbl_educacion.getText());
-                totalEducacion = BigDecimal.valueOf(totalEducacion).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalSalud = Double.parseDouble(lbl_salud.getText());
-                totalSalud = BigDecimal.valueOf(totalSalud).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalVestimenta = Double.parseDouble(lbl_vestimenta.getText());
-                totalVestimenta = BigDecimal.valueOf(totalVestimenta).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalNegocio = Double.parseDouble(lbl_negocio.getText());
-                totalNegocio = BigDecimal.valueOf(totalNegocio).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalOtros = Double.parseDouble(lbl_otros.getText());
-                totalOtros = BigDecimal.valueOf(totalOtros).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                float iva = Float.parseFloat(txt_iva.getText());
-                float sin = Float.parseFloat(txt_sin_iva.getText());
-                float con = Float.parseFloat(txt_total.getText());
-
-                if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + factura + "'")) {
+                String num_factura = txt_num_fac.getText();
+                if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
+                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
+                    validar_iva();
+                    double iva = dar_formato(txt_iva.getText()),
+                            total_sin_iva = dar_formato(txt_sin_iva.getText()),
+                            total_con_iva = dar_formato(txt_total.getText());
 
                     conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                            + "VALUES('" + factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + sin + "," + iva + "," + con + ")");
-
-                    if (totalVivienda != 0) {
-                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                                + "VALUES('" + factura + "','Vivienda'," + totalVivienda + ")");
-                    }
-                    if (totalAlimento != 0) {
-                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                                + "VALUES('" + factura + "','Alimentacion'," + totalAlimento + "')");
-                    }
-                    if (totalEducacion != 0) {
-                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                                + "VALUES('" + factura + "','Educacion','" + totalEducacion + "')");
-                    }
-                    if (totalSalud != 0) {
-                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                                + "VALUES('" + factura + "','Salud','" + totalSalud + "')");
-                    }
-                    if (totalVestimenta != 0) {
-                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                                + "VALUES('" + factura + "','Vestimenta'," + totalVestimenta + "')");
-                    }
-                    if (totalNegocio != 0) {
-                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                                + "VALUES('" + factura + "','Negocio','" + totalNegocio + "')");
-                    }
-                    if (totalOtros != 0) {
-                        conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                                + "VALUES('" + factura + "','Otro','" + totalOtros + "')");
-                    }
-                    JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
+                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
+                    //Registro de todos los tipos de gastos
+                    registrar_gastos(num_factura);
+                    borrar_campos();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
+                    JOptionPane.showMessageDialog(null, "El numero de factura ya existe en la base de datos");
                 }
             } catch (Exception e) {
                 System.err.println(e);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Informacion Incompleta");
+            JOptionPane.showMessageDialog(null, "Por favor, llenar todos los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btn_RegistrarFacturaActionPerformed
 
     private void btnEditarEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEstActionPerformed
@@ -663,7 +706,6 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void combo_EstablecimientosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_EstablecimientosItemStateChanged
-        // TODO add your handling code here:
         ArrayList auxDatosEst;
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             if (combo_Establecimientos.getSelectedIndex() != 0) {
@@ -706,15 +748,15 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void agregar_todo() {
-        JTextField campos[]={txt_vestimenta,txt_vivienda,txt_educacion,txt_alimentacion,txt_negocio,txt_otros,txt_salud};
-        JLabel labels[]={lbl_vestimenta,lbl_vivienda,lbl_educacion,lbl_alimentacion,lbl_negocio,lbl_otros,lbl_salud};
+        JTextField campos[] = {txt_vestimenta, txt_vivienda, txt_educacion, txt_alimentacion, txt_negocio, txt_otros, txt_salud};
+        JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_negocio, lbl_otros, lbl_salud};
         String valor;
         for (int i = 0; i < 7; i++) {
-            valor=campos[i].getText();
-            if(!valor.equals("")){
+            valor = campos[i].getText();
+            if (!valor.equals("")) {
                 sumar(labels[i], campos[i]);
             }
-        }     
+        }
     }
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
