@@ -8,10 +8,15 @@ package conexionBDD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.StringTokenizer;
+=======
+import java.util.List;
+>>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
 
 /**
  *
@@ -25,9 +30,18 @@ public class Conexionn {
         //conexion=null;
         try {
 
+<<<<<<< HEAD
             conexion = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/facturas",
                     "aplicaciones", "postgres01");
+=======
+           /*conexion = DriverManager.getConnection(                        
+                    "jdbc:postgresql://127.0.0.1:5432/facturas",
+                            "aplicaciones", "postgres01");*/
+            conexion = DriverManager.getConnection(
+                    "jdbc:postgresql://127.0.0.1:5432/facturacion",
+                    "postgres", "admin");
+>>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
 
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
@@ -135,6 +149,7 @@ public class Conexionn {
         }
         return val;
     }
+<<<<<<< HEAD
     
     public String transformar (String num) {
         StringTokenizer token = new StringTokenizer(num, ",");
@@ -142,6 +157,27 @@ public class Conexionn {
         
         aux = token.nextToken() + "." + token.nextToken();
         return aux;
+=======
+
+    public ArrayList ddl(String sql) {
+    ArrayList salida=new ArrayList();
+        try {
+            Statement comando = conexion.createStatement();
+            ResultSet resultado = comando.executeQuery(sql);
+            ResultSetMetaData mt=resultado.getMetaData();
+            
+            if(resultado.next()){                
+                for (int i = 1; i <= mt.getColumnCount(); i++) {                    
+                    salida.add(resultado.getString(i));      
+               }                            
+            }                        
+            resultado.close();
+            comando.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return salida;
+>>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
     }
 
 }

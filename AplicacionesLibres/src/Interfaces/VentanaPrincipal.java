@@ -17,6 +17,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     FacturaManualNew fm;
     FacturaElectronicaNew fe;
+    HistorialGastos hg;
     String cedula_usuario;
     Conexionn conn;
 
@@ -24,7 +25,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         conn = new Conexionn();
         fm = new FacturaManualNew(conn, cedula_usuario,anio);
+<<<<<<< HEAD
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
+=======
+        fe = new FacturaElectronicaNew(cedula_usuario);
+        hg = new HistorialGastos(conn,cedula_usuario,anio);
+>>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
         this.cedula_usuario = cedula_usuario;
         setResizable(false);
         setLocationRelativeTo(null);
@@ -45,6 +51,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         m_FactFisic = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -76,6 +84,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         m_FactFisic.add(jMenuItem1);
 
         jMenuBar1.add(m_FactFisic);
+
+        jMenu1.setText("Historial de Gastos");
+
+        jMenuItem4.setText("Ver Reporte de Gastos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu1);
 
         m_Usuario.setText("Usuario");
 
@@ -110,6 +130,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jDesktopPane.removeAll();
         fe.setVisible(false);
+        hg.setVisible(false);
         fm.setVisible(true);
         jDesktopPane.add(fm);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -117,6 +138,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         jDesktopPane.removeAll();
         fm.setVisible(false);
+        hg.setVisible(false);
         fe.setVisible(true);
         jDesktopPane.add(fe);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -134,6 +156,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        jDesktopPane.removeAll();
+        fm.setVisible(false);
+        fe.setVisible(true);
+        hg.setVisible(true);
+        jDesktopPane.add(hg);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,10 +210,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
     private javax.swing.JMenu m_Usuario;
