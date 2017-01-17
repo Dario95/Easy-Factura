@@ -6,6 +6,7 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
@@ -19,7 +20,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     FacturaElectronicaNew fe;
     HistorialGastos hg;
     String cedula_usuario;
+    int anio;
     Conexionn conn;
+    
+    ArrayList historial;
 
     public VentanaPrincipal(String cedula_usuario,int anio) {
         initComponents();
@@ -27,6 +31,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fm = new FacturaManualNew(conn, cedula_usuario,anio);
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
         hg = new HistorialGastos(conn,cedula_usuario,anio);
+        
+        this.anio = anio;
         this.cedula_usuario = cedula_usuario;
         setResizable(false);
         setLocationRelativeTo(null);
@@ -154,11 +160,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        jDesktopPane.removeAll();
-        fm.setVisible(false);
-        fe.setVisible(true);
-        hg.setVisible(true);
-        jDesktopPane.add(hg);
+        historial = conn.ddl(String.format("select * from historial_pagos where anio_historial=%s and id_cliente='%s'", anio, cedula_usuario));
+        
+        if (historial.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se tienen registros de este año");
+        } else {
+            jDesktopPane.removeAll();
+            fm.setVisible(false);
+            fe.setVisible(false);
+            hg.setVisible(true);
+            jDesktopPane.add(hg);
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**

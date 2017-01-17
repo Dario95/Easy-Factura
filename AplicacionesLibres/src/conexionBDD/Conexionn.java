@@ -28,7 +28,7 @@ public class Conexionn {
         try {
            conexion = DriverManager.getConnection(                        
                     "jdbc:postgresql://127.0.0.1:5432/facturas",
-                            "aplicaciones", "postgres01");
+                            "appfacturacion", "facturacion01");
             /*conexion = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/facturacion",
                     "postgres", "admin");*/
