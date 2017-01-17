@@ -12,11 +12,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.StringTokenizer;
-=======
 import java.util.List;
->>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
 
 /**
  *
@@ -29,20 +26,12 @@ public class Conexionn {
     public Conexionn() {
         //conexion=null;
         try {
-
-<<<<<<< HEAD
-            conexion = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/facturas",
-                    "aplicaciones", "postgres01");
-=======
            /*conexion = DriverManager.getConnection(                        
                     "jdbc:postgresql://127.0.0.1:5432/facturas",
                             "aplicaciones", "postgres01");*/
             conexion = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/facturacion",
                     "postgres", "admin");
->>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
-
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
@@ -84,31 +73,6 @@ public class Conexionn {
         return n;
     }
     
-    public ArrayList obtenerHistorial(String cedula, int anio) {
-        ArrayList n = new ArrayList();
-        try {
-            Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultado = comando.executeQuery("SELECT total_alimentacion,"
-                    + "total_salud, total_vivienda, total_educacion, total_vestimenta,"
-                    + "total_negocios, total_otros FROM historial_pagos "
-                    + "WHERE anio_historial="+anio+" AND id_cliente='"+cedula+"'");
-            while (resultado.next()) {
-                n.add(transformar(resultado.getString("total_alimentacion")));
-                n.add(transformar(resultado.getString("total_salud")));
-                n.add(transformar(resultado.getString("total_vivienda")));
-                n.add(transformar(resultado.getString("total_educacion")));
-                n.add(transformar(resultado.getString("total_vestimenta")));
-                n.add(transformar(resultado.getString("total_negocios")));
-                n.add(transformar(resultado.getString("total_otros")));
-            }
-            resultado.close();
-            comando.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return n;
-    }
-
     public String consultar(String tabla) {
         String n = "";
         try {
@@ -149,15 +113,6 @@ public class Conexionn {
         }
         return val;
     }
-<<<<<<< HEAD
-    
-    public String transformar (String num) {
-        StringTokenizer token = new StringTokenizer(num, ",");
-        String aux;
-        
-        aux = token.nextToken() + "." + token.nextToken();
-        return aux;
-=======
 
     public ArrayList ddl(String sql) {
     ArrayList salida=new ArrayList();
@@ -177,7 +132,6 @@ public class Conexionn {
             System.out.println(e.getMessage());
         }
         return salida;
->>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
     }
 
 }

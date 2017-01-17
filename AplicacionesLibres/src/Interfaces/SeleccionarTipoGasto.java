@@ -444,16 +444,6 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
             }
             
             if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
-                /*ArrayList valoresAntiguos = conTipo.obtenerHistorial(cedula, anio);
-                
-                totales[3] += Double.parseDouble(valoresAntiguos.get(0).toString());
-                totales[1] += Double.parseDouble(valoresAntiguos.get(1).toString());
-                totales[0] += Double.parseDouble(valoresAntiguos.get(2).toString());
-                totales[2] += Double.parseDouble(valoresAntiguos.get(3).toString());
-                totales[4] += Double.parseDouble(valoresAntiguos.get(4).toString());
-                totales[5] += Double.parseDouble(valoresAntiguos.get(5).toString());
-                totales[6] += Double.parseDouble(valoresAntiguos.get(6).toString());*/
-                
                 query = "UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+"+totales[3]+"::money,"
                         + "total_salud=total_salud+"+totales[1]+"::money,"
                         + "total_vivienda=total_vivienda+"+totales[0]+"::money,"
@@ -461,7 +451,6 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                         + "total_vestimenta=total_vestimenta+"+totales[4]+"::money,"
                         + "total_negocios=total_negocios+"+totales[5]+"::money,"
                         + "total_otros=total_otros+"+totales[6]+"::money WHERE anio_historial="+anio+" AND id_cliente='"+cedula+"'";
-                System.out.println(query);
             } else {
                 query = "INSERT INTO HISTORIAL_PAGOS VALUES ("+anio+",'"+cedula+"',"+totales[3]+","+totales[1]+","+totales[0]+","+totales[2]+","+totales[4]+","+totales[5]+","+totales[6]+")";
             }

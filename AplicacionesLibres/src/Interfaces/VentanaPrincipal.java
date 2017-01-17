@@ -25,12 +25,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         conn = new Conexionn();
         fm = new FacturaManualNew(conn, cedula_usuario,anio);
-<<<<<<< HEAD
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
-=======
-        fe = new FacturaElectronicaNew(cedula_usuario);
         hg = new HistorialGastos(conn,cedula_usuario,anio);
->>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
         this.cedula_usuario = cedula_usuario;
         setResizable(false);
         setLocationRelativeTo(null);
