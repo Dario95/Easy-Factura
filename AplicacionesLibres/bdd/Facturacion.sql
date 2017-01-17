@@ -3,8 +3,6 @@
 /* Created on:     10/1/2017 15:26:50                           */
 /*==============================================================*/
 
-
-<<<<<<< HEAD
 -- drop index CLIENTE_PK;
 -- 
 -- drop table CLIENTE;
@@ -33,8 +31,6 @@
 -- 
 -- drop table TIPO_GASTO;
 
-=======
->>>>>>> b9c3e5315543bb40b75249de2e3b1c8a1c686619
 /*==============================================================*/
 /* Table: CLIENTE                                               */
 /*==============================================================*/
@@ -194,7 +190,6 @@ alter table TIPO_GASTO
       references FACTURA (ID_FACTURA)
       on delete restrict on update restrict;
 
-
 ---procedure para borrar clientes
  CREATE OR REPLACE FUNCTION borrarCliente (id varchar) RETURNS void AS $$
      BEGIN
@@ -203,3 +198,7 @@ alter table TIPO_GASTO
          delete from cliente where id_cliente=$1;
      END;
  $$ LANGUAGE plpgsql;
+
+ -- Cargar límites de gastos personales
+ INSERT INTO GASTOSANUALESPERSONALES VALUES (2016, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);
+ INSERT INTO GASTOSANUALESPERSONALES VALUES (2017, 3669.25, 14677.00, 3669.25, 3669.25, 3669.25);
