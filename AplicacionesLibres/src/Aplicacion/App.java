@@ -14,6 +14,7 @@ import Interfaces.*;
 public class App {
     public static void main(String args[]) {
         new Login().setVisible(true);
+        //System.setProperty("user.dir", "/home/andreu/NetBeansProjects/AplicacionesLibres/dist/");
         //new VentanaPrincipal("1723123459",2016).setVisible(true);
     }    
 }
