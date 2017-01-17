@@ -159,23 +159,31 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if (jRadioButton1.isSelected()) {
-            String ficheroSeleccionado = jList1.getSelectedValue().toString();
-            Inicio init = new Inicio();
-            init.setVisible(true);
-            init.nombreFac(jTextField1.getText() + "/" + ficheroSeleccionado);
-        } else if (jRadioButton2.isSelected()) {
-            List ficherosSeleccionados = jList1.getSelectedValuesList();
-            if (jComboBox1.getSelectedIndex() != 0 && !ficherosSeleccionados.isEmpty()) {
-                for (Object ficheroSeleccionado : ficherosSeleccionados) {
-                    CargaXml carga = new CargaXml();
-                    carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
-                            "src/Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt",
-                            cedula_usuario, anio);
+        if (!jTextField1.getText().equals("")) {
+            if (jRadioButton1.isSelected()) {
+                try {
+                    String ficheroSeleccionado = jList1.getSelectedValue().toString();
+                    Inicio init = new Inicio();
+                    init.setVisible(true);
+                    init.nombreFac(jTextField1.getText() + "/" + ficheroSeleccionado);
+                } catch (NullPointerException e) {
+                    JOptionPane.showMessageDialog(this, "No se selecciono una factura");
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "No se selecciono un tipo de factura");
+            } else if (jRadioButton2.isSelected()) {
+                List ficherosSeleccionados = jList1.getSelectedValuesList();
+                if (jComboBox1.getSelectedIndex() != 0 && !ficherosSeleccionados.isEmpty()) {
+                    for (Object ficheroSeleccionado : ficherosSeleccionados) {
+                        CargaXml carga = new CargaXml();
+                        carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
+                                "src/Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt",
+                                cedula_usuario, anio);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se selecciono un tipo de factura");
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se cargo un directorio para las facturas");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

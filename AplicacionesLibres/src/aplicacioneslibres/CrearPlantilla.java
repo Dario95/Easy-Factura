@@ -5,17 +5,18 @@
  */
 package aplicacioneslibres;
 
-
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,19 +28,27 @@ public class CrearPlantilla {
     private ArrayList arrayTotal;
     private final ArrayList arrayElem = new ArrayList();
 
-    public void generarPlantilla(String factura, String nomFactura) {
+    public void generarPlantilla(String factura, String nomFactura) throws FileNotFoundException, IOException {
         cargarElementos();
         arrayTotal = xmlTotal.cargarTodo(factura);
 
         File archivo = new File("src/Plantillas/" + nomFactura + ".txt");
         File facturas = new File("src/Plantillas/tipoFacturas.txt");
+        
+        JOptionPane.showMessageDialog(null, archivo.getAbsolutePath());
 
         StringTokenizer tk;
-        String aux;
-        String act;
+        String aux, elemento;
 
-        Pattern pat;
-        Matcher mat;
+        FileReader f = new FileReader(facturas);
+        BufferedReader b = new BufferedReader(f);
+
+        while ((elemento = b.readLine()) != null) {
+            if(elemento.equals(nomFactura)) {
+                JOptionPane.showMessageDialog(null, "Esta plantilla ya fue creada");
+                return;
+            }
+        }
 
         try {
             FileWriter writeFac = new FileWriter(facturas, true);
@@ -57,17 +66,8 @@ public class CrearPlantilla {
                 for (Object total : arrayTotal) {
                     tk = new StringTokenizer(total.toString(), "-");
                     aux = tk.nextToken();
-                    act = elem.toString();
 
-                    if (act.equals("mail") || act.equals("ireccion")) {
-                        pat = Pattern.compile(act);
-                        mat = pat.matcher(aux);
-                        if (mat.find()) {
-                            escribir.write(aux + "\n");
-                            break;
-                        }
-                    }
-                    else if (aux.equals(elem.toString())) {
+                    if (aux.equals(elem.toString())) {
                         escribir.write(aux + "\n");
                         break;
                     }
@@ -75,6 +75,7 @@ public class CrearPlantilla {
             }
 
             escribir.close();
+            JOptionPane.showMessageDialog(null, "Plantilla Creada Exitosamente");
             //System.out.println("Ya se guardo");
         } catch (IOException ex) {
             System.err.println(ex);

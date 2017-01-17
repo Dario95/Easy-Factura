@@ -87,6 +87,11 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         tablaProductos.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
 
         tablaProductos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboBox));
+        
+        tablaProductos.getColumnModel().getColumn(1).setMinWidth(100);
+        tablaProductos.getColumnModel().getColumn(1).setMaxWidth(100);
+        tablaProductos.getColumnModel().getColumn(2).setMinWidth(150);
+        tablaProductos.getColumnModel().getColumn(2).setMaxWidth(150);
 
         tablaProductos.getModel().addTableModelListener(new TableModelListener() {
             @Override
@@ -457,6 +462,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
             
             conTipo.insertar(query);
 
+            JOptionPane.showMessageDialog(this, "Factura ingresada exitosamente");
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado el tipo para cada producto");

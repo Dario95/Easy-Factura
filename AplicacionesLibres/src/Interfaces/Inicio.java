@@ -7,6 +7,9 @@ package Interfaces;
 
 import aplicacioneslibres.CrearPlantilla;
 import java.awt.event.ComponentAdapter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
@@ -118,13 +121,17 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_txttypeActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
-        CrearPlantilla crear = new CrearPlantilla();
-        crear.generarPlantilla(getFac(), txttype.getText());
-        
-        this.dispose();
-
-        //nombreFac=txttype.getText();
+        try {
+            // TODO add your handling code here:
+            CrearPlantilla crear = new CrearPlantilla();
+            crear.generarPlantilla(getFac(), txttype.getText());
+            
+            this.dispose();
+            
+            //nombreFac=txttype.getText();
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     /**
