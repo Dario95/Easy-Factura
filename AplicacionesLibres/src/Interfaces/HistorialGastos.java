@@ -37,28 +37,6 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }
-
-        String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado", "Limite Anual"};
-        ArrayList historial = conn.ddl(String.format("select *,total_alimentacion+total_salud+total_vivienda+total_educacion+total_vestimenta+total_negocios+total_otros as valor_total from historial_pagos where anio_historial=%s and id_cliente='%s'", this.anio, this.cedula_usuario));
-        ArrayList anual = conn.ddl(String.format("select * from gastosanualespersonales where anio_gastos=%s", this.anio));
-
-        String datosTabla[][] = {{"Alimentacion", historial.get(2).toString(), anual.get(1).toString()},
-        {"Salud", historial.get(3).toString(), anual.get(2).toString()},
-        {"Vivienda", historial.get(4).toString(), anual.get(3).toString()},
-        {"Educacion", historial.get(5).toString(), anual.get(4).toString()},
-        {"Vestimenta", historial.get(6).toString(), anual.get(5).toString()},
-        {"Negocio", historial.get(7).toString(), ""},
-        {"Otros", historial.get(8).toString(), ""}};
-
-        lbl_total.setText((String) historial.get(9));
-        
-        JTable tablaHistorial = new JTable(datosTabla, nombreCabeceras) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        jScrollPane1.setViewportView(tablaHistorial);
     }
 
     /**
@@ -133,7 +111,27 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-   
+        String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado", "Limite Anual"};
+        ArrayList historial = conn.ddl(String.format("select *,total_alimentacion+total_salud+total_vivienda+total_educacion+total_vestimenta+total_negocios+total_otros as valor_total from historial_pagos where anio_historial=%s and id_cliente='%s'", this.anio, this.cedula_usuario));
+        ArrayList anual = conn.ddl(String.format("select * from gastosanualespersonales where anio_gastos=%s", this.anio));
+
+        String datosTabla[][] = {{"Alimentacion", historial.get(2).toString(), anual.get(1).toString()},
+        {"Salud", historial.get(3).toString(), anual.get(2).toString()},
+        {"Vivienda", historial.get(4).toString(), anual.get(3).toString()},
+        {"Educacion", historial.get(5).toString(), anual.get(4).toString()},
+        {"Vestimenta", historial.get(6).toString(), anual.get(5).toString()},
+        {"Negocio", historial.get(7).toString(), ""},
+        {"Otros", historial.get(8).toString(), ""}};
+
+        lbl_total.setText((String) historial.get(9));
+        
+        JTable tablaHistorial = new JTable(datosTabla, nombreCabeceras) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        jScrollPane1.setViewportView(tablaHistorial);
     }//GEN-LAST:event_formComponentShown
 
     /**

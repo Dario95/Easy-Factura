@@ -188,7 +188,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        fc.setCurrentDirectory(new File("src/Facturas/"));
+        fc.setCurrentDirectory(new File("Facturas/"));
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = fc.showOpenDialog(FacturaElectronicaNew.this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -298,7 +298,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     private void cargarTipos() {
         try {
-            FileReader f = new FileReader("src/Plantillas/tipoFacturas.txt");
+            FileReader f = new FileReader("Plantillas/tipoFacturas.txt");
             BufferedReader b = new BufferedReader(f);
 
             String elemento;
