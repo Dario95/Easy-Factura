@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class FacturaManualNew extends javax.swing.JInternalFrame {
@@ -43,12 +44,11 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         establecimientos = conn.cargarEstablecimiento();
         for (Object est : establecimientos) {
             combo_Establecimientos.addItem(est.toString());
-        }     
-        
+        }
+
         //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
         //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
         //conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");
-
     }
 
     /**
@@ -84,20 +84,13 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         txt_sin_iva = new javax.swing.JTextField();
         txt_num_fac = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txt_vivienda = new javax.swing.JTextField();
+        txt_alimentacion = new javax.swing.JTextField();
+        txt_otros = new javax.swing.JTextField();
+        txt_salud = new javax.swing.JTextField();
+        txt_vestimenta = new javax.swing.JTextField();
+        txt_educacion = new javax.swing.JTextField();
+        txt_negocio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -105,14 +98,28 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        lbl_vivienda = new javax.swing.JLabel();
+        lbl_alimentacion = new javax.swing.JLabel();
+        lbl_educacion = new javax.swing.JLabel();
+        lbl_otros = new javax.swing.JLabel();
+        lbl_salud = new javax.swing.JLabel();
+        lbl_vestimenta = new javax.swing.JLabel();
+        lbl_negocio = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
         btn_RegistrarFactura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -222,262 +229,238 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         getContentPane().add(panel_establecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 770, -1));
 
         panel_establecimiento1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de la Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Open Sans Extrabold", 1, 14), java.awt.Color.black)); // NOI18N
+        panel_establecimiento1.setLayout(null);
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel8.setText("Numero de Factura:");
+        jLabel8.setText("Número de Factura:");
+        panel_establecimiento1.add(jLabel8);
+        jLabel8.setBounds(30, 40, 157, 17);
 
         jLabel9.setBackground(java.awt.Color.black);
         jLabel9.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel9.setText("Fecha de Emision:");
+        panel_establecimiento1.add(jLabel9);
+        jLabel9.setBounds(410, 40, 143, 17);
 
         jLabel15.setBackground(java.awt.Color.black);
         jLabel15.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel15.setText("Total sin iva:");
+        panel_establecimiento1.add(jLabel15);
+        jLabel15.setBounds(500, 270, 100, 17);
 
         date_fecha.setDateFormatString("yyyy-MM-dd");
         date_fecha.setPreferredSize(new java.awt.Dimension(12, 29));
+        panel_establecimiento1.add(date_fecha);
+        date_fecha.setBounds(560, 30, 180, 29);
 
         jLabel16.setBackground(java.awt.Color.black);
         jLabel16.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel16.setText("I.V.A:");
+        panel_establecimiento1.add(jLabel16);
+        jLabel16.setBounds(500, 310, 42, 17);
 
         jLabel17.setBackground(java.awt.Color.black);
         jLabel17.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel17.setText("Valor total:");
+        panel_establecimiento1.add(jLabel17);
+        jLabel17.setBounds(500, 350, 87, 17);
 
+        txt_iva.setText("0.0");
         txt_iva.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_ivaKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_iva);
+        txt_iva.setBounds(610, 300, 128, 29);
+
+        txt_total.setEnabled(false);
+        panel_establecimiento1.add(txt_total);
+        txt_total.setBounds(610, 340, 128, 29);
+
+        txt_sin_iva.setEnabled(false);
+        panel_establecimiento1.add(txt_sin_iva);
+        txt_sin_iva.setBounds(610, 260, 128, 29);
+        panel_establecimiento1.add(txt_num_fac);
+        txt_num_fac.setBounds(190, 30, 150, 29);
 
         jLabel11.setBackground(java.awt.Color.black);
         jLabel11.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel11.setText("Tipo de gasto:");
+        jLabel11.setText("Tipos de gasto:");
+        panel_establecimiento1.add(jLabel11);
+        jLabel11.setBounds(5, 78, 150, 17);
 
-        jCheckBox2.setText("Vivienda");
-        jCheckBox2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox2ItemStateChanged(evt);
-            }
-        });
-
-        jCheckBox3.setText("Alimentación");
-        jCheckBox3.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox3StateChanged(evt);
-            }
-        });
-        jCheckBox3.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox3ItemStateChanged(evt);
-            }
-        });
-
-        jCheckBox4.setText("Vestimenta");
-        jCheckBox4.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox4StateChanged(evt);
-            }
-        });
-        jCheckBox4.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox4ItemStateChanged(evt);
-            }
-        });
-
-        jCheckBox5.setText("Educación ");
-        jCheckBox5.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox5StateChanged(evt);
-            }
-        });
-        jCheckBox5.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox5ItemStateChanged(evt);
-            }
-        });
-
-        jCheckBox6.setText("Salud");
-        jCheckBox6.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox6StateChanged(evt);
-            }
-        });
-        jCheckBox6.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox6ItemStateChanged(evt);
-            }
-        });
-
-        jCheckBox7.setText("Negocio");
-        jCheckBox7.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox7StateChanged(evt);
-            }
-        });
-        jCheckBox7.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox7ItemStateChanged(evt);
-            }
-        });
-
-        jCheckBox8.setText("Otros");
-        jCheckBox8.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBox8StateChanged(evt);
-            }
-        });
-        jCheckBox8.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox8ItemStateChanged(evt);
-            }
-        });
-
-        jTextField1.setDisabledTextColor(new java.awt.Color(183, 183, 183));
-        jTextField1.setEnabled(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_vivienda.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        txt_vivienda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                txt_viviendaKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_vivienda);
+        txt_vivienda.setBounds(110, 120, 91, 29);
 
-        jTextField2.setDisabledTextColor(new java.awt.Color(183, 183, 183));
-        jTextField2.setEnabled(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_alimentacion.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        txt_alimentacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField2KeyTyped(evt);
+                txt_alimentacionKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_alimentacion);
+        txt_alimentacion.setBounds(110, 160, 91, 29);
 
-        jTextField3.setDisabledTextColor(new java.awt.Color(183, 183, 183));
-        jTextField3.setEnabled(false);
-        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_otros.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        txt_otros.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField3KeyTyped(evt);
+                txt_otrosKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_otros);
+        txt_otros.setBounds(110, 240, 91, 29);
 
-        jTextField4.setEnabled(false);
-        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_salud.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField4KeyTyped(evt);
+                txt_saludKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_salud);
+        txt_salud.setBounds(490, 120, 82, 29);
 
-        jTextField5.setEnabled(false);
-        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_vestimenta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField5KeyTyped(evt);
+                txt_vestimentaKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_vestimenta);
+        txt_vestimenta.setBounds(490, 160, 82, 29);
 
-        jTextField6.setEnabled(false);
-        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_educacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField6KeyTyped(evt);
+                txt_educacionKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_educacion);
+        txt_educacion.setBounds(110, 200, 91, 29);
 
-        jTextField7.setEnabled(false);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
-        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_negocio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField7KeyTyped(evt);
+                txt_negocioKeyTyped(evt);
             }
         });
+        panel_establecimiento1.add(txt_negocio);
+        txt_negocio.setBounds(490, 200, 82, 29);
 
         jButton1.setText("+");
-        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton1);
+        jButton1.setBounds(210, 120, 50, 29);
 
         jButton3.setText("+");
-        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton3);
+        jButton3.setBounds(210, 160, 50, 29);
 
         jButton4.setText("+");
-        jButton4.setEnabled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton4);
+        jButton4.setBounds(210, 240, 50, 29);
 
         jButton5.setText("+");
-        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton5);
+        jButton5.setBounds(580, 120, 50, 29);
 
         jButton6.setText("+");
-        jButton6.setEnabled(false);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton6);
+        jButton6.setBounds(210, 200, 50, 29);
 
         jButton7.setText("+");
-        jButton7.setEnabled(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton7);
+        jButton7.setBounds(580, 160, 50, 29);
 
         jButton8.setText("+");
-        jButton8.setEnabled(false);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton8);
+        jButton8.setBounds(580, 200, 50, 29);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("0");
+        lbl_vivienda.setForeground(java.awt.Color.darkGray);
+        lbl_vivienda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_vivienda.setText("0.0");
+        lbl_vivienda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_vivienda);
+        lbl_vivienda.setBounds(320, 120, 70, 30);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("0");
+        lbl_alimentacion.setForeground(java.awt.Color.darkGray);
+        lbl_alimentacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_alimentacion.setText("0.0");
+        lbl_alimentacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_alimentacion);
+        lbl_alimentacion.setBounds(320, 160, 70, 30);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("0");
+        lbl_educacion.setForeground(java.awt.Color.darkGray);
+        lbl_educacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_educacion.setText("0.0");
+        lbl_educacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_educacion);
+        lbl_educacion.setBounds(320, 200, 70, 30);
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel12.setText("0");
+        lbl_otros.setForeground(java.awt.Color.darkGray);
+        lbl_otros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_otros.setText("0.0");
+        lbl_otros.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_otros);
+        lbl_otros.setBounds(320, 240, 70, 30);
 
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel13.setText("0");
+        lbl_salud.setForeground(java.awt.Color.darkGray);
+        lbl_salud.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_salud.setText("0.0");
+        lbl_salud.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_salud);
+        lbl_salud.setBounds(690, 120, 67, 30);
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel14.setText("0");
+        lbl_vestimenta.setForeground(java.awt.Color.darkGray);
+        lbl_vestimenta.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_vestimenta.setText("0.0");
+        lbl_vestimenta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_vestimenta);
+        lbl_vestimenta.setBounds(690, 160, 67, 30);
 
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel18.setText("0");
+        lbl_negocio.setForeground(java.awt.Color.darkGray);
+        lbl_negocio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_negocio.setText("0.0");
+        lbl_negocio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_negocio);
+        lbl_negocio.setBounds(690, 200, 67, 30);
 
         jButton9.setText("Calcular");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -485,175 +468,99 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                 jButton9ActionPerformed(evt);
             }
         });
+        panel_establecimiento1.add(jButton9);
+        jButton9.setBounds(140, 300, 180, 60);
 
-        javax.swing.GroupLayout panel_establecimiento1Layout = new javax.swing.GroupLayout(panel_establecimiento1);
-        panel_establecimiento1.setLayout(panel_establecimiento1Layout);
-        panel_establecimiento1Layout.setHorizontalGroup(
-            panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_num_fac, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel9)
-                                .addGap(32, 32, 32)
-                                .addComponent(date_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_establecimiento1Layout.createSequentialGroup()
-                                .addGap(0, 443, Short.MAX_VALUE)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jLabel16))
-                                .addGap(65, 65, 65)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_sin_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txt_iva, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_total, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox5)
-                                    .addComponent(jCheckBox8)
-                                    .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jCheckBox3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jCheckBox2)))
-                                .addGap(18, 18, 18)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jCheckBox4)
-                                                    .addComponent(jCheckBox6)
-                                                    .addComponent(jCheckBox7))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                                                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jTextField7))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                                                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panel_establecimiento1Layout.setVerticalGroup(
-            panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(date_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(jLabel9)
-                        .addComponent(txt_num_fac, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jCheckBox6)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jCheckBox4)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jCheckBox7)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBox2)
-                                    .addComponent(jButton1)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBox3)
-                                    .addComponent(jButton3)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBox5)
-                                    .addComponent(jButton6)
-                                    .addComponent(jLabel3)))))
-                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton7)
-                            .addComponent(jLabel14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8))
-                    .addComponent(jLabel18))
-                .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(txt_sin_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_iva, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17))
-                        .addContainerGap())
-                    .addGroup(panel_establecimiento1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_establecimiento1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox8)
-                            .addComponent(jButton4)
-                            .addComponent(jLabel12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))))
-        );
+        jLabel19.setText("Vivienda");
+        panel_establecimiento1.add(jLabel19);
+        jLabel19.setBounds(10, 130, 100, 17);
+
+        jLabel20.setText("Alimentación");
+        panel_establecimiento1.add(jLabel20);
+        jLabel20.setBounds(10, 170, 140, 17);
+
+        jLabel21.setText("Educación ");
+        panel_establecimiento1.add(jLabel21);
+        jLabel21.setBounds(10, 210, 130, 17);
+
+        jLabel22.setText("Otros");
+        panel_establecimiento1.add(jLabel22);
+        jLabel22.setBounds(10, 250, 120, 17);
+
+        jButton10.setText("-");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        panel_establecimiento1.add(jButton10);
+        jButton10.setBounds(260, 120, 50, 29);
+
+        jButton11.setText("-");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        panel_establecimiento1.add(jButton11);
+        jButton11.setBounds(260, 160, 50, 29);
+
+        jButton12.setText("-");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        panel_establecimiento1.add(jButton12);
+        jButton12.setBounds(260, 200, 50, 29);
+
+        jButton13.setText("-");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        panel_establecimiento1.add(jButton13);
+        jButton13.setBounds(260, 240, 50, 29);
+
+        jLabel23.setText("Salud");
+        panel_establecimiento1.add(jLabel23);
+        jLabel23.setBounds(400, 130, 100, 17);
+
+        jLabel24.setText("Vestimenta");
+        panel_establecimiento1.add(jLabel24);
+        jLabel24.setBounds(400, 170, 100, 17);
+
+        jLabel25.setText("Negocio");
+        panel_establecimiento1.add(jLabel25);
+        jLabel25.setBounds(400, 210, 90, 17);
+
+        jButton14.setText("-");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        panel_establecimiento1.add(jButton14);
+        jButton14.setBounds(630, 120, 50, 29);
+
+        jButton15.setText("-");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        panel_establecimiento1.add(jButton15);
+        jButton15.setBounds(630, 160, 50, 29);
+
+        jButton16.setText("-");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        panel_establecimiento1.add(jButton16);
+        jButton16.setBounds(630, 200, 50, 29);
 
         getContentPane().add(panel_establecimiento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 770, 380));
 
@@ -677,19 +584,19 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
             fecha = sdf.format(date_fecha.getDate());
             try {
                 String factura = txt_num_fac.getText();
-                double totalVivienda = Double.parseDouble(jLabel1.getText());
+                double totalVivienda = Double.parseDouble(lbl_vivienda.getText());
                 totalVivienda = BigDecimal.valueOf(totalVivienda).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalAlimento = Double.parseDouble(jLabel2.getText());
+                double totalAlimento = Double.parseDouble(lbl_alimentacion.getText());
                 totalAlimento = BigDecimal.valueOf(totalAlimento).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalEducacion = Double.parseDouble(jLabel3.getText());
+                double totalEducacion = Double.parseDouble(lbl_educacion.getText());
                 totalEducacion = BigDecimal.valueOf(totalEducacion).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalSalud = Double.parseDouble(jLabel13.getText());
+                double totalSalud = Double.parseDouble(lbl_salud.getText());
                 totalSalud = BigDecimal.valueOf(totalSalud).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalVestimenta = Double.parseDouble(jLabel14.getText());
+                double totalVestimenta = Double.parseDouble(lbl_vestimenta.getText());
                 totalVestimenta = BigDecimal.valueOf(totalVestimenta).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalNegocio = Double.parseDouble(jLabel18.getText());
+                double totalNegocio = Double.parseDouble(lbl_negocio.getText());
                 totalNegocio = BigDecimal.valueOf(totalNegocio).setScale(3, RoundingMode.HALF_UP).doubleValue();
-                double totalOtros = Double.parseDouble(jLabel12.getText());
+                double totalOtros = Double.parseDouble(lbl_otros.getText());
                 totalOtros = BigDecimal.valueOf(totalOtros).setScale(3, RoundingMode.HALF_UP).doubleValue();
                 float iva = Float.parseFloat(txt_iva.getText());
                 float sin = Float.parseFloat(txt_sin_iva.getText());
@@ -770,300 +677,149 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        restar(lbl_negocio, txt_negocio);
+    }//GEN-LAST:event_jButton16ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        restar(lbl_vestimenta, txt_vestimenta);
+    }//GEN-LAST:event_jButton15ActionPerformed
 
-    private void jCheckBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox2ItemStateChanged
-        // TODO add your handling code here:
-        jTextField1.setEnabled(!jTextField1.isEnabled());
-        jButton1.setEnabled(jTextField1.isEnabled());
-        if (!jTextField1.isEnabled()) {
-            jTextField1.setText("");
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        restar(lbl_salud, txt_salud);
+    }//GEN-LAST:event_jButton14ActionPerformed
 
-        }
-    }//GEN-LAST:event_jCheckBox2ItemStateChanged
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        restar(lbl_otros, txt_otros);
+    }//GEN-LAST:event_jButton13ActionPerformed
 
-    private void jCheckBox6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox6StateChanged
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        restar(lbl_educacion, txt_educacion);
+    }//GEN-LAST:event_jButton12ActionPerformed
 
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox6StateChanged
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        restar(lbl_alimentacion, txt_alimentacion);
+    }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jCheckBox5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox5StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox5StateChanged
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        restar(lbl_vivienda, txt_vivienda);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jCheckBox3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox3StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3StateChanged
-
-    private void jCheckBox8StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox8StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox8StateChanged
-
-    private void jCheckBox4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox4StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox4StateChanged
-
-    private void jCheckBox7StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox7StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox7StateChanged
-
-    private void jCheckBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox3ItemStateChanged
-        // TODO add your handling code here:
-        jTextField2.setEnabled(!jTextField2.isEnabled());
-        jButton3.setEnabled(jTextField2.isEnabled());
-        if (!jTextField2.isEnabled()) {
-            jTextField2.setText("");
-        }
-    }//GEN-LAST:event_jCheckBox3ItemStateChanged
-
-    private void jCheckBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox8ItemStateChanged
-        jTextField3.setEnabled(!jTextField3.isEnabled());
-        jButton4.setEnabled(jTextField3.isEnabled());
-        if (!jTextField3.isEnabled()) {
-            jTextField3.setText("");
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox8ItemStateChanged
-
-    private void jCheckBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox6ItemStateChanged
-        jTextField4.setEnabled(!jTextField4.isEnabled());
-        jButton5.setEnabled(jTextField4.isEnabled());
-        if (!jTextField4.isVisible()) {
-            jTextField4.setText("");
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox6ItemStateChanged
-
-    private void jCheckBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox4ItemStateChanged
-        jTextField5.setEnabled(!jTextField5.isEnabled());
-        jButton7.setEnabled(jTextField5.isEnabled());
-        if (!jTextField5.isEnabled()) {
-            jTextField5.setText("");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox4ItemStateChanged
-
-    private void jCheckBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox5ItemStateChanged
-        jTextField6.setEnabled(!jTextField6.isEnabled());
-        jButton6.setEnabled(jTextField6.isEnabled());
-        if (!jTextField6.isEnabled()) {
-            jTextField6.setText("");
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox5ItemStateChanged
-
-    private void jCheckBox7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox7ItemStateChanged
-        jTextField7.setEnabled(!jTextField7.isEnabled());
-        jButton8.setEnabled(jTextField7.isEnabled());
-        if (!jTextField7.isEnabled()) {
-            jTextField7.setText("");
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox7ItemStateChanged
-
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '-') && (jTextField1.getText().length() > 1)) {
-            getToolkit();
-            evt.consume();
-        }
-
-        if ((c == '.') && (jTextField1.getText().contains("."))) {
-            getToolkit();
-            evt.consume();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1KeyTyped
-
-    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '-') && (jTextField2.getText().length() > 1)) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '.') && (jTextField2.getText().contains("."))) {
-            getToolkit();
-            evt.consume();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2KeyTyped
-
-    private void jTextField6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '-') && (jTextField6.getText().length() > 1)) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '.') && (jTextField6.getText().contains("."))) {
-            getToolkit();
-            evt.consume();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6KeyTyped
-
-    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '-') && (jTextField3.getText().length() > 1)) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '.') && (jTextField3.getText().contains("."))) {
-            getToolkit();
-            evt.consume();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3KeyTyped
-
-    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '-') && (jTextField4.getText().length() > 1)) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '.') && (jTextField4.getText().contains("."))) {
-            getToolkit();
-            evt.consume();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4KeyTyped
-
-    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '-') && (jTextField5.getText().length() > 1)) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '.') && (jTextField5.getText().contains("."))) {
-            getToolkit();
-            evt.consume();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5KeyTyped
-
-    private void jTextField7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '.') && !(c == '-')) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '-') && (jTextField7.getText().length() > 1)) {
-            getToolkit();
-            evt.consume();
-        }
-        if ((c == '.') && (jTextField7.getText().contains("."))) {
-            getToolkit();
-            evt.consume();
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7KeyTyped
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        double res = Double.parseDouble(jLabel1.getText()) + Double.parseDouble(jTextField1.getText());
-        if (res >= 0) {
-            jLabel1.setText(res + "");
-        }
-        jTextField1.setText("");
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        double res = Double.parseDouble(jLabel2.getText()) + Double.parseDouble(jTextField2.getText());
-        if (res >= 0) {
-            jLabel2.setText(res + "");
-        }
-        jTextField2.setText("");// TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        double res = Double.parseDouble(jLabel3.getText()) + Double.parseDouble(jTextField6.getText());
-        if (res >= 0) {
-            jLabel3.setText(res + "");
-        }
-        jTextField6.setText("");// TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        double res = Double.parseDouble(jLabel12.getText()) + Double.parseDouble(jTextField3.getText());
-        if (res >= 0) {
-            jLabel12.setText(res + "");
-        }
-        jTextField3.setText("");// TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        double res = Double.parseDouble(jLabel13.getText()) + Double.parseDouble(jTextField4.getText());
-        if (res >= 0) {
-            jLabel13.setText(res + "");
-        }
-        jTextField4.setText("");// TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        double res = Double.parseDouble(jLabel14.getText()) + Double.parseDouble(jTextField5.getText());
-        if (res >= 0) {
-            jLabel14.setText(res + "");
-        }
-        jTextField5.setText("");// TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        double res = Double.parseDouble(jLabel17.getText()) + Double.parseDouble(jTextField7.getText());
-        if (res >= 0) {
-            jLabel17.setText(res + "");
-        }
-        jTextField7.setText("");// TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void agregar_todo() {
+        JTextField campos[]={txt_vestimenta,txt_vivienda,txt_educacion,txt_alimentacion,txt_negocio,txt_otros,txt_salud};
+        JLabel labels[]={lbl_vestimenta,lbl_vivienda,lbl_educacion,lbl_alimentacion,lbl_negocio,lbl_otros,lbl_salud};
+        String valor;
+        for (int i = 0; i < 7; i++) {
+            valor=campos[i].getText();
+            if(!valor.equals("")){
+                sumar(labels[i], campos[i]);
+            }
+        }     
+    }
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        double totalNoIva = Double.parseDouble(jLabel1.getText()) + Double.parseDouble(jLabel2.getText())
-                + Double.parseDouble(jLabel3.getText()) + Double.parseDouble(jLabel12.getText())
-                + Double.parseDouble(jLabel13.getText()) + Double.parseDouble(jLabel14.getText()) + Double.parseDouble(jLabel18.getText());
+        agregar_todo();
+        double totalNoIva = Double.parseDouble(lbl_vivienda.getText()) + Double.parseDouble(lbl_alimentacion.getText())
+                + Double.parseDouble(lbl_educacion.getText()) + Double.parseDouble(lbl_otros.getText())
+                + Double.parseDouble(lbl_salud.getText()) + Double.parseDouble(lbl_vestimenta.getText()) + Double.parseDouble(lbl_negocio.getText());
         txt_sin_iva.setText(totalNoIva + "");   // TODO add your handling code here:
-        if (txt_iva.getText().isEmpty()) {
-            txt_iva.setText("0");
-        }
         double totalIVA = totalNoIva + Double.parseDouble(txt_iva.getText());
         txt_total.setText(totalIVA + "");
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void txt_ivaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ivaKeyTyped
-        // TODO add your handling code here:
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        sumar(lbl_negocio, txt_negocio);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        sumar(lbl_vestimenta, txt_vestimenta);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        sumar(lbl_educacion, txt_educacion);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        sumar(lbl_salud, txt_salud);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        sumar(lbl_otros, txt_otros);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        sumar(lbl_alimentacion, txt_alimentacion);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void sumar(JLabel lbl, JTextField txt) {
+        String valor = txt.getText();
+        if (!valor.equals("")) {
+            lbl.setText(Double.parseDouble(lbl.getText()) + Double.parseDouble(valor) + "");
+            txt.setText("");
+        }
+
+    }
+
+    private void restar(JLabel lbl, JTextField txt) {
+        String valor = txt.getText();
+        if (!valor.equals("")) {
+            double res = Double.parseDouble(lbl.getText()) - Double.parseDouble(valor);
+            if (res < 0) {
+                lbl.setText("0.0");
+            } else {
+                lbl.setText(res + "");
+            }
+            txt.setText("");
+        }
+
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        sumar(lbl_vivienda, txt_vivienda);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void filtrar(java.awt.event.KeyEvent evt, JTextField txt) {
         char c = evt.getKeyChar();
         if (!Character.isDigit(c) && !(c == '.')) {
             getToolkit();
             evt.consume();
         }
-
-        if ((c == '.') && (txt_iva.getText().contains("."))) {
+        if ((c == '.') && (txt_vivienda.getText().contains("."))) {
             getToolkit();
             evt.consume();
         }
+    }
 
+    private void txt_negocioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_negocioKeyTyped
+        filtrar(evt, txt_negocio);
+    }//GEN-LAST:event_txt_negocioKeyTyped
+
+    private void txt_educacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_educacionKeyTyped
+        filtrar(evt, txt_educacion);
+    }//GEN-LAST:event_txt_educacionKeyTyped
+
+    private void txt_vestimentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_vestimentaKeyTyped
+        filtrar(evt, txt_vestimenta);
+    }//GEN-LAST:event_txt_vestimentaKeyTyped
+
+    private void txt_saludKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_saludKeyTyped
+        filtrar(evt, txt_salud);
+    }//GEN-LAST:event_txt_saludKeyTyped
+
+    private void txt_otrosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_otrosKeyTyped
+        filtrar(evt, txt_otros);
+    }//GEN-LAST:event_txt_otrosKeyTyped
+
+    private void txt_alimentacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_alimentacionKeyTyped
+        filtrar(evt, txt_alimentacion);
+    }//GEN-LAST:event_txt_alimentacionKeyTyped
+
+    private void txt_viviendaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_viviendaKeyTyped
+        filtrar(evt, txt_vivienda);
+    }//GEN-LAST:event_txt_viviendaKeyTyped
+
+    private void txt_ivaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ivaKeyTyped
+        filtrar(evt, txt_iva);
     }//GEN-LAST:event_txt_ivaKeyTyped
 
     /**
@@ -1101,6 +857,13 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     public static javax.swing.JComboBox<String> combo_Establecimientos;
     private com.toedter.calendar.JDateChooser date_fecha;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1109,46 +872,46 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lbl_alimentacion;
+    private javax.swing.JLabel lbl_educacion;
+    private javax.swing.JLabel lbl_negocio;
+    private javax.swing.JLabel lbl_otros;
+    private javax.swing.JLabel lbl_salud;
+    private javax.swing.JLabel lbl_vestimenta;
+    private javax.swing.JLabel lbl_vivienda;
     private javax.swing.JPanel panel_establecimiento;
     private javax.swing.JPanel panel_establecimiento1;
+    private javax.swing.JTextField txt_alimentacion;
     private javax.swing.JTextField txt_direc_est;
+    private javax.swing.JTextField txt_educacion;
     private javax.swing.JTextField txt_iva;
+    private javax.swing.JTextField txt_negocio;
     private javax.swing.JTextField txt_num_fac;
+    private javax.swing.JTextField txt_otros;
     private javax.swing.JTextField txt_ruc_est;
+    private javax.swing.JTextField txt_salud;
     private javax.swing.JTextField txt_sin_iva;
     private javax.swing.JTextField txt_telef;
     private javax.swing.JTextField txt_total;
+    private javax.swing.JTextField txt_vestimenta;
+    private javax.swing.JTextField txt_vivienda;
     // End of variables declaration//GEN-END:variables
 }
