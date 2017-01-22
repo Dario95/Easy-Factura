@@ -8,11 +8,20 @@ package Interfaces;
 import conexionBDD.Conexionn;
 import java.awt.Component;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -23,6 +32,7 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
     Conexionn conn;
     String cedula_usuario;
     int anio;
+    JTable aux;
 
     public HistorialGastos(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
@@ -52,6 +62,7 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         lbl_total = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        btnExport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -63,15 +74,20 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
         });
 
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 48)); // NOI18N
-        lbl_Reporte.setForeground(java.awt.Color.black);
         lbl_Reporte.setText("REPORTE DEL AÑO ");
 
         jLabel4.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
-        jLabel4.setForeground(java.awt.Color.black);
         jLabel4.setText("SUMA TOTAL:");
 
         lbl_total.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
         lbl_total.setForeground(java.awt.Color.red);
+
+        btnExport.setText("Exportar");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,7 +107,11 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lbl_Reporte)))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExport)
+                .addGap(148, 148, 148))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +124,8 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(btnExport))
         );
 
         pack();
@@ -124,15 +145,55 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
         {"Otros", historial.get(8).toString(), ""}};
 
         lbl_total.setText((String) historial.get(9));
-        
+
         JTable tablaHistorial = new JTable(datosTabla, nombreCabeceras) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+
+        aux = tablaHistorial;
         jScrollPane1.setViewportView(tablaHistorial);
     }//GEN-LAST:event_formComponentShown
+
+    public void toExcel(JTable table, File file) {
+        try {
+            TableModel model = table.getModel();
+            FileWriter excel = new FileWriter(file);
+
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                excel.write(model.getColumnName(i) + "\t");
+            }
+
+            excel.write("\n");
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    excel.write(model.getValueAt(i, j).toString() + "\t");
+                }
+                excel.write("\n");
+            }
+
+            excel.close();
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+        String file = JOptionPane.showInputDialog(null, "Ingrese el Nombre del archivo");
+        String path = "";
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        path = f.getAbsolutePath();
+        toExcel(aux, new File(path + "/" + file + ".xls"));
+
+    }//GEN-LAST:event_btnExportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,16 +209,24 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HistorialGastos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialGastos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HistorialGastos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialGastos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HistorialGastos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialGastos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HistorialGastos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialGastos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -170,6 +239,7 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExport;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_Reporte;
