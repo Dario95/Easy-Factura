@@ -10,13 +10,8 @@ import java.awt.Component;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -93,10 +88,10 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jScrollPane1)
-                .addGap(182, 182, 182))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExport)
+                .addGap(151, 151, 151))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -106,12 +101,11 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
                         .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lbl_Reporte)))
-                .addContainerGap(109, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExport)
-                .addGap(148, 148, 148))
+                        .addComponent(lbl_Reporte))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,25 +118,27 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(btnExport))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(btnExport)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado", "Limite Anual"};
+        String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado", "Limite Anual", "Diferencia"};
         ArrayList historial = conn.ddl(String.format("select *,total_alimentacion+total_salud+total_vivienda+total_educacion+total_vestimenta+total_negocios+total_otros as valor_total from historial_pagos where anio_historial=%s and id_cliente='%s'", this.anio, this.cedula_usuario));
         ArrayList anual = conn.ddl(String.format("select * from gastosanualespersonales where anio_gastos=%s", this.anio));
+        ArrayList diferencia = conn.ddl(String.format("select g.total_alimentacion - h.total_alimentacion, g.total_salud - h.total_salud, g.total_vivienda - h.total_vivienda, g.total_educacion - h.total_educacion, g.total_vestimenta - h.total_vestimenta from gastosanualespersonales g join historial_pagos h on g.anio_gastos = h.anio_historial where h.id_cliente='%s' and anio_gastos='%s'", this.cedula_usuario, this.anio));
 
-        String datosTabla[][] = {{"Alimentacion", historial.get(2).toString(), anual.get(1).toString()},
-        {"Salud", historial.get(3).toString(), anual.get(2).toString()},
-        {"Vivienda", historial.get(4).toString(), anual.get(3).toString()},
-        {"Educacion", historial.get(5).toString(), anual.get(4).toString()},
-        {"Vestimenta", historial.get(6).toString(), anual.get(5).toString()},
-        {"Negocio", historial.get(7).toString(), ""},
-        {"Otros", historial.get(8).toString(), ""}};
+        String datosTabla[][] = {{"Alimentacion", historial.get(2).toString(), anual.get(1).toString(), diferencia.get(0).toString()},
+        {"Salud", historial.get(3).toString(), anual.get(2).toString(), diferencia.get(1).toString()},
+        {"Vivienda", historial.get(4).toString(), anual.get(3).toString(), diferencia.get(2).toString()},
+        {"Educacion", historial.get(5).toString(), anual.get(4).toString(), diferencia.get(3).toString()},
+        {"Vestimenta", historial.get(6).toString(), anual.get(5).toString(), diferencia.get(4).toString()},
+        {"Negocio", historial.get(7).toString(), "", ""},
+        {"Otros", historial.get(8).toString(), "", ""}};
 
         lbl_total.setText((String) historial.get(9));
 
