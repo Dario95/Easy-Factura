@@ -175,7 +175,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                     for (Object ficheroSeleccionado : ficherosSeleccionados) {
                         CargaXml carga = new CargaXml();
                         carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
-                                "src/Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt",
+                                "Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt",
                                 cedula_usuario, anio);
                     }
                 } else {
@@ -298,7 +298,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     private void cargarTipos() {
         try {
-            FileReader f = new FileReader("src/Plantillas/tipoFacturas.txt");
+            FileReader f = new FileReader("Plantillas/tipoFacturas.txt");
             BufferedReader b = new BufferedReader(f);
 
             String elemento;
