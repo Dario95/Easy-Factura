@@ -4,3 +4,5 @@
 build.xml
 manifest.mf
 *.class
+/AplicacionesLibres1/nbproject/private/
+/AplicacionesLibres1/build/
