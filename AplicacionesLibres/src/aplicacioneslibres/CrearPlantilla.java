@@ -32,8 +32,8 @@ public class CrearPlantilla {
         cargarElementos();
         arrayTotal = xmlTotal.cargarTodo(factura);
 
-        File archivo = new File("src/Plantillas/" + nomFactura + ".txt");
-        File facturas = new File("src/Plantillas/tipoFacturas.txt");
+        File archivo = new File("Plantillas/" + nomFactura + ".txt");
+        File facturas = new File("Plantillas/tipoFacturas.txt");
         
         JOptionPane.showMessageDialog(null, archivo.getAbsolutePath());
 
