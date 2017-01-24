@@ -62,6 +62,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 700));
@@ -103,6 +104,9 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
             }
         });
 
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personal", "Negocios" }));
+        jComboBox2.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,8 +120,10 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton1)
                             .addComponent(jRadioButton2)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 171, Short.MAX_VALUE)))
                         .addGap(61, 61, 61))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +144,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +154,9 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                         .addComponent(jRadioButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(70, 70, 70))
@@ -175,8 +183,8 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                     for (Object ficheroSeleccionado : ficherosSeleccionados) {
                         CargaXml carga = new CargaXml();
                         carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
-                                "Plantillas/" + jComboBox1.getSelectedItem().toString() + ".txt",
-                                cedula_usuario, anio);
+                                new File("Plantillas/").getAbsolutePath() + "/" + jComboBox1.getSelectedItem().toString() + ".txt",
+                                cedula_usuario, anio, jComboBox2.getSelectedItem().toString());
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "No se selecciono un tipo de factura");
@@ -188,7 +196,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        fc.setCurrentDirectory(new File("Facturas/"));
+        fc.setCurrentDirectory(new File("Facturas/").getAbsoluteFile());
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = fc.showOpenDialog(FacturaElectronicaNew.this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -234,7 +242,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                 Logger.getLogger(FacturaElectronicaNew.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Open command cancelled by user.", "Cancelado", 3);
+            JOptionPane.showMessageDialog(null, "No se selecciono ninguna carpeta.", "Cancelado", 3);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -244,8 +252,10 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             cargarTipos();
             jComboBox1.setEnabled(true);
+            jComboBox2.setEnabled(true);
         } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
             jComboBox1.setEnabled(false);
+            jComboBox2.setEnabled(false);
         }
     }//GEN-LAST:event_jRadioButton2ItemStateChanged
 
@@ -298,7 +308,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     private void cargarTipos() {
         try {
-            FileReader f = new FileReader("Plantillas/tipoFacturas.txt");
+            FileReader f = new FileReader(new File("Plantillas/tipoFacturas.txt").getAbsoluteFile());
             BufferedReader b = new BufferedReader(f);
 
             String elemento;
@@ -318,6 +328,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList jList1;

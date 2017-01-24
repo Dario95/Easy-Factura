@@ -14,8 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,8 +30,8 @@ public class CrearPlantilla {
         cargarElementos();
         arrayTotal = xmlTotal.cargarTodo(factura);
 
-        File archivo = new File("Plantillas/" + nomFactura + ".txt");
-        File facturas = new File("Plantillas/tipoFacturas.txt");
+        File archivo = new File("Plantillas/" + nomFactura + ".txt").getAbsoluteFile();
+        File facturas = new File("Plantillas/tipoFacturas.txt").getAbsoluteFile();
         
         JOptionPane.showMessageDialog(null, archivo.getAbsolutePath());
 
