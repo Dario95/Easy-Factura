@@ -4,7 +4,8 @@
  */
 package aplicacioneslibres;
 
-import Interfaces.SeleccionarTipoGasto;
+import Interfaces.SeleccionarTipoGastoNegocios;
+import Interfaces.SeleccionarTipoGastoPersonal;
 import conexionBDD.Conexionn;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
@@ -36,9 +38,9 @@ public class CargaXml {
 
             // Abre la plantilla
             String elemento;
-                        
+
             ArrayList elementos = new ArrayList();
-            
+
             FileReader f = new FileReader(archivo);
             BufferedReader b = new BufferedReader(f);
 
@@ -53,7 +55,7 @@ public class CargaXml {
             // Datos sin cabecera
             cont = elementos.indexOf("estado");
             String estado = "";
-            if(cont != -1) {
+            if (cont != -1) {
                 Element est = (Element) rootNode.getChild(elementos.get(cont).toString());
                 if (est != null) {
                     estado = est.getTextTrim();
@@ -62,7 +64,7 @@ public class CargaXml {
 
             cont = elementos.indexOf("ambiente");
             String ambiente = "";
-            if(cont != -1) {
+            if (cont != -1) {
                 Element amb = (Element) rootNode.getChild(elementos.get(cont).toString());
                 if (amb != null) {
                     ambiente = amb.getTextTrim();
@@ -82,179 +84,143 @@ public class CargaXml {
                 tabla = rootNode;
             }
 
-            List lista_campos = tabla.getChildren();
-            Element campo;
+            String fechaCompleta = tabla.getChildren().get(1).getChildTextTrim("fechaEmision");
+            StringTokenizer tk = new StringTokenizer(fechaCompleta, "/");
+            String verificarFecha = "";
 
-            Element tributaria = (Element) lista_campos.get(0);
-
-            // Info Tributaria
-            cont = elementos.indexOf("razonSocial");
-            String nombreEst = "";
-            if(cont != -1) {
-                nombreEst = tributaria.getChildTextTrim(elementos.get(cont).toString());
-            }
-            
-            cont = elementos.indexOf("dirMatriz");
-            String dirMatriz = "";
-            if(cont != -1) {
-                dirMatriz = tributaria.getChildTextTrim(elementos.get(cont).toString());
-            }
-            
-            cont = elementos.indexOf("ruc");
-            String ruc = "";
-            if(cont != -1) {
-                ruc = tributaria.getChildTextTrim(elementos.get(cont).toString());
-            }
-            
-            cont = elementos.indexOf("estab");
-            String estab = "";
-            if(cont != -1) {
-                estab = tributaria.getChildTextTrim(elementos.get(cont).toString());
-            }
-            
-            cont = elementos.indexOf("ptoEmi");
-            String emision = "";
-            if(cont != -1) {
-                emision = tributaria.getChildTextTrim(elementos.get(cont).toString());
-            }
-            
-            cont = elementos.indexOf("secuencial");
-            String secuencial = "";
-            if(cont != -1) {
-                secuencial = tributaria.getChildTextTrim(elementos.get(cont).toString());
+            while (tk.hasMoreTokens()) {
+                verificarFecha = tk.nextToken();
             }
 
-            String numFact = estab + "-" + emision + "-" + secuencial;
+            if (verificarFecha.equals(String.valueOf(anio))) {
+                List lista_campos = tabla.getChildren();
+                Element campo;
 
-            if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
-                String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
-                        + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
-                cp.insertar(establecimiento);
-            }
+                Element tributaria = (Element) lista_campos.get(0);
 
-            //Se obtiene la raiz de la factura
-            Element factura = (Element) lista_campos.get(1);
-
-            // Info Factura
-            cont = elementos.indexOf("fechaEmision");
-            String fecha = "";
-            if(cont != -1) {
-                fecha = factura.getChildTextTrim(elementos.get(cont).toString());
-            }
-            // String nombreCli = factura.getChildTextTrim(elementos[7]);
-            // String cedulaClip = factura.getChildTextTrim(elementos[8]);
-            cont = elementos.indexOf("totalSinImpuestos");
-            Double totalSinImp = 0.0;
-            if(cont != -1) {
-                totalSinImp = Double.parseDouble(factura.getChildTextTrim(elementos.get(cont).toString()));
-            }
-
-            List totalConImp = factura.getChild("totalConImpuestos").getChildren();
-            Element totalImp = (Element) totalConImp.get(0);
-            
-            cont = elementos.indexOf("valor");
-            Double Imps = 0.0;
-            if(cont != -1) {
-                Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos.get(cont).toString()));
-            }
-
-            Double totalConImps = totalSinImp + Imps;
-
-            // Element adicional = (Element) lista_campos.get(3);
-            // Info Adicional
-            /*List campoAdi = adicional.getChildren();
-            Pattern pat;
-            Matcher mat;
-            String emailCli = "";
-            String dirCli = "";
-
-            for (int i = 0; i < campoAdi.size(); i++) {
-                Element attr = (Element) campoAdi.get(i);
-
-                pat = Pattern.compile("mail");
-                mat = pat.matcher(elementos[11]);
-                if (mat.find()) {
-                    emailCli = attr.getTextTrim();
-                    break;
+                // Info Tributaria
+                cont = elementos.indexOf("razonSocial");
+                String nombreEst = "";
+                if (cont != -1) {
+                    nombreEst = tributaria.getChildTextTrim(elementos.get(cont).toString());
                 }
 
-                pat = Pattern.compile("ireccion");
-                mat = pat.matcher(elementos[12]);
-                if (mat.find()) {
-                    dirCli = attr.getTextTrim();
-                    break;
+                cont = elementos.indexOf("dirMatriz");
+                String dirMatriz = "";
+                if (cont != -1) {
+                    dirMatriz = tributaria.getChildTextTrim(elementos.get(cont).toString());
                 }
-            }*/
 
- /*String cliente = "INSERT INTO CLIENTE (id_cliente,nombre_cliente)"
-                    + "VALUES ('" + cedulaClip + "','" + nombreCli + "')";
-            cp.insertar(cliente);*/
-            if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
-                String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                        + "VALUES ('" + numFact + "','" + cedulaCli + "','" + ruc + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
-                cp.insertar(facturaQ);
+                cont = elementos.indexOf("ruc");
+                String ruc = "";
+                if (cont != -1) {
+                    ruc = tributaria.getChildTextTrim(elementos.get(cont).toString());
+                }
 
-                Element detalles = (Element) lista_campos.get(2);
-                List detalle = detalles.getChildren();
+                cont = elementos.indexOf("estab");
+                String estab = "";
+                if (cont != -1) {
+                    estab = tributaria.getChildTextTrim(elementos.get(cont).toString());
+                }
 
-                Object datosProducto[][] = new Object[detalle.size()][3];
+                cont = elementos.indexOf("ptoEmi");
+                String emision = "";
+                if (cont != -1) {
+                    emision = tributaria.getChildTextTrim(elementos.get(cont).toString());
+                }
 
-                for (int j = 0; j < detalle.size(); j++) {
+                cont = elementos.indexOf("secuencial");
+                String secuencial = "";
+                if (cont != -1) {
+                    secuencial = tributaria.getChildTextTrim(elementos.get(cont).toString());
+                }
 
-                    campo = (Element) detalle.get(j);
+                String numFact = estab + "-" + emision + "-" + secuencial;
 
-                    // Detalle
-                    cont = elementos.indexOf("descripcion");
-                    String descripcion = "";
-                    if(cont != -1) {
-                        descripcion = campo.getChildTextTrim(elementos.get(cont).toString());
+                if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
+                    String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
+                            + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
+                    cp.insertar(establecimiento);
+                }
+
+                //Se obtiene la raiz de la factura
+                Element factura = (Element) lista_campos.get(1);
+
+                // Info Factura
+                cont = elementos.indexOf("fechaEmision");
+                String fecha = "";
+                if (cont != -1) {
+                    fecha = factura.getChildTextTrim(elementos.get(cont).toString());
+                }
+
+                cont = elementos.indexOf("totalSinImpuestos");
+                Double totalSinImp = 0.0;
+                if (cont != -1) {
+                    totalSinImp = Double.parseDouble(factura.getChildTextTrim(elementos.get(cont).toString()));
+                }
+
+                List totalConImp = factura.getChild("totalConImpuestos").getChildren();
+                Element totalImp = (Element) totalConImp.get(0);
+
+                cont = elementos.indexOf("valor");
+                Double Imps = 0.0;
+                if (cont != -1) {
+                    Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos.get(cont).toString()));
+                }
+
+                Double totalConImps = totalSinImp + Imps;
+
+                if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
+                    String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
+                            + "VALUES ('" + numFact + "','" + cedulaCli + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
+                    cp.insertar(facturaQ);
+
+                    Element detalles = (Element) lista_campos.get(2);
+                    List detalle = detalles.getChildren();
+
+                    Object datosProducto[][] = new Object[detalle.size()][3];
+
+                    for (int j = 0; j < detalle.size(); j++) {
+
+                        campo = (Element) detalle.get(j);
+
+                        // Detalle
+                        cont = elementos.indexOf("descripcion");
+                        String descripcion = "";
+                        if (cont != -1) {
+                            descripcion = campo.getChildTextTrim(elementos.get(cont).toString());
+                        }
+
+                        cont = elementos.indexOf("precioTotalSinImpuesto");
+                        Double total = 0.0;
+                        if (cont != -1) {
+                            total = Double.parseDouble(campo.getChildTextTrim(elementos.get(cont).toString()));
+                        }
+
+                        if (!descripcion.equals("")) {
+                            datosProducto[j][0] = descripcion;
+                            datosProducto[j][1] = total;
+                            datosProducto[j][2] = "";
+                        }
                     }
-                    // Double cantidad = Double.parseDouble(campo.getChildTextTrim(elementos[14]));
-                    // Double precioUnitario = Double.parseDouble(campo.getChildTextTrim(elementos[15]));
-                    cont = elementos.indexOf("precioTotalSinImpuesto");
-                    Double total = 0.0;
-                    if(cont != -1) {
-                        total = Double.parseDouble(campo.getChildTextTrim(elementos.get(cont).toString()));
-                    }
 
-                    if (!descripcion.equals("")) {
-                        datosProducto[j][0] = descripcion;
-                        datosProducto[j][1] = total;
-                        datosProducto[j][2] = "";
+                    if (datosProducto.length != 0) {
+                        if (tipo.equals("Personal")) {
+                            SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+                            seleccionarP.setVisible(true);
+                        } else {
+                            SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+                            seleccionarH.setVisible(true);
+                        }
                     }
-
-                    /*int idProducto;
-                if (cp.consultar("PRODUCTO").equals("")) {
-                    idProducto = 0;
                 } else {
-                    idProducto = Integer.parseInt(cp.consultar("PRODUCTO"));
-                    idProducto++;
-                }
-
-                String producto = "INSERT INTO PRODUCTO (id_producto,descripcion_producto)"
-                        + "VALUES (" + idProducto + ",'" + descripcion + "')";
-                cp.insertar(producto);
-
-                String detalleQ = "INSERT INTO DETALLE (id_producto,id_factura,total,cantidad,precio_unitario)"
-                        + "VALUES (" + idProducto + ",'" + numFact + "'," + total + "," + cantidad + "," + precioUnitario + ")";
-                cp.insertar(detalleQ);*/
-                }
-
-                if(datosProducto.length != 0) {
-                    SeleccionarTipoGasto seleccionar = new SeleccionarTipoGasto(cp, datosProducto, numFact, anio, cedulaCli, tipo);
-                    seleccionar.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
+                JOptionPane.showMessageDialog(null, "El año de la factura no corresponde con el año seleccionado");
             }
-
         } catch (IOException | JDOMException io) {
             System.out.println(io.getMessage());
         }
     }
-
-    /*public static void main(String args[]) {
-        CargaXml car = new CargaXml();
-        car.cargarXml("test.xml", "test.txt");
-    }*/
 }

@@ -26,7 +26,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     int anio;
     Conexionn conn;
 
-    ArrayList historial;
+    ArrayList historial_p, historial_n;
 
     public VentanaPrincipal(String cedula_usuario, int anio) {
         initComponents();
@@ -175,8 +175,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        historial = conn.ddl(String.format("select * from historial_pagos where anio_historial=%s and id_cliente='%s'", anio, cedula_usuario));
-        if (historial.isEmpty()) {
+        historial_p = conn.ddl(String.format("select * from historial_pagos_personales where anio_historial_p=%s and id_cliente='%s'", anio, cedula_usuario));
+        historial_n = conn.ddl(String.format("select * from historial_pagos_negocios where anio_historial_n=%s and id_cliente='%s'", anio, cedula_usuario));
+        
+        if (historial_p.isEmpty() && historial_n.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se tienen registros de este año");
         } else {
             jDesktopPane.removeAll();

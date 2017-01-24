@@ -12,8 +12,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
-import java.util.List;
 
 /**
  *

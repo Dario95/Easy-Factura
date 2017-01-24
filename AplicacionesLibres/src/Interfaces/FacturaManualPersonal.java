@@ -587,13 +587,13 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
                     + "VALUES('" + num_factura + "','Otro'," + totalOtros + ")");
         }
 
-        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_personal=" + anio + "")) {
+        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula_usuario + "'")) {
             conn.insertar("UPDATE HISTORIAL_PAGOS_PERSONALES SET total_alimentacion=total_alimentacion+" + totalAlimento + "::money,"
                     + "total_salud=total_salud+" + totalSalud + "::money,"
                     + "total_vivienda=total_vivienda+" + totalVivienda + "::money,"
                     + "total_educacion=total_educacion+" + totalEducacion + "::money,"
                     + "total_vestimenta=total_vestimenta+" + totalVestimenta + "::money,"
-                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial_personal=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial_p=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
 
         } else {
             conn.insertar("INSERT INTO HISTORIAL_PAGOS_PERSONALES VALUES (" + anio + ",'" + cedula_usuario + "'," + totalAlimento + "," + totalSalud + "," + totalVivienda + "," + totalEducacion + "," + totalVestimenta + "," + totalOtros + ")");

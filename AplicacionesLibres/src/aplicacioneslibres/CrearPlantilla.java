@@ -33,8 +33,6 @@ public class CrearPlantilla {
         File archivo = new File("Plantillas/" + nomFactura + ".txt").getAbsoluteFile();
         File facturas = new File("Plantillas/tipoFacturas.txt").getAbsoluteFile();
         
-        JOptionPane.showMessageDialog(null, archivo.getAbsolutePath());
-
         StringTokenizer tk;
         String aux, elemento;
 

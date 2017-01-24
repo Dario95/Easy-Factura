@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -22,7 +23,7 @@ import javax.swing.table.TableModel;
  *
  * @author andreu
  */
-public class SeleccionarTipoGasto extends javax.swing.JFrame {
+public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
 
     final JComboBox comboBox;
     JTable tablaProductos;
@@ -46,7 +47,7 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
      * @param cedula
      * @param tipo
      */
-    public SeleccionarTipoGasto(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula, String tipo) {
+    public SeleccionarTipoGastoPersonal(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula, String tipo) {
         initComponents();
         this.conTipo = conn;
         this.numFac = factura;
@@ -72,194 +73,69 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         comboBox = new JComboBox();
         comboBox.addItem("");
 
-        if (tipo.equals("Personal")) {
-            comboBox.addItem("Vivienda");
-            comboBox.addItem("Salud");
-            comboBox.addItem("Educacion");
-            comboBox.addItem("Alimentacion");
-            comboBox.addItem("Vestimenta");
-            comboBox.addItem("Otro");
-                  
-            lblMercaderia.setVisible(false);
-            txtMercaderia.setVisible(false);
-            lblArriendo.setVisible(false);
-            txtArriendo.setVisible(false);
-            lblServicios.setVisible(false);
-            txtServicios.setVisible(false);
-            lblSueldos.setVisible(false);
-            txtSueldos.setVisible(false);
-            lblMovilizacion.setVisible(false);
-            txtMovilizacion.setVisible(false);
-            lblViaticos.setVisible(false);
-            txtViaticos.setVisible(false);
-            lblCapacitacion.setVisible(false);
-            txtCapacitacion.setVisible(false);
-            lblSuministros.setVisible(false);
-            txtSuministros.setVisible(false);
-            lblHerramientas.setVisible(false);
-            txtHerramientas.setVisible(false);
-            
-            
-            
-            pack();
+        comboBox.addItem("Vivienda");
+        comboBox.addItem("Salud");
+        comboBox.addItem("Educacion");
+        comboBox.addItem("Alimentacion");
+        comboBox.addItem("Vestimenta");
+        comboBox.addItem("Otro");
 
-            tablaProductos.getModel().addTableModelListener(new TableModelListener() {
-                @Override
-                public void tableChanged(TableModelEvent tme) {
-                    int row = tme.getFirstRow();
-                    int column = tme.getColumn();
+        tablaProductos.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent tme) {
+                int row = tme.getFirstRow();
+                int column = tme.getColumn();
 
-                    TableModel model = (TableModel) tme.getSource();
-                    Object data = model.getValueAt(row, column);
+                TableModel model = (TableModel) tme.getSource();
+                Object data = model.getValueAt(row, column);
 
-                    if (!data.equals("") && column == 2) {
-                        //int opc = comboBox.getSelectedIndex();
-                        //System.out.println(row);
+                if (!data.equals("") && column == 2) {
+                    //int opc = comboBox.getSelectedIndex();
+                    //System.out.println(row);
 
-                        if (!tipoEstado[row].equals("")) {
-                            if (tipoEstado[row].equals("Vivienda")) {
-                                restarAgregado(txtVivienda, row);
-                            }
-                            if (tipoEstado[row].equals("Salud")) {
-                                restarAgregado(txtSalud, row);
-                            }
-                            if (tipoEstado[row].equals("Educacion")) {
-                                restarAgregado(txtEducacion, row);
-                            }
-                            if (tipoEstado[row].equals("Alimentacion")) {
-                                restarAgregado(txtAlimentacion, row);
-                            }
-                            if (tipoEstado[row].equals("Vestimenta")) {
-                                restarAgregado(txtVestimenta, row);
-                            }
-                            if (tipoEstado[row].equals("Otro")) {
-                                restarAgregado(txtOtro, row);
-                            }
+                    if (!tipoEstado[row].equals("")) {
+                        if (tipoEstado[row].equals("Vivienda")) {
+                            restarAgregado(txtVivienda, row);
                         }
-
-                        if (data.equals("Vivienda")) {
-                            sumarAgregado(txtVivienda, row, "Vivienda");
+                        if (tipoEstado[row].equals("Salud")) {
+                            restarAgregado(txtSalud, row);
                         }
-                        if (data.equals("Salud")) {
-                            sumarAgregado(txtSalud, row, "Salud");
+                        if (tipoEstado[row].equals("Educacion")) {
+                            restarAgregado(txtEducacion, row);
                         }
-                        if (data.equals("Educacion")) {
-                            sumarAgregado(txtEducacion, row, "Educacion");
+                        if (tipoEstado[row].equals("Alimentacion")) {
+                            restarAgregado(txtAlimentacion, row);
                         }
-                        if (data.equals("Alimentacion")) {
-                            sumarAgregado(txtAlimentacion, row, "Alimentacion");
+                        if (tipoEstado[row].equals("Vestimenta")) {
+                            restarAgregado(txtVestimenta, row);
                         }
-                        if (data.equals("Vestimenta")) {
-                            sumarAgregado(txtVestimenta, row, "Vestimenta");
-                        }
-                        if (data.equals("Otro")) {
-                            sumarAgregado(txtOtro, row, "Otro");
+                        if (tipoEstado[row].equals("Otro")) {
+                            restarAgregado(txtOtro, row);
                         }
                     }
 
-                }
-            });
-        } else {
-            comboBox.addItem("Mercaderia");
-            comboBox.addItem("Arriendo");
-            comboBox.addItem("Servicios Basicos");
-            comboBox.addItem("Sueldos");
-            comboBox.addItem("Movilizacion");
-            comboBox.addItem("Viaticos");
-            comboBox.addItem("Capacitacion");
-            comboBox.addItem("Suministros");
-            comboBox.addItem("Herramientas");
-            
-            lblVivienda.setVisible(false);
-            txtVivienda.setVisible(false);
-            lblSalud.setVisible(false);
-            txtSalud.setVisible(false);
-            lblEducacion.setVisible(false);
-            txtEducacion.setVisible(false);
-            lblAlimentacion.setVisible(false);
-            txtAlimentacion.setVisible(false);
-            lblVestimenta.setVisible(false);
-            txtVestimenta.setVisible(false);
-            lblOtro.setVisible(false);
-            txtOtro.setVisible(false);
-            
-            pack();
-
-            tablaProductos.getModel().addTableModelListener(new TableModelListener() {
-                @Override
-                public void tableChanged(TableModelEvent tme) {
-                    int row = tme.getFirstRow();
-                    int column = tme.getColumn();
-
-                    TableModel model = (TableModel) tme.getSource();
-                    Object data = model.getValueAt(row, column);
-
-                    if (!data.equals("") && column == 2) {
-                        //int opc = comboBox.getSelectedIndex();
-                        //System.out.println(row);
-
-                        if (!tipoEstado[row].equals("")) {
-                            if (tipoEstado[row].equals("Mercaderia")) {
-                                restarAgregado(txtVivienda, row);
-                            }
-                            if (tipoEstado[row].equals("Arriendo")) {
-                                restarAgregado(txtSalud, row);
-                            }
-                            if (tipoEstado[row].equals("Servicios Basicos")) {
-                                restarAgregado(txtEducacion, row);
-                            }
-                            if (tipoEstado[row].equals("Sueldos")) {
-                                restarAgregado(txtAlimentacion, row);
-                            }
-                            if (tipoEstado[row].equals("Movilizacion")) {
-                                restarAgregado(txtVestimenta, row);
-                            }
-                            if (tipoEstado[row].equals("Viaticos")) {
-                                restarAgregado(txtOtro, row);
-                            }
-                            if (tipoEstado[row].equals("Capacitacion")) {
-                                restarAgregado(txtOtro, row);
-                            }
-                            if (tipoEstado[row].equals("Suministros")) {
-                                restarAgregado(txtOtro, row);
-                            }
-                            if (tipoEstado[row].equals("Herramientas")) {
-                                restarAgregado(txtOtro, row);
-                            }
-                        }
-
-                        if (data.equals("Mercaderia")) {
-                            sumarAgregado(txtVivienda, row, "Mercaderia");
-                        }
-                        if (data.equals("Arriendo")) {
-                            sumarAgregado(txtSalud, row, "Arriendo");
-                        }
-                        if (data.equals("Servicios Basicos")) {
-                            sumarAgregado(txtEducacion, row, "Servicios Basicos");
-                        }
-                        if (data.equals("Sueldos")) {
-                            sumarAgregado(txtAlimentacion, row, "Sueldos");
-                        }
-                        if (data.equals("Movilizacion")) {
-                            sumarAgregado(txtVestimenta, row, "Movilizacion");
-                        }
-                        if (data.equals("Viaticos")) {
-                            sumarAgregado(txtOtro, row, "Viaticos");
-                        }
-                        if (data.equals("Capacitacion")) {
-                            sumarAgregado(txtOtro, row, "Capacitacion");
-                        }
-                        if (data.equals("Suministros")) {
-                            sumarAgregado(txtOtro, row, "Suministros");
-                        }
-                        if (data.equals("Herramientas")) {
-                            sumarAgregado(txtOtro, row, "Herramientas");
-                        }
+                    if (data.equals("Vivienda")) {
+                        sumarAgregado(txtVivienda, row, "Vivienda");
                     }
-
+                    if (data.equals("Salud")) {
+                        sumarAgregado(txtSalud, row, "Salud");
+                    }
+                    if (data.equals("Educacion")) {
+                        sumarAgregado(txtEducacion, row, "Educacion");
+                    }
+                    if (data.equals("Alimentacion")) {
+                        sumarAgregado(txtAlimentacion, row, "Alimentacion");
+                    }
+                    if (data.equals("Vestimenta")) {
+                        sumarAgregado(txtVestimenta, row, "Vestimenta");
+                    }
+                    if (data.equals("Otro")) {
+                        sumarAgregado(txtOtro, row, "Otro");
+                    }
                 }
-            });
-        }
+
+            }
+        });
 
         DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
         alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
@@ -301,24 +177,6 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         txtOtro = new javax.swing.JTextField();
         lblVestimenta = new javax.swing.JLabel();
         lblOtro = new javax.swing.JLabel();
-        lblMercaderia = new javax.swing.JLabel();
-        txtMercaderia = new javax.swing.JTextField();
-        lblArriendo = new javax.swing.JLabel();
-        txtArriendo = new javax.swing.JTextField();
-        lblServicios = new javax.swing.JLabel();
-        txtServicios = new javax.swing.JTextField();
-        lblSueldos = new javax.swing.JLabel();
-        txtSueldos = new javax.swing.JTextField();
-        lblMovilizacion = new javax.swing.JLabel();
-        txtMovilizacion = new javax.swing.JTextField();
-        lblViaticos = new javax.swing.JLabel();
-        txtViaticos = new javax.swing.JTextField();
-        lblCapacitacion = new javax.swing.JLabel();
-        txtCapacitacion = new javax.swing.JTextField();
-        lblSuministros = new javax.swing.JLabel();
-        txtSuministros = new javax.swing.JTextField();
-        lblHerramientas = new javax.swing.JLabel();
-        txtHerramientas = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -361,133 +219,48 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
 
         lblOtro.setText("Otro");
 
-        lblMercaderia.setText("Mercaderia");
-
-        txtMercaderia.setEditable(false);
-        txtMercaderia.setText("0.0");
-
-        lblArriendo.setText("Arriendo");
-
-        txtArriendo.setEditable(false);
-        txtArriendo.setText("0.0");
-
-        lblServicios.setText("Servicios Basicos");
-
-        txtServicios.setEditable(false);
-        txtServicios.setText("0.0");
-
-        lblSueldos.setText("Sueldos");
-
-        txtSueldos.setEditable(false);
-        txtSueldos.setText("0.0");
-
-        lblMovilizacion.setText("Movilizacion");
-
-        txtMovilizacion.setEditable(false);
-        txtMovilizacion.setText("0.0");
-
-        lblViaticos.setText("Viaticos");
-
-        txtViaticos.setEditable(false);
-        txtViaticos.setText("0.0");
-
-        lblCapacitacion.setText("Capacitacion");
-
-        txtCapacitacion.setEditable(false);
-        txtCapacitacion.setText("0.0");
-
-        lblSuministros.setText("Sumistros");
-
-        txtSuministros.setEditable(false);
-        txtSuministros.setText("0.0");
-
-        lblHerramientas.setText("Herramientas");
-
-        txtHerramientas.setEditable(false);
-        txtHerramientas.setText("0.0");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblVivienda)
-                            .addGap(75, 75, 75)
-                            .addComponent(txtVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(65, 65, 65)
-                            .addComponent(lblAlimentacion)
-                            .addGap(36, 36, 36)
-                            .addComponent(txtAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblSalud)
-                            .addGap(91, 91, 91)
-                            .addComponent(txtSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(65, 65, 65)
-                            .addComponent(lblVestimenta)
-                            .addGap(46, 46, 46)
-                            .addComponent(txtVestimenta, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblEducacion)
-                            .addGap(65, 65, 65)
-                            .addComponent(txtEducacion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(65, 65, 65)
-                            .addComponent(lblOtro)
-                            .addGap(84, 84, 84)
-                            .addComponent(txtOtro, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblMercaderia)
-                            .addGap(57, 57, 57)
-                            .addComponent(txtMercaderia, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(65, 65, 65)
-                            .addComponent(lblViaticos)
-                            .addGap(66, 66, 66)
-                            .addComponent(txtViaticos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblArriendo)
-                            .addGap(73, 73, 73)
-                            .addComponent(txtArriendo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(65, 65, 65)
-                            .addComponent(lblCapacitacion)
-                            .addGap(37, 37, 37)
-                            .addComponent(txtCapacitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblServicios)
-                            .addGap(26, 26, 26)
-                            .addComponent(txtServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(65, 65, 65)
-                            .addComponent(lblSuministros)
-                            .addGap(53, 53, 53)
-                            .addComponent(txtSuministros, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblSueldos)
-                            .addGap(78, 78, 78)
-                            .addComponent(txtSueldos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(65, 65, 65)
-                            .addComponent(lblHerramientas)
-                            .addGap(31, 31, 31)
-                            .addComponent(txtHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(lblMovilizacion)
-                            .addGap(53, 53, 53)
-                            .addComponent(txtMovilizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(512, 512, 512)
-                            .addComponent(jButton1))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblVivienda)
+                        .addGap(95, 95, 95)
+                        .addComponent(txtVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(lblAlimentacion)
+                        .addGap(56, 56, 56)
+                        .addComponent(txtAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblSalud)
+                        .addGap(111, 111, 111)
+                        .addComponent(txtSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(lblVestimenta)
+                        .addGap(66, 66, 66)
+                        .addComponent(txtVestimenta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblEducacion)
+                        .addGap(85, 85, 85)
+                        .addComponent(txtEducacion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(lblOtro)
+                        .addGap(104, 104, 104)
+                        .addComponent(txtOtro, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(512, 512, 512)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -523,48 +296,6 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                             .addComponent(lblEducacion)
                             .addComponent(lblOtro))))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtMercaderia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtViaticos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMercaderia)
-                            .addComponent(lblViaticos))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtArriendo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCapacitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblArriendo)
-                            .addComponent(lblCapacitacion))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSuministros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblServicios)
-                            .addComponent(lblSuministros))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSueldos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSueldos)
-                            .addComponent(lblHerramientas))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(lblMovilizacion))
-                    .addComponent(txtMovilizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -587,92 +318,38 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         }
 
         if (validado == true) {
-            String query = "";
-            Double total;
+            String query;
 
-            double totales[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+            double totales[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
             if (!txtVivienda.getText().equals("0.0")) {
-                total = Double.parseDouble(txtVivienda.getText());
-                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
-                        + "VALUES('" + numFac + "','" + lblVivienda.getText() + "'," + total + ")";
-
-                totales[0] = total;
-                conTipo.insertar(query);
+                totales[0] = ingresarTipo(txtVivienda, lblVivienda);
             }
             if (!txtSalud.getText().equals("0.0")) {
-                total = Double.parseDouble(txtSalud.getText());
-                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
-                        + "VALUES('" + numFac + "','" + lblSalud.getText() + "'," + total + ")";
-
-                totales[1] = total;
-                conTipo.insertar(query);
+                totales[1] = ingresarTipo(txtSalud, lblSalud);
             }
             if (!txtEducacion.getText().equals("0.0")) {
-                total = Double.parseDouble(txtEducacion.getText());
-                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
-                        + "VALUES('" + numFac + "','" + lblEducacion.getText() + "'," + total + ")";
-
-                totales[2] = total;
-                conTipo.insertar(query);
+                totales[2] = ingresarTipo(txtEducacion, lblEducacion);
             }
             if (!txtAlimentacion.getText().equals("0.0")) {
-                total = Double.parseDouble(txtAlimentacion.getText());
-                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
-                        + "VALUES('" + numFac + "','" + lblAlimentacion.getText() + "'," + total + ")";
-
-                totales[3] = total;
-                conTipo.insertar(query);
+                totales[3] = ingresarTipo(txtAlimentacion, lblAlimentacion);
             }
             if (!txtVestimenta.getText().equals("0.0")) {
-                total = Double.parseDouble(txtVestimenta.getText());
-                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
-                        + "VALUES('" + numFac + "','" + lblVestimenta.getText() + "'," + total + ")";
-
-                totales[4] = total;
-                conTipo.insertar(query);
+                totales[4] = ingresarTipo(txtVestimenta, lblVestimenta);
             }
             if (!txtOtro.getText().equals("0.0")) {
-                total = Double.parseDouble(txtOtro.getText());
-                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
-                        + "VALUES('" + numFac + "','" + lblOtro.getText() + "'," + total + ")";
-
-                totales[5] = total;
-                conTipo.insertar(query);
-            }
-            if (!jTextField7.getText().equals("0.0")) {
-                total = Double.parseDouble(jTextField7.getText());
-                total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-                query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
-                        + "VALUES('" + numFac + "','" + jLabel8.getText() + "'," + total + ")";
-
-                totales[6] = total;
-                conTipo.insertar(query);
+                totales[5] = ingresarTipo(txtOtro, lblOtro);
             }
 
-            if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
-                query = "UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+" + totales[3] + "::money,"
+            if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
+                query = "UPDATE HISTORIAL_PAGOS_PERSONALES SET total_alimentacion=total_alimentacion+" + totales[3] + "::money,"
                         + "total_salud=total_salud+" + totales[1] + "::money,"
                         + "total_vivienda=total_vivienda+" + totales[0] + "::money,"
                         + "total_educacion=total_educacion+" + totales[2] + "::money,"
                         + "total_vestimenta=total_vestimenta+" + totales[4] + "::money,"
-                        + "total_negocios=total_negocios+" + totales[5] + "::money,"
-                        + "total_otros=total_otros+" + totales[6] + "::money WHERE anio_historial=" + anio + " AND id_cliente='" + cedula + "'";
+                        + "total_otros=total_otros+" + totales[5] + "::money WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'";
             } else {
-                query = "INSERT INTO HISTORIAL_PAGOS VALUES (" + anio + ",'" + cedula + "'," + totales[3] + "," + totales[1] + "," + totales[0] + "," + totales[2] + "," + totales[4] + "," + totales[5] + "," + totales[6] + ")";
+                query = "INSERT INTO HISTORIAL_PAGOS_PERSONALES VALUES (" + anio + ",'" + cedula + "'," + totales[3] + "," + totales[1] + "," + totales[0] + "," + totales[2] + "," + totales[4] + "," + totales[5] + ")";
             }
 
             conTipo.insertar(query);
@@ -701,6 +378,21 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
         tipoEstado[row] = tipo;
     }
 
+    public double ingresarTipo(JTextField txtField, JLabel lblLabel) {
+        double total;
+        String query;
+
+        total = Double.parseDouble(txtField.getText());
+        total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
+        query = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                + "VALUES('" + numFac + "','" + lblLabel.getText() + "'," + total + ")";
+
+        conTipo.insertar(query);
+
+        return total;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -718,14 +410,15 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGasto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGasto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGasto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGasto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -741,34 +434,16 @@ public class SeleccionarTipoGasto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAlimentacion;
-    private javax.swing.JLabel lblArriendo;
-    private javax.swing.JLabel lblCapacitacion;
     private javax.swing.JLabel lblEducacion;
-    private javax.swing.JLabel lblHerramientas;
-    private javax.swing.JLabel lblMercaderia;
-    private javax.swing.JLabel lblMovilizacion;
     private javax.swing.JLabel lblOtro;
     private javax.swing.JLabel lblSalud;
-    private javax.swing.JLabel lblServicios;
-    private javax.swing.JLabel lblSueldos;
-    private javax.swing.JLabel lblSuministros;
     private javax.swing.JLabel lblVestimenta;
-    private javax.swing.JLabel lblViaticos;
     private javax.swing.JLabel lblVivienda;
     private javax.swing.JTextField txtAlimentacion;
-    private javax.swing.JTextField txtArriendo;
-    private javax.swing.JTextField txtCapacitacion;
     private javax.swing.JTextField txtEducacion;
-    private javax.swing.JTextField txtHerramientas;
-    private javax.swing.JTextField txtMercaderia;
-    private javax.swing.JTextField txtMovilizacion;
     private javax.swing.JTextField txtOtro;
     private javax.swing.JTextField txtSalud;
-    private javax.swing.JTextField txtServicios;
-    private javax.swing.JTextField txtSueldos;
-    private javax.swing.JTextField txtSuministros;
     private javax.swing.JTextField txtVestimenta;
-    private javax.swing.JTextField txtViaticos;
     private javax.swing.JTextField txtVivienda;
     // End of variables declaration//GEN-END:variables
 }
