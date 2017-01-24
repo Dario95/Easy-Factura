@@ -16,21 +16,25 @@ import javax.swing.JPasswordField;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    FacturaManualNew fm;
+    FacturaManualPersonal fmp;
     FacturaElectronicaNew fe;
+    FacturaManualNegocio fmn;
     HistorialGastos hg;
-    String cedula_usuario;
+    Object[] paneles;
+    
+    String cedula_usuario;    
     int anio;
     Conexionn conn;
-    
+
     ArrayList historial;
 
-    public VentanaPrincipal(String cedula_usuario,int anio) {
+    public VentanaPrincipal(String cedula_usuario, int anio) {
         initComponents();
         conn = new Conexionn();
-        fm = new FacturaManualNew(conn, cedula_usuario,anio);
+        fmp = new FacturaManualPersonal(conn, cedula_usuario, anio);
+        fmn=new FacturaManualNegocio(conn, cedula_usuario, anio);
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
-        hg = new HistorialGastos(conn,cedula_usuario,anio);
+        hg = new HistorialGastos(conn, cedula_usuario, anio);      
         
         this.anio = anio;
         this.cedula_usuario = cedula_usuario;
@@ -53,6 +57,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         m_FactFisic = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
@@ -77,13 +82,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         m_FactFisic.setText("Facturas Fisicas");
 
-        jMenuItem1.setText("Registar");
+        jMenuItem1.setText("Registar Factura Personal");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         m_FactFisic.add(jMenuItem1);
+
+        jMenuItem5.setText("Registrar Factura de Negocio");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        m_FactFisic.add(jMenuItem5);
 
         jMenuBar1.add(m_FactFisic);
 
@@ -133,13 +146,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jDesktopPane.removeAll();
         fe.setVisible(false);
         hg.setVisible(false);
-        fm.setVisible(true);
-        jDesktopPane.add(fm);
+        fmn.setVisible(false);
+        fmp.setVisible(true);
+        jDesktopPane.add(fmp);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         jDesktopPane.removeAll();
-        fm.setVisible(false);
+        fmp.setVisible(false);
+        fmn.setVisible(false);
         hg.setVisible(false);
         fe.setVisible(true);
         jDesktopPane.add(fe);
@@ -150,8 +165,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             JPasswordField pf = new JPasswordField();
             int okCxl = JOptionPane.showConfirmDialog(null, pf, "Por favor, ingrese su contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (okCxl == JOptionPane.OK_OPTION) {
-                if (conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s' and contrasena='%s'", cedula_usuario, String.valueOf(pf.getPassword())))) {                                                            
-                    conn.insertar(String.format("select borrarCliente('%s')", cedula_usuario));                    
+                if (conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s' and contrasena='%s'", cedula_usuario, String.valueOf(pf.getPassword())))) {
+                    conn.insertar(String.format("select borrarCliente('%s')", cedula_usuario));
                 } else {
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -161,17 +176,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         historial = conn.ddl(String.format("select * from historial_pagos where anio_historial=%s and id_cliente='%s'", anio, cedula_usuario));
-        
         if (historial.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se tienen registros de este año");
         } else {
             jDesktopPane.removeAll();
-            fm.setVisible(false);
+            fmp.setVisible(false);
+            fmn.setVisible(false);
             fe.setVisible(false);
             hg.setVisible(true);
             jDesktopPane.add(hg);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        jDesktopPane.removeAll();
+        fe.setVisible(false);
+        hg.setVisible(false);
+        fmp.setVisible(false);
+        fmn.setVisible(true);        
+        jDesktopPane.add(fmn);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,6 +248,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
     private javax.swing.JMenu m_Usuario;
