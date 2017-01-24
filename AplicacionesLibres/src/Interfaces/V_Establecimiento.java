@@ -6,6 +6,7 @@
 package Interfaces;
 
 import static Interfaces.FacturaManualPersonal.combo_Establecimientos;
+import static Interfaces.FacturaManualNegocio.combo_Establecimientos;
 import conexionBDD.Conexionn;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -82,6 +83,12 @@ public class V_Establecimiento extends javax.swing.JFrame {
         jLabel10.setBackground(java.awt.Color.black);
         jLabel10.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel10.setText("Telefono:");
+
+        txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_rucKeyTyped(evt);
+            }
+        });
 
         jLabel7.setBackground(java.awt.Color.black);
         jLabel7.setFont(new java.awt.Font("Open Sans Extrabold", 1, 18)); // NOI18N
@@ -212,12 +219,23 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_borrarActionPerformed
 
+    private void txt_rucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyTyped
+        char c = evt.getKeyChar();        
+        if (!Character.isDigit(c) || txt_ruc.getText().length()>12) {
+            getToolkit();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_rucKeyTyped
+
     public void recargar() {
-        combo_Establecimientos.removeAllItems();
-        combo_Establecimientos.addItem("");
+        Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();        
+        Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem("");
+        Interfaces.FacturaManualNegocio.combo_Establecimientos.removeAllItems();
+        Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem("");
         auxRec = connEst.cargarEstablecimiento();
         for (Object est : auxRec) {
-            combo_Establecimientos.addItem(est.toString());
+            Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem(est.toString());
+            Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem(est.toString());
         }
     }
 

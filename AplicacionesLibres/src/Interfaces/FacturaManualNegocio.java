@@ -51,7 +51,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         date_fecha.setMinSelectableDate(new Date(anio-1900, 0, 1));
         //fecha maxima
         Date n=new Date();
-        System.out.println(n); 
+        
         if((n.getYear()+1900)==anio){
             date_fecha.setMaxSelectableDate(n); 
         }else{
@@ -309,7 +309,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jLabel11);
         jLabel11.setBounds(10, 60, 150, 17);
 
-        txt_mercaderia.setText("1");
         txt_mercaderia.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_mercaderia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -319,7 +318,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_mercaderia);
         txt_mercaderia.setBounds(110, 80, 91, 29);
 
-        txt_arriendo.setText("1");
         txt_arriendo.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_arriendo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -329,7 +327,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_arriendo);
         txt_arriendo.setBounds(110, 120, 91, 29);
 
-        txt_capacitacion.setText("1");
         txt_capacitacion.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_capacitacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -339,7 +336,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_capacitacion);
         txt_capacitacion.setBounds(110, 200, 91, 29);
 
-        txt_sueldos.setText("1");
         txt_sueldos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_sueldosKeyTyped(evt);
@@ -348,7 +344,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_sueldos);
         txt_sueldos.setBounds(490, 80, 82, 29);
 
-        txt_movilizacion.setText("1");
         txt_movilizacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_movilizacionKeyTyped(evt);
@@ -357,7 +352,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_movilizacion);
         txt_movilizacion.setBounds(490, 120, 82, 29);
 
-        txt_servbasicos.setText("1");
         txt_servbasicos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_servbasicosKeyTyped(evt);
@@ -366,7 +360,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_servbasicos);
         txt_servbasicos.setBounds(110, 160, 91, 29);
 
-        txt_viaticos.setText("1");
         txt_viaticos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_viaticosKeyTyped(evt);
@@ -587,7 +580,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton16);
         jButton16.setBounds(630, 160, 50, 29);
 
-        txt_suministros.setText("1");
         txt_suministros.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_suministrosKeyTyped(evt);
@@ -625,7 +617,6 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton18);
         jButton18.setBounds(630, 200, 50, 29);
 
-        txt_herramientas.setText("1");
         txt_herramientas.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_herramientas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
