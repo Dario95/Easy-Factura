@@ -709,7 +709,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         }
         if (totalServicios != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Servicios Básicos'," + totalServicios + ")");
+                    + "VALUES('" + num_factura + "','Servicios Basicos'," + totalServicios + ")");
         }
         if (totalSueldos != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
@@ -717,15 +717,15 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         }
         if (totalMovilizacion != 0) {//
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Movilización'," + totalMovilizacion + ")");
+                    + "VALUES('" + num_factura + "','Movilizacion'," + totalMovilizacion + ")");
         }
         if (totalViaticos != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Viáticos'," + totalViaticos + ")");
+                    + "VALUES('" + num_factura + "','Viaticos'," + totalViaticos + ")");
         }
         if (totalCapacitacion != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Capacitación'," + totalCapacitacion + ")");
+                    + "VALUES('" + num_factura + "','Capacitacion'," + totalCapacitacion + ")");
         }
                
         if (totalSuministros != 0) {
@@ -737,7 +737,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
                     + "VALUES('" + num_factura + "','Herramientas'," + totalHerramientas + ")");
         }
 
-        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_NEGOCIOS WHERE anio_historial2=" + anio + "")) {
+        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_NEGOCIOS WHERE anio_historial_n=" + anio + " AND id_cliente='" + cedula_usuario + "'")) {
             conn.insertar("UPDATE HISTORIAL_PAGOS_NEGOCIOS SET total_mercaderia=total_mercaderia+" + totalMercaderia + "::money,"
                     + "total_arriendo=total_arriendo+" + totalArriendo + "::money,"
                     + "total_servicios=total_servicios+" + totalServicios + "::money,"
@@ -746,7 +746,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
                     + "total_viaticos=total_viaticos+" + totalViaticos + "::money,"
                     + "total_capacitacion=total_capacitacion+" + totalCapacitacion + "::money,"
                     + "total_suministros=total_suministros+" + totalSuministros + "::money,"
-                    + "total_herramientas=total_herramientas+" + totalHerramientas+ "::money WHERE anio_historial2=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+                    + "total_herramientas=total_herramientas+" + totalHerramientas+ "::money WHERE anio_historial_n=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
 
         } else {
             conn.insertar("INSERT INTO HISTORIAL_PAGOS_NEGOCIOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalMercaderia + "," 

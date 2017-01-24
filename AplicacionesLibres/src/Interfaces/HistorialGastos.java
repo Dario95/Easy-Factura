@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -28,7 +27,7 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
     Conexionn conn;
     String cedula_usuario;
     int anio;
-    JTable aux;
+    JTable auxP, auxN;
 
     public HistorialGastos(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
@@ -55,10 +54,15 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         lbl_Reporte = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        lbl_total = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         btnExport = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lblPersonal = new javax.swing.JLabel();
+        txtPersonal = new javax.swing.JTextField();
+        lblNegocios = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -72,12 +76,6 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 48)); // NOI18N
         lbl_Reporte.setText("REPORTE DEL AÑO ");
 
-        jLabel4.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
-        jLabel4.setText("SUMA TOTAL:");
-
-        lbl_total.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
-        lbl_total.setForeground(java.awt.Color.red);
-
         btnExport.setText("Exportar");
         btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,41 +83,76 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
             }
         });
 
+        lblPersonal.setText("Gastos Personales Totales");
+
+        txtPersonal.setEditable(false);
+
+        lblNegocios.setText("Gastos de Negocios Totales");
+
+        jTextField2.setEditable(false);
+
+        jLabel1.setText("Gastos Personales");
+
+        jLabel2.setText("Gastos de Negocios");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(btnExport)
-                .addGap(151, 151, 151))
+                .addGap(145, 145, 145))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(260, 260, 260)
-                        .addComponent(jLabel4)
-                        .addGap(70, 70, 70)
-                        .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(12, 12, 12)
                         .addComponent(lbl_Reporte))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(119, 119, 119)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(132, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblNegocios)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblPersonal)
+                                        .addGap(25, 25, 25)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(lbl_Reporte)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPersonal)
+                    .addComponent(txtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNegocios)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addComponent(btnExport)
                 .addContainerGap())
         );
@@ -128,39 +161,71 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado", "Limite Anual", "Diferencia"};
-        ArrayList historial = conn.ddl(String.format("select *,total_alimentacion+total_salud+total_vivienda+total_educacion+total_vestimenta+total_negocios+total_otros as valor_total from historial_pagos where anio_historial=%s and id_cliente='%s'", this.anio, this.cedula_usuario));
-        ArrayList anual = conn.ddl(String.format("select * from gastosanualespersonales where anio_gastos=%s", this.anio));
-        ArrayList diferencia = conn.ddl(String.format("select g.total_alimentacion - h.total_alimentacion, g.total_salud - h.total_salud, g.total_vivienda - h.total_vivienda, g.total_educacion - h.total_educacion, g.total_vestimenta - h.total_vestimenta from gastosanualespersonales g join historial_pagos h on g.anio_gastos = h.anio_historial where h.id_cliente='%s' and anio_gastos='%s'", this.cedula_usuario, this.anio));
+        ArrayList historial_n = conn.ddl(String.format("select *,total_mercaderia+total_arriendo+total_servicios+total_sueldos+total_movilizacion+total_viaticos+total_capacitacion+total_suministros+total_herramientas from historial_pagos_negocios where anio_historial_n=%s and id_cliente='%s'", anio, cedula_usuario));
+        ArrayList historial_p = conn.ddl(String.format("select *,total_alimentacion+total_salud+total_vivienda+total_educacion+total_vestimenta+total_otros from historial_pagos_personales where anio_historial_p=%s and id_cliente='%s'", this.anio, this.cedula_usuario));
 
-        String datosTabla[][] = {{"Alimentacion", historial.get(2).toString(), anual.get(1).toString(), diferencia.get(0).toString()},
-        {"Salud", historial.get(3).toString(), anual.get(2).toString(), diferencia.get(1).toString()},
-        {"Vivienda", historial.get(4).toString(), anual.get(3).toString(), diferencia.get(2).toString()},
-        {"Educacion", historial.get(5).toString(), anual.get(4).toString(), diferencia.get(3).toString()},
-        {"Vestimenta", historial.get(6).toString(), anual.get(5).toString(), diferencia.get(4).toString()},
-        {"Negocio", historial.get(7).toString(), "", ""},
-        {"Otros", historial.get(8).toString(), "", ""}};
+        if (!historial_p.isEmpty()) {
+            ArrayList anual = conn.ddl(String.format("select * from gastosanualespersonales where anio_gastos=%s", this.anio));
+            ArrayList diferencia = conn.ddl(String.format("select g.total_alimentacion - h.total_alimentacion, g.total_salud - h.total_salud, g.total_vivienda - h.total_vivienda, g.total_educacion - h.total_educacion, g.total_vestimenta - h.total_vestimenta from gastosanualespersonales g join historial_pagos_personales h on g.anio_gastos = h.anio_historial_p where h.id_cliente='%s' and anio_gastos='%s'", this.cedula_usuario, this.anio));
 
-        lbl_total.setText((String) historial.get(9));
+            String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado", "Limite Anual", "Diferencia"};
+            String datosTabla[][] = {{"Alimentacion", historial_p.get(2).toString(), anual.get(1).toString(), diferencia.get(0).toString()},
+            {"Salud", historial_p.get(3).toString(), anual.get(2).toString(), diferencia.get(1).toString()},
+            {"Vivienda", historial_p.get(4).toString(), anual.get(3).toString(), diferencia.get(2).toString()},
+            {"Educacion", historial_p.get(5).toString(), anual.get(4).toString(), diferencia.get(3).toString()},
+            {"Vestimenta", historial_p.get(6).toString(), anual.get(5).toString(), diferencia.get(4).toString()},
+            {"Otros", historial_p.get(7).toString(), "", ""}};
 
-        JTable tablaHistorial = new JTable(datosTabla, nombreCabeceras) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+            txtPersonal.setText((String) historial_p.get(8));
 
-        aux = tablaHistorial;
+            JTable tablaHistorialP = new JTable(datosTabla, nombreCabeceras) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            auxP = tablaHistorialP;
+
+            DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
+            alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+            tablaHistorialP.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
+            tablaHistorialP.getColumnModel().getColumn(2).setCellRenderer(alinearDerecha);
+            tablaHistorialP.getColumnModel().getColumn(3).setCellRenderer(alinearDerecha);
+
+            jScrollPane1.setViewportView(tablaHistorialP);
+        }
         
-        DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
-        alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
-        tablaHistorial.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
-        tablaHistorial.getColumnModel().getColumn(2).setCellRenderer(alinearDerecha);
-        tablaHistorial.getColumnModel().getColumn(3).setCellRenderer(alinearDerecha);
-        
-        jScrollPane1.setViewportView(tablaHistorial);
-        
-        
+        if (!historial_n.isEmpty()) {
+            
+            String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado"};
+            String datosTabla[][] = {{"Mercaderia", historial_n.get(2).toString()},
+            {"Arriendo", historial_n.get(3).toString()},
+            {"Servicios Basicos", historial_n.get(4).toString()},
+            {"Sueldos", historial_n.get(5).toString()},
+            {"Movilizacion", historial_n.get(6).toString()},
+            {"Viaticos", historial_n.get(7).toString()},
+            {"Capacitacion", historial_n.get(8).toString()},
+            {"Suministros", historial_n.get(9).toString()},
+            {"Herramientas", historial_n.get(10).toString()}};
+
+            jTextField2.setText((String) historial_n.get(11));
+
+            JTable tablaHistorialN = new JTable(datosTabla, nombreCabeceras) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            auxN = tablaHistorialN;
+
+            DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
+            alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+            tablaHistorialN.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
+            
+            jScrollPane2.setViewportView(tablaHistorialN);
+        }
     }//GEN-LAST:event_formComponentShown
 
     public void toExcel(JTable table, File file) {
@@ -190,15 +255,16 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
-        String file = JOptionPane.showInputDialog(null, "Ingrese el Nombre del archivo");
-        String path = "";
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooser.showOpenDialog(null);
-        File f = chooser.getSelectedFile();
-        path = f.getAbsolutePath();
-        toExcel(aux, new File(path + "/" + file + ".xls"));
-
+        // String file = JOptionPane.showInputDialog(null, "Ingrese el Nombre del archivo");
+        //String path = "";
+        //JFileChooser chooser = new JFileChooser();
+        //chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //chooser.showOpenDialog(null);
+        File f = new File("Reportes/");
+        toExcel(auxP, new File(f.getAbsolutePath() + "/ReporteGastosPersonales.xls"));
+        toExcel(auxN, new File(f.getAbsolutePath() + "/ReporteGastosNegocios.xls"));
+        
+        JOptionPane.showMessageDialog(null, "Reportes Generados Exitosamente");
     }//GEN-LAST:event_btnExportActionPerformed
 
     /**
@@ -246,9 +312,14 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExport;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblNegocios;
+    private javax.swing.JLabel lblPersonal;
     private javax.swing.JLabel lbl_Reporte;
-    private javax.swing.JLabel lbl_total;
+    private javax.swing.JTextField txtPersonal;
     // End of variables declaration//GEN-END:variables
 }
