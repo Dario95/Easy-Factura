@@ -1,4 +1,4 @@
-/*==============================================================*/
+﻿/*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
 /* Created on:     23/1/2017 19:24:16                           */
 /*==============================================================*/
@@ -83,11 +83,11 @@ ID_CLIENTE
 /*==============================================================*/
 create table GASTOSANUALESPERSONALES (
    ANIO_GASTOS          INT4                 not null,
-   TOTAL_MERCADERIA     MONEY                not null,
-   TOTAL_ARRIENDO       MONEY                not null,
-   TOTAL_SERVICIOS      MONEY                not null,
-   TOTAL_SUELDOS        MONEY                not null,
-   TOTAL_MOVILIZACION   MONEY                not null,
+   TOTAL_ALIMENTACION   MONEY                not null,
+   TOTAL_SALUD          MONEY                not null,
+   TOTAL_VIVIENDA       MONEY                not null,
+   TOTAL_EDUCACION      MONEY                not null,
+   TOTAL_VESTIMENTA     MONEY                not null,
    constraint PK_GASTOSANUALESPERSONALES primary key (ANIO_GASTOS)
 );
 
@@ -102,7 +102,7 @@ ANIO_GASTOS
 /* Table: HISTORIAL_PAGOS_NEGOCIOS                              */
 /*==============================================================*/
 create table HISTORIAL_PAGOS_NEGOCIOS (
-   ANIO_HISTORIAL2      INT4                 not null,
+   ANIO_HISTORIAL_N     INT4                 not null,
    ID_CLIENTE           CHAR(10)             null,
    TOTAL_MERCADERIA     MONEY                null,
    TOTAL_ARRIENDO       MONEY                null,
@@ -113,14 +113,14 @@ create table HISTORIAL_PAGOS_NEGOCIOS (
    TOTAL_CAPACITACION   MONEY                null,
    TOTAL_SUMINISTROS    MONEY                null,
    TOTAL_HERRAMIENTAS   MONEY                null,
-   constraint PK_HISTORIAL_PAGOS_NEGOCIOS primary key (ANIO_HISTORIAL2)
+   constraint PK_HISTORIAL_PAGOS_NEGOCIOS primary key (ANIO_HISTORIAL_N)
 );
 
 /*==============================================================*/
 /* Index: HISTORIAL_PAGOS_NEGOCIOS_PK                           */
 /*==============================================================*/
 create unique index HISTORIAL_PAGOS_NEGOCIOS_PK on HISTORIAL_PAGOS_NEGOCIOS (
-ANIO_HISTORIAL2
+ANIO_HISTORIAL_N
 );
 
 /*==============================================================*/
@@ -134,7 +134,7 @@ ID_CLIENTE
 /* Table: HISTORIAL_PAGOS_PERSONALES                            */
 /*==============================================================*/
 create table HISTORIAL_PAGOS_PERSONALES (
-   ANIO_HISTORIAL_PERSONAL INT4                 not null,
+   ANIO_HISTORIAL_P     INT4                 not null,
    ID_CLIENTE           CHAR(10)             null,
    TOTAL_ALIMENTACION   MONEY                null,
    TOTAL_SALUD          MONEY                null,
@@ -142,14 +142,14 @@ create table HISTORIAL_PAGOS_PERSONALES (
    TOTAL_EDUCACION      MONEY                null,
    TOTAL_VESTIMENTA     MONEY                null,
    TOTAL_OTROS          MONEY                null,
-   constraint PK_HISTORIAL_PAGOS_PERSONALES primary key (ANIO_HISTORIAL_PERSONAL)
+   constraint PK_HISTORIAL_PAGOS_PERSONALES primary key (ANIO_HISTORIAL_P)
 );
 
 /*==============================================================*/
 /* Index: HISTORIAL_PAGOS_PERSONALES_PK                         */
 /*==============================================================*/
 create unique index HISTORIAL_PAGOS_PERSONALES_PK on HISTORIAL_PAGOS_PERSONALES (
-ANIO_HISTORIAL_PERSONAL
+ANIO_HISTORIAL_P
 );
 
 /*==============================================================*/
