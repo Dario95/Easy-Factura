@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
@@ -150,7 +151,16 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
         };
 
         aux = tablaHistorial;
+        
+        DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
+        alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+        tablaHistorial.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
+        tablaHistorial.getColumnModel().getColumn(2).setCellRenderer(alinearDerecha);
+        tablaHistorial.getColumnModel().getColumn(3).setCellRenderer(alinearDerecha);
+        
         jScrollPane1.setViewportView(tablaHistorial);
+        
+        
     }//GEN-LAST:event_formComponentShown
 
     public void toExcel(JTable table, File file) {

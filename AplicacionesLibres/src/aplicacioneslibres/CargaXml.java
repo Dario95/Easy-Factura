@@ -24,7 +24,7 @@ import org.jdom2.input.SAXBuilder;
  */
 public class CargaXml {
 
-    public void cargarXml(String name, String archivo, String cedulaCli, int anio) {
+    public void cargarXml(String name, String archivo, String cedulaCli, int anio, String tipo) {
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
 
@@ -241,7 +241,7 @@ public class CargaXml {
                 }
 
                 if(datosProducto.length != 0) {
-                    SeleccionarTipoGasto seleccionar = new SeleccionarTipoGasto(cp, datosProducto, numFact, anio, cedulaCli);
+                    SeleccionarTipoGasto seleccionar = new SeleccionarTipoGasto(cp, datosProducto, numFact, anio, cedulaCli, tipo);
                     seleccionar.setVisible(true);
                 }
             } else {
