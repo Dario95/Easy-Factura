@@ -21,6 +21,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     FacturaManualNegocio fmn;
     HistorialGastos hg;
     Object[] paneles;
+    Reportes rp;
     
     String cedula_usuario;    
     int anio;
@@ -35,7 +36,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fmn=new FacturaManualNegocio(conn, cedula_usuario, anio);
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
         hg = new HistorialGastos(conn, cedula_usuario, anio);      
-        
+        rp=new Reportes(conn, cedula_usuario, anio);
         this.anio = anio;
         this.cedula_usuario = cedula_usuario;
         setResizable(false);
@@ -60,6 +61,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -110,6 +112,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
+        jMenuItem6.setText("Reportes");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
+
         jMenuBar1.add(jMenu1);
 
         m_Usuario.setText("Usuario");
@@ -136,7 +146,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,6 +157,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fe.setVisible(false);
         hg.setVisible(false);
         fmn.setVisible(false);
+        rp.setVisible(false);
         fmp.setVisible(true);
         jDesktopPane.add(fmp);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -156,6 +167,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fmp.setVisible(false);
         fmn.setVisible(false);
         hg.setVisible(false);
+        rp.setVisible(false);
         fe.setVisible(true);
         jDesktopPane.add(fe);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -185,6 +197,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             fmp.setVisible(false);
             fmn.setVisible(false);
             fe.setVisible(false);
+        rp.setVisible(false);
             hg.setVisible(true);
             jDesktopPane.add(hg);
         }
@@ -195,9 +208,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fe.setVisible(false);
         hg.setVisible(false);
         fmp.setVisible(false);
+        rp.setVisible(false);
+        rp.setVisible(false);
         fmn.setVisible(true);        
         jDesktopPane.add(fmn);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+         jDesktopPane.removeAll();
+        fe.setVisible(false);
+        hg.setVisible(false);
+        fmp.setVisible(false);
+        fmn.setVisible(false);    
+        rp.setVisible(true); 
+        jDesktopPane.add(rp);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,6 +276,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
     private javax.swing.JMenu m_Usuario;
