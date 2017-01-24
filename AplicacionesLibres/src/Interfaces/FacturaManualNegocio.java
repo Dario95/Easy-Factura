@@ -690,49 +690,62 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
                 totalCapacitacion = dar_formato(lbl_capacitacion.getText()),
                 totalSuministros = dar_formato(lbl_suministros.getText()),
                 totalHerramientas = dar_formato(lbl_herramientas.getText());
-/* POR MODIFICAR
+
         if (totalMercaderia != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Vivienda'," + totalMercaderia + ")");
+                    + "VALUES('" + num_factura + "','Mercadería'," + totalMercaderia + ")");
         }
         if (totalArriendo != 0) {    //        
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Alimentacion'," + totalArriendo + ")");
+                    + "VALUES('" + num_factura + "','Arriendo'," + totalArriendo + ")");
         }
         if (totalServicios != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Educacion'," + totalServicios + ")");
+                    + "VALUES('" + num_factura + "','Servicios Básicos'," + totalServicios + ")");
         }
         if (totalSueldos != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Salud'," + totalSueldos + ")");
+                    + "VALUES('" + num_factura + "','Sueldos'," + totalSueldos + ")");
         }
         if (totalMovilizacion != 0) {//
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Vestimenta'," + totalMovilizacion + ")");
+                    + "VALUES('" + num_factura + "','Movilización'," + totalMovilizacion + ")");
         }
         if (totalViaticos != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Negocio'," + totalViaticos + ")");
+                    + "VALUES('" + num_factura + "','Viáticos'," + totalViaticos + ")");
         }
         if (totalCapacitacion != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Otro'," + totalCapacitacion + ")");
+                    + "VALUES('" + num_factura + "','Capacitación'," + totalCapacitacion + ")");
+        }
+               
+        if (totalSuministros != 0) {
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Suministros'," + totalSuministros + ")");
+        }
+        if (totalHerramientas != 0) {    //        
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Herramientas'," + totalHerramientas + ")");
         }
 
-        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
-            conn.insertar("UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+" + totalArriendo + "::money,"
-                    + "total_salud=total_salud+" + totalSueldos + "::money,"
-                    + "total_vivienda=total_vivienda+" + totalMercaderia + "::money,"
-                    + "total_educacion=total_educacion+" + totalServicios + "::money,"
-                    + "total_vestimenta=total_vestimenta+" + totalMovilizacion + "::money,"
-                    + "total_negocios=total_negocios+" + totalViaticos + "::money,"
-                    + "total_otros=total_otros+" + totalCapacitacion + "::money WHERE anio_historial=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_NEGOCIOS WHERE anio_historial2=" + anio + "")) {
+            conn.insertar("UPDATE HISTORIAL_PAGOS_NEGOCIOS SET total_mercaderia=total_mercaderia+" + totalMercaderia + "::money,"
+                    + "total_arriendo=total_arriendo+" + totalArriendo + "::money,"
+                    + "total_servicios=total_servicios+" + totalServicios + "::money,"
+                    + "total_sueldos=total_sueldos+" + totalSueldos + "::money,"
+                    + "total_movilizacion=total_movilizacion+" + totalMovilizacion + "::money,"
+                    + "total_viaticos=total_viaticos+" + totalViaticos + "::money,"
+                    + "total_capacitacion=total_capacitacion+" + totalCapacitacion + "::money,"
+                    + "total_suministros=total_suministros+" + totalSuministros + "::money,"
+                    + "total_herramientas=total_herramientas+" + totalHerramientas+ "::money WHERE anio_historial2=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
 
         } else {
-            conn.insertar("INSERT INTO HISTORIAL_PAGOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalArriendo + "," + totalSueldos + "," + totalMercaderia + "," + totalServicios + "," + totalMovilizacion + "," + totalViaticos + "," + totalCapacitacion + ")");
+            conn.insertar("INSERT INTO HISTORIAL_PAGOS_NEGOCIOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalMercaderia + "," 
+                    + totalArriendo + "," + totalServicios + "," + totalSueldos + "," + totalMovilizacion + "," + totalViaticos + ","
+                    + totalCapacitacion + "," + totalSuministros+"," + totalHerramientas + ")");
         }
-*/
+        
         JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
     }
 
@@ -761,8 +774,8 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
                             total_sin_iva = dar_formato(txt_sin_iva.getText()),
                             total_con_iva = dar_formato(txt_total.getText());
 
-                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
+                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura,fecha_emision, total_sin_iva, iva, total_con_iva)"
+                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','Negocio','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
                     //Registro de todos los tipos de gastos
                     registrar_gastos(num_factura);
                     borrar_campos();

@@ -164,7 +164,7 @@ ID_CLIENTE
 /*==============================================================*/
 create table TIPO_GASTO (
    ID_FACTURA           VARCHAR(20)          not null,
-   TIPO                 VARCHAR(12)          not null,
+   TIPO                 VARCHAR(20)          not null,
    TOTAL                MONEY                not null
 );
 
