@@ -5,8 +5,10 @@
  */
 package Interfaces;
 
+import static Interfaces.FacturaManualNegocio.combo_Establecimientos;
 import conexionBDD.Conexionn;
 import java.awt.Component;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileWriter;
@@ -45,6 +47,15 @@ public class Reportes extends javax.swing.JInternalFrame {
         this.conn = conn;
         this.cedula_usuario = cedula_usuario;
         this.anio = anio;
+
+        combo_Establecimientos.addItem("Todos");
+        ArrayList establecimientos = conn.cargarEstablecimiento();
+        for (Object est : establecimientos) {
+            combo_Establecimientos.addItem(est.toString());
+        }
+        panel_mes.setVisible(false);
+        panel_rango.setVisible(false);
+        
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
         MouseMotionListener[] actions
@@ -52,6 +63,7 @@ public class Reportes extends javax.swing.JInternalFrame {
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }
+
     }
 
     /**
@@ -63,8 +75,23 @@ public class Reportes extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         lbl_Reporte = new javax.swing.JLabel();
         btnExport = new javax.swing.JButton();
+        combo_tipo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        combo_tiempo = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        panel_rango = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        date_inicio = new com.toedter.calendar.JDateChooser();
+        date_fin = new com.toedter.calendar.JDateChooser();
+        combo_Establecimientos = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        panel_mes = new javax.swing.JPanel();
+        combo_tiempo1 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -74,71 +101,147 @@ public class Reportes extends javax.swing.JInternalFrame {
                 formComponentShown(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 48)); // NOI18N
         lbl_Reporte.setText("REPORTE DEL AÑO ");
+        getContentPane().add(lbl_Reporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
+        btnExport.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         btnExport.setText("Exportar");
         btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportActionPerformed(evt);
             }
         });
+        getContentPane().add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 560, 310, 70));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnExport)
-                .addGap(145, 145, 145))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(lbl_Reporte)
-                .addContainerGap(255, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(lbl_Reporte)
-                .addGap(561, 561, 561)
-                .addComponent(btnExport)
-                .addContainerGap())
-        );
+        combo_tipo.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        combo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personales", "de Negocio" }));
+        getContentPane().add(combo_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 300, 50));
+
+        jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
+        jLabel1.setText("Reporte de gastos:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
+
+        combo_tiempo.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        combo_tiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anual", "Mensual", "Rango de Fechas" }));
+        combo_tiempo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_tiempoItemStateChanged(evt);
+            }
+        });
+        getContentPane().add(combo_tiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 300, 50));
+
+        jLabel2.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
+        jLabel2.setText("Reporte por:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
+
+        panel_rango.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
+        jLabel5.setText("Fecha de fin:");
+        panel_rango.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
+        jLabel6.setText("Fecha de inicio:");
+        panel_rango.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+        panel_rango.add(date_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 300, 40));
+        panel_rango.add(date_fin, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 300, 40));
+
+        getContentPane().add(panel_rango, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 560, 160));
+
+        combo_Establecimientos.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        combo_Establecimientos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_EstablecimientosItemStateChanged(evt);
+            }
+        });
+        getContentPane().add(combo_Establecimientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 300, 50));
+
+        jLabel4.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
+        jLabel4.setText("Establecimiento:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+
+        panel_mes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        combo_tiempo1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        combo_tiempo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octube", "Noviembre", "Diciembre" }));
+        combo_tiempo1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_tiempo1ItemStateChanged(evt);
+            }
+        });
+        panel_mes.add(combo_tiempo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 300, 50));
+
+        jLabel3.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
+        jLabel3.setText("Mes:");
+        panel_mes.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+
+        getContentPane().add(panel_mes, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 560, 160));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-    
+
     }//GEN-LAST:event_formComponentShown
 
-   
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
-   String path="src/Interfaces/reporteAnio.jasper";
-   JasperReport jr=null;
+        String path = "src/Interfaces/reporteAnio.jasper";
+        JasperReport jr = null;
         try {
-            jr=  (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
             /*Agregar parametros*/
-            Map parametros=new HashMap();
+            Map parametros = new HashMap();
             parametros.put("textoEntrada", "Reporte Anual");
             parametros.put("idCliente", this.cedula_usuario);
             parametros.put("Anio", this.anio);
             //Fin parametros
-            JasperPrint jp=JasperFillManager.fillReport(jr, parametros,conn.getConn());
-            JasperViewer jv=new JasperViewer(jp);
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.getConn());
+            JasperViewer jv = new JasperViewer(jp);
             jv.setVisible(true);
             jv.setTitle(path);
         } catch (JRException ex) {
             Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
         }
-   
-        
+
         JOptionPane.showMessageDialog(null, "Reportes Generados Exitosamente");
     }//GEN-LAST:event_btnExportActionPerformed
+
+    private void combo_tiempoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_tiempoItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            switch (combo_tiempo.getSelectedIndex()) {
+                case 1:
+                    panel_rango.setVisible(false);
+                    panel_mes.setVisible(true);
+                    break;
+                case 2:
+                    panel_mes.setVisible(false);
+                    panel_rango.setVisible(true);
+                    break;
+                default:
+                    panel_mes.setVisible(false);
+                    panel_rango.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_combo_tiempoItemStateChanged
+
+    private void combo_EstablecimientosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_EstablecimientosItemStateChanged
+        ArrayList auxDatosEst;
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            if (combo_Establecimientos.getSelectedIndex() != 0) {
+                auxDatosEst = conn.cambiarDatosEstablecimiento(combo_Establecimientos.getSelectedItem().toString());
+            } else {
+
+            }
+        }
+    }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
+
+    private void combo_tiempo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_tiempo1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_combo_tiempo1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -185,6 +288,21 @@ public class Reportes extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExport;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> combo_Establecimientos;
+    private javax.swing.JComboBox<String> combo_tiempo;
+    private javax.swing.JComboBox<String> combo_tiempo1;
+    private javax.swing.JComboBox<String> combo_tipo;
+    private com.toedter.calendar.JDateChooser date_fin;
+    private com.toedter.calendar.JDateChooser date_inicio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lbl_Reporte;
+    private javax.swing.JPanel panel_mes;
+    private javax.swing.JPanel panel_rango;
     // End of variables declaration//GEN-END:variables
 }

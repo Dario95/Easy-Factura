@@ -19,8 +19,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     FacturaManualPersonal fmp;
     FacturaElectronicaNew fe;
     FacturaManualNegocio fmn;
-    HistorialGastos hg;
-    Object[] paneles;
+    HistorialGastos hg;    
     Reportes rp;
     
     String cedula_usuario;    
@@ -208,8 +207,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fe.setVisible(false);
         hg.setVisible(false);
         fmp.setVisible(false);
-        rp.setVisible(false);
-        rp.setVisible(false);
+        rp.setVisible(false);        
         fmn.setVisible(true);        
         jDesktopPane.add(fmn);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
