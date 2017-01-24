@@ -301,6 +301,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jLabel11);
         jLabel11.setBounds(10, 60, 150, 17);
 
+        txt_mercaderia.setText("1");
         txt_mercaderia.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_mercaderia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -310,6 +311,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_mercaderia);
         txt_mercaderia.setBounds(110, 80, 91, 29);
 
+        txt_arriendo.setText("1");
         txt_arriendo.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_arriendo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -319,6 +321,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_arriendo);
         txt_arriendo.setBounds(110, 120, 91, 29);
 
+        txt_capacitacion.setText("1");
         txt_capacitacion.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_capacitacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -328,6 +331,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_capacitacion);
         txt_capacitacion.setBounds(110, 200, 91, 29);
 
+        txt_sueldos.setText("1");
         txt_sueldos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_sueldosKeyTyped(evt);
@@ -336,6 +340,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_sueldos);
         txt_sueldos.setBounds(490, 80, 82, 29);
 
+        txt_movilizacion.setText("1");
         txt_movilizacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_movilizacionKeyTyped(evt);
@@ -344,6 +349,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_movilizacion);
         txt_movilizacion.setBounds(490, 120, 82, 29);
 
+        txt_servbasicos.setText("1");
         txt_servbasicos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_servbasicosKeyTyped(evt);
@@ -352,6 +358,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(txt_servbasicos);
         txt_servbasicos.setBounds(110, 160, 91, 29);
 
+        txt_viaticos.setText("1");
         txt_viaticos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_viaticosKeyTyped(evt);
@@ -572,6 +579,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton16);
         jButton16.setBounds(630, 160, 50, 29);
 
+        txt_suministros.setText("1");
         txt_suministros.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_suministrosKeyTyped(evt);
@@ -609,6 +617,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton18);
         jButton18.setBounds(630, 200, 50, 29);
 
+        txt_herramientas.setText("1");
         txt_herramientas.setDisabledTextColor(new java.awt.Color(183, 183, 183));
         txt_herramientas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -662,7 +671,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean validar_vacios() {
-        return ((combo_Establecimientos.getSelectedItem().equals("") || txt_num_fac.getText().equals("") || txt_total.getText().equals("") || txt_sin_iva.getText().equals("") || date_fecha.getDate() == null));
+        return ((combo_Establecimientos.getSelectedItem().equals("") || txt_num_fac.getText().equals("") || date_fecha.getDate() == null));
 
     }
 
@@ -741,22 +750,13 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
 
     }
 
-    private void validar_iva() {
-        double total_aux = dar_formato(txt_iva.getText()) + dar_formato(txt_sin_iva.getText()),
-                total_con_iva = dar_formato(txt_total.getText());
-        if (total_con_iva != total_aux) {
-            txt_total.setText(total_aux + "");
-        }
-    }
-
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
-
+    jButton9ActionPerformed(evt);
         if (!validar_vacios()) {
             try {
                 String num_factura = txt_num_fac.getText();
                 if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
-                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
-                    validar_iva();
+                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());                    
                     double iva = dar_formato(txt_iva.getText()),
                             total_sin_iva = dar_formato(txt_sin_iva.getText()),
                             total_con_iva = dar_formato(txt_total.getText());
@@ -834,8 +834,8 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void agregar_todo() {
-        JTextField campos[] = {txt_movilizacion, txt_mercaderia, txt_servbasicos, txt_arriendo, txt_viaticos, txt_capacitacion, txt_sueldos,txt_herramientas,txt_viaticos};
-        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos,lbl_herramientas,lbl_viaticos};
+        JTextField campos[] = {txt_movilizacion, txt_mercaderia, txt_servbasicos, txt_arriendo, txt_viaticos, txt_capacitacion, txt_sueldos,txt_herramientas,txt_suministros};
+        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos,lbl_herramientas,lbl_suministros};
         String valor;
         for (int i = 0; i < 9; i++) {
             valor = campos[i].getText();
@@ -952,27 +952,27 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_ivaKeyTyped
 
     private void txt_suministrosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_suministrosKeyTyped
-        // TODO add your handling code here:
+        filtrar(evt, txt_suministros);
     }//GEN-LAST:event_txt_suministrosKeyTyped
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // TODO add your handling code here:
+        sumar(lbl_suministros, txt_suministros);
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
+        restar(lbl_suministros, txt_suministros);
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void txt_herramientasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_herramientasKeyTyped
-        // TODO add your handling code here:
+        filtrar(evt, txt_herramientas);
     }//GEN-LAST:event_txt_herramientasKeyTyped
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
+        sumar(lbl_herramientas, txt_herramientas);
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
+        restar(lbl_herramientas, txt_herramientas);
     }//GEN-LAST:event_jButton20ActionPerformed
 
     /**

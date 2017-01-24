@@ -381,6 +381,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_mercaderia">
           <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
             <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="b7" green="b7" red="b7" type="rgb"/>
             </Property>
@@ -396,6 +397,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_arriendo">
           <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
             <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="b7" green="b7" red="b7" type="rgb"/>
             </Property>
@@ -411,6 +413,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_capacitacion">
           <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
             <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="b7" green="b7" red="b7" type="rgb"/>
             </Property>
@@ -425,6 +428,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_sueldos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+          </Properties>
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_sueldosKeyTyped"/>
           </Events>
@@ -435,6 +441,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_movilizacion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+          </Properties>
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_movilizacionKeyTyped"/>
           </Events>
@@ -445,6 +454,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_servbasicos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+          </Properties>
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_servbasicosKeyTyped"/>
           </Events>
@@ -455,6 +467,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_viaticos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+          </Properties>
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_viaticosKeyTyped"/>
           </Events>
@@ -863,6 +878,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_suministros">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+          </Properties>
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_suministrosKeyTyped"/>
           </Events>
@@ -929,6 +947,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_herramientas">
           <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
             <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="b7" green="b7" red="b7" type="rgb"/>
             </Property>

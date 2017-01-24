@@ -536,7 +536,7 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean validar_vacios() {
-        return ((combo_Establecimientos.getSelectedItem().equals("") || txt_num_fac.getText().equals("") || txt_total.getText().equals("") || txt_sin_iva.getText().equals("") || date_fecha.getDate() == null));
+        return ((combo_Establecimientos.getSelectedItem().equals("") || txt_num_fac.getText().equals("") || date_fecha.getDate() == null));
 
     }
 
@@ -608,26 +608,17 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
 
     }
 
-    private void validar_iva() {
-        double total_aux = dar_formato(txt_iva.getText()) + dar_formato(txt_sin_iva.getText()),
-                total_con_iva = dar_formato(txt_total.getText());
-        if (total_con_iva != total_aux) {
-            txt_total.setText(total_aux + "");
-        }
-    }
-
+ 
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
-
+    jButton9ActionPerformed(evt);
         if (!validar_vacios()) {
             try {
                 String num_factura = txt_num_fac.getText();
                 if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
                     String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
-                    validar_iva();
                     double iva = dar_formato(txt_iva.getText()),
                             total_sin_iva = dar_formato(txt_sin_iva.getText()),
                             total_con_iva = dar_formato(txt_total.getText());
-
                     conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura, fecha_emision, total_sin_iva, iva, total_con_iva)"
                             + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText()+ "','Personal','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
                     //Registro de todos los tipos de gastos
