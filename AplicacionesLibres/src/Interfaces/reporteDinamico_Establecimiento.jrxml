@@ -13,17 +13,28 @@
 	<parameter name="idCliente" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+<<<<<<< HEAD
 	<parameter name="fechaFin" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fechaIncio" class="java.lang.String">
+=======
+	<parameter name="fechaFin" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaIncio" class="java.util.Date">
+>>>>>>> 1974008189f03e115909ffbfdd85bc08c3aabfdf
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="textoEntrada" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select g.tipo,cast(sum(g.total)as numeric) as Total
 from factura f join tipo_gasto g on f.id_factura=g.id_factura 
+<<<<<<< HEAD
 where fecha_emision>= TO_DATE($P{fechaIncio},'YYYY-MM-DD') and fecha_emision<TO_DATE($P{fechaFin},'YYYY-MM-DD')
+=======
+where fecha_emision>=$P{fechaIncio} and fecha_emision<$P{fechaFin}
+>>>>>>> 1974008189f03e115909ffbfdd85bc08c3aabfdf
 and f.tipo_factura=$P{tipoFactura}
 and f.id_cliente=$P{idCliente}
 group by g.tipo;]]>
