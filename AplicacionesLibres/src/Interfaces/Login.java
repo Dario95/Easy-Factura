@@ -47,6 +47,12 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Cédula");
 
+        txt_cedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cedulaKeyTyped(evt);
+            }
+        });
+
         jLabel2.setText("Contraseña");
 
         btn_Ingresar.setText("Ingresar");
@@ -162,6 +168,13 @@ public class Login extends javax.swing.JFrame {
         new V_RegistroUsuario().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_RegistrarActionPerformed
+
+    private void txt_cedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cedulaKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || txt_cedula.getText().length()>9) {            
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_cedulaKeyTyped
 
     /**
      * @param args the command line arguments
