@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -46,9 +47,16 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
             combo_Establecimientos.addItem(est.toString());
         }
 
-        //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
-        //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
-        //conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");
+        //fecha minima
+        date_fecha.setMinSelectableDate(new Date(anio-1900, 0, 1));
+        //fecha maxima
+        Date n=new Date();
+        System.out.println(n); 
+        if((n.getYear()+1900)==anio){
+            date_fecha.setMaxSelectableDate(n); 
+        }else{
+            date_fecha.setMaxSelectableDate(new Date(anio-1900, 11, 31)); 
+        }
     }
 
     /**
