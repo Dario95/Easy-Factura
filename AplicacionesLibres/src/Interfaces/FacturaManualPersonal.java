@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -580,16 +579,16 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
                     + "VALUES('" + num_factura + "','Otro'," + totalOtros + ")");
         }
 
-        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
-            conn.insertar("UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+" + totalAlimento + "::money,"
+        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_personal=" + anio + "")) {
+            conn.insertar("UPDATE HISTORIAL_PAGOS_PERSONALES SET total_alimentacion=total_alimentacion+" + totalAlimento + "::money,"
                     + "total_salud=total_salud+" + totalSalud + "::money,"
                     + "total_vivienda=total_vivienda+" + totalVivienda + "::money,"
                     + "total_educacion=total_educacion+" + totalEducacion + "::money,"
                     + "total_vestimenta=total_vestimenta+" + totalVestimenta + "::money,"
-                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial_personal=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
 
         } else {
-            conn.insertar("INSERT INTO HISTORIAL_PAGOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalAlimento + "," + totalSalud + "," + totalVivienda + "," + totalEducacion + "," + totalVestimenta + "," + totalOtros + ")");
+            conn.insertar("INSERT INTO HISTORIAL_PAGOS_PERSONALES VALUES (" + anio + ",'" + cedula_usuario + "'," + totalAlimento + "," + totalSalud + "," + totalVivienda + "," + totalEducacion + "," + totalVestimenta + "," + totalOtros + ")");
         }
 
         JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
@@ -600,7 +599,7 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
         txt_num_fac.setText(null);
         date_fecha.setDate(null);
         JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_otros, lbl_salud};
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             labels[i].setText("0.0");
         }
         txt_sin_iva.setText(null);
@@ -629,8 +628,8 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
                             total_sin_iva = dar_formato(txt_sin_iva.getText()),
                             total_con_iva = dar_formato(txt_total.getText());
 
-                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
+                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura, fecha_emision, total_sin_iva, iva, total_con_iva)"
+                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText()+ "','Personal','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
                     //Registro de todos los tipos de gastos
                     registrar_gastos(num_factura);
                     borrar_campos();
@@ -701,7 +700,7 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
         JTextField campos[] = {txt_vestimenta, txt_vivienda, txt_educacion, txt_alimentacion,  txt_otros, txt_salud};
         JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_otros, lbl_salud};
         String valor;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             valor = campos[i].getText();
             if (!valor.equals("")) {
                 sumar(labels[i], campos[i]);
