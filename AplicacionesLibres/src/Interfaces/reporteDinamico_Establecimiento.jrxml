@@ -13,9 +13,6 @@
 	<parameter name="idCliente" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="establecimiento" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="fechaFin" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -29,7 +26,6 @@ from factura f join tipo_gasto g on f.id_factura=g.id_factura
 where fecha_emision>= TO_DATE($P{fechaIncio},'YYYY-MM-DD') and fecha_emision<TO_DATE($P{fechaFin},'YYYY-MM-DD')
 and f.tipo_factura=$P{tipoFactura}
 and f.id_cliente=$P{idCliente}
-and f.id_establecimiento=(select id_establecimiento from establecimiento where nombre_establecimiento=$P{establecimiento})
 group by g.tipo;]]>
 	</queryString>
 	<field name="tipo" class="java.lang.String"/>
@@ -52,44 +48,34 @@ group by g.tipo;]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="85">
+		<band height="64">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Establecimiento:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="20" width="100" height="20"/>
+				<reportElement x="11" y="4" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[Fecha Inicio:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="40" width="100" height="20"/>
+				<reportElement x="11" y="24" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[Fecha Fin:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="0" width="440" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{establecimiento}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="100" y="40" width="440" height="20"/>
+				<reportElement x="111" y="24" width="440" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{fechaFin}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="20" width="440" height="20"/>
+				<reportElement x="111" y="4" width="440" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{fechaIncio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="60" width="100" height="20"/>
+				<reportElement x="11" y="44" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[Gatos:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="60" width="440" height="20"/>
+				<reportElement x="111" y="44" width="440" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{tipoFactura}]]></textFieldExpression>
 			</textField>

@@ -71,8 +71,8 @@
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">
-            <StringItem index="0" value="Personales"/>
-            <StringItem index="1" value="de Negocio"/>
+            <StringItem index="0" value="Personal"/>
+            <StringItem index="1" value="Negocio"/>
           </StringArray>
         </Property>
       </Properties>
@@ -105,8 +105,8 @@
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="3">
-            <StringItem index="0" value="Anual"/>
-            <StringItem index="1" value="Mensual"/>
+            <StringItem index="0" value="A&#xf1;o"/>
+            <StringItem index="1" value="Mes"/>
             <StringItem index="2" value="Rango de Fechas"/>
           </StringArray>
         </Property>
@@ -234,7 +234,7 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JComboBox" name="combo_tiempo1">
+        <Component class="javax.swing.JComboBox" name="combo_mes">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Noto Sans" size="18" style="0"/>
@@ -257,7 +257,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="combo_tiempo1ItemStateChanged"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="combo_mesItemStateChanged"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

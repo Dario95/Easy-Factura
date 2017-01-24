@@ -5,15 +5,14 @@
  */
 package Interfaces;
 
-import static Interfaces.FacturaManualNegocio.combo_Establecimientos;
 import conexionBDD.Conexionn;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -21,8 +20,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -55,7 +52,26 @@ public class Reportes extends javax.swing.JInternalFrame {
         }
         panel_mes.setVisible(false);
         panel_rango.setVisible(false);
-        
+
+        //fecha minima
+        date_inicio.setMinSelectableDate(new Date(anio - 1900, 0, 1));
+        //fecha maxima
+        Date n = new Date();
+        if ((n.getYear() + 1900) == anio) {
+            date_inicio.setMaxSelectableDate(n);
+        } else {
+            date_inicio.setMaxSelectableDate(new Date(anio - 1900, 11, 31));
+        }
+
+        //fecha minima
+        date_fin.setMinSelectableDate(new Date(anio - 1900, 0, 1));
+        //fecha maxima        
+        if ((n.getYear() + 1900) == anio) {
+            date_fin.setMaxSelectableDate(n);
+        } else {
+            date_fin.setMaxSelectableDate(new Date(anio - 1900, 11, 31));
+        }
+
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
         MouseMotionListener[] actions
@@ -90,7 +106,7 @@ public class Reportes extends javax.swing.JInternalFrame {
         combo_Establecimientos = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         panel_mes = new javax.swing.JPanel();
-        combo_tiempo1 = new javax.swing.JComboBox<>();
+        combo_mes = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -117,7 +133,7 @@ public class Reportes extends javax.swing.JInternalFrame {
         getContentPane().add(btnExport, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 560, 310, 70));
 
         combo_tipo.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
-        combo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personales", "de Negocio" }));
+        combo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personal", "Negocio" }));
         getContentPane().add(combo_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 300, 50));
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
@@ -125,7 +141,7 @@ public class Reportes extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
         combo_tiempo.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
-        combo_tiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anual", "Mensual", "Rango de Fechas" }));
+        combo_tiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Año", "Mes", "Rango de Fechas" }));
         combo_tiempo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 combo_tiempoItemStateChanged(evt);
@@ -165,14 +181,14 @@ public class Reportes extends javax.swing.JInternalFrame {
 
         panel_mes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        combo_tiempo1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
-        combo_tiempo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octube", "Noviembre", "Diciembre" }));
-        combo_tiempo1.addItemListener(new java.awt.event.ItemListener() {
+        combo_mes.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        combo_mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octube", "Noviembre", "Diciembre" }));
+        combo_mes.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                combo_tiempo1ItemStateChanged(evt);
+                combo_mesItemStateChanged(evt);
             }
         });
-        panel_mes.add(combo_tiempo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 300, 50));
+        panel_mes.add(combo_mes, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 300, 50));
 
         jLabel3.setFont(new java.awt.Font("Noto Sans", 1, 24)); // NOI18N
         jLabel3.setText("Mes:");
@@ -187,28 +203,169 @@ public class Reportes extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_formComponentShown
 
+    private boolean validar_fechas() {
 
-    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
-        String path = "src/Interfaces/reporteAnio.jasper";
-        JasperReport jr = null;
+        if (date_fin.getDate() != null && date_inicio.getDate() != null) {
+            if (date_fin.getDate().compareTo(date_inicio.getDate()) > 0) {
+                return true;
+            }
+            JOptionPane.showMessageDialog(null, "Rango de fechas incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, los campos de las fechas", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        //return false;
+    }
+
+    private void generar_reporte(String archivo, Map parametros) {
         try {
+            //todos los establecimientos
+            String path = "src/Interfaces/" + archivo;
+            JasperReport jr = null;
+
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            /*Agregar parametros*/
+            /*Agregar parametros
             Map parametros = new HashMap();
             parametros.put("textoEntrada", "Reporte Anual");
             parametros.put("idCliente", this.cedula_usuario);
             parametros.put("Anio", this.anio);
-            //Fin parametros
+            Fin parametros*/
             JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.getConn());
             JasperViewer jv = new JasperViewer(jp);
             jv.setVisible(true);
             jv.setTitle(path);
+            jv.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         } catch (JRException ex) {
             Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        JOptionPane.showMessageDialog(null, "Reportes Generados Exitosamente");
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+
+        //Gastos Personales
+        switch (combo_tiempo.getSelectedIndex()) {
+            case 0://Reporte anual                
+                if (combo_Establecimientos.getSelectedIndex() == 0) {
+                    if (combo_tipo.getSelectedIndex() == 0) {
+                        Map parametros = new HashMap();
+                        parametros.put("textoEntrada", "Reporte Anual");
+                        parametros.put("idCliente", this.cedula_usuario);
+                        parametros.put("Anio", this.anio);
+                        generar_reporte("reporteAnio.jasper", parametros);
+                    } else {                        
+                        Map parametros = new HashMap();
+                        parametros.put("textoEntrada", "Reporte Anual");
+                        System.out.println(combo_tipo.getSelectedItem().toString());
+                        parametros.put("tipoFactura", combo_tipo.getSelectedItem().toString());
+                        parametros.put("idCliente", this.cedula_usuario);
+                        //System.out.println(new SimpleDateFormat("dd/MM/yyyy").parse(new Date(this.anio-1900,0,1).toString()));
+                        //parametros.put("fechaInicio", new java.sql.Date(new Date(this.anio-1900,0,1).getTime()));
+                        //parametros.put("fechaFin",new java.sql.Date(new Date(this.anio-1900,11,31).getTime()) );
+                        //parametros.put("fechaInicio", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2016"));
+                        //parametros.put("fechaFin", new SimpleDateFormat("dd/MM/yyyy").parse("31/12/2016"));
+                        parametros.put("fechaInicio", anio + "-01-01");
+                        parametros.put("fechaFin", anio + "-12-31");
+                        generar_reporte("reporteDinamico_Establecimiento.jasper", parametros);
+
+                    }
+
+                } else {//establecimiento especifico
+                    Map parametros = new HashMap();
+                    parametros.put("textoEntrada", "Reporte Anual");
+                    parametros.put("tipoFactura", combo_tipo.getSelectedItem().toString());
+                    parametros.put("idCliente", this.cedula_usuario);
+                    parametros.put("establecimiento", combo_Establecimientos.getSelectedItem().toString());
+                    parametros.put("fechaInicio", this.anio+"-01-01");
+                    parametros.put("fechaFin", this.anio+"-01-01");
+                    generar_reporte("reporteDinamico.jasper", parametros);
+                }
+
+                break;
+            case 1://mes
+                int m = combo_mes.getSelectedIndex() + 1;
+                String fecha_inicio = this.anio + "-" + (m) + "-01",
+                 fecha_fin = this.anio + "-" + (m) + "-31";
+
+                if (combo_Establecimientos.getSelectedIndex() == 0) { //todos los establecimientos
+                    Map parametros = new HashMap();
+                    parametros.put("textoEntrada", "Reporte del mes " + combo_mes.getSelectedItem().toString());
+                    parametros.put("tipoFactura", combo_tipo.getSelectedItem().toString());
+                    parametros.put("idCliente", this.cedula_usuario);
+                    parametros.put("fechaInicio", fecha_inicio);
+                    parametros.put("fechaFin", fecha_fin);
+                    generar_reporte("reporteDinamico_Establecimiento.jasper", parametros);
+
+                } else {//establecimiento especifico
+                    Map parametros = new HashMap();
+                    parametros.put("textoEntrada", "Reporte del mes " + combo_mes.getSelectedItem().toString());
+                    parametros.put("tipoFactura", combo_tipo.getSelectedItem().toString());
+                    parametros.put("idCliente", this.cedula_usuario);
+                    parametros.put("establecimiento", combo_Establecimientos.getSelectedItem().toString());
+                    parametros.put("fechaInicio", fecha_inicio);
+                    parametros.put("fechaFin", fecha_fin);
+                    generar_reporte("reporteDinamico.jasper", parametros);
+                }
+
+                break;
+            default://por fecha                   
+                if (validar_fechas()) {
+                    fecha_inicio = new SimpleDateFormat("yyyy-MM-dd").format(date_inicio.getDate());
+                    fecha_fin = new SimpleDateFormat("yyyy-MM-dd").format(date_fin.getDate());
+                    if (combo_Establecimientos.getSelectedIndex() == 0) { //todos los establecimientos
+                        Map parametros = new HashMap();
+                        parametros.put("textoEntrada", "Reporte del mes " + combo_mes.getSelectedItem().toString());
+                        parametros.put("tipoFactura", combo_tipo.getSelectedItem().toString());
+                        parametros.put("idCliente", this.cedula_usuario);
+                        parametros.put("fechaInicio", fecha_inicio);
+                        parametros.put("fechaFin", fecha_fin);
+                        generar_reporte("reporteDinamico_Establecimiento.jasper", parametros);
+                    } else {//establecimiento especifico
+                        Map parametros = new HashMap();
+                        parametros.put("textoEntrada", "Reporte entre " + fecha_inicio + " - " + fecha_fin);
+                        parametros.put("tipoFactura", combo_tipo.getSelectedItem().toString());
+                        parametros.put("idCliente", this.cedula_usuario);
+                        parametros.put("establecimiento", combo_Establecimientos.getSelectedItem().toString());
+                        parametros.put("fechaInicio", fecha_inicio);
+                        parametros.put("fechaFin", fecha_fin);
+                        generar_reporte("reporteDinamico.jasper", parametros);
+                    }
+
+                }
+        }
+
+        /*else {
+            //Gastos de negocio
+            switch (combo_tiempo.getSelectedIndex()) {
+                case 0://Reporte anual
+                    if (combo_Establecimientos.getSelectedIndex() == 0) { //todos los establecimientos
+
+                    } else {//establecimiento especifico
+
+                    }
+                case 1://mes
+                    if (combo_Establecimientos.getSelectedIndex() == 0) { //todos los establecimientos
+
+                    } else {//establecimiento especifico
+
+                    }
+                    break;
+
+                default://por fecha
+                    if (validar_fechas()) {
+                        if (combo_Establecimientos.getSelectedIndex() == 0) { //todos los establecimientos
+
+                        } else {//establecimiento especifico
+
+                        }
+                    }
+            }
+        }
+         */
+        //JOptionPane.showMessageDialog(null, "Reportes Generados Exitosamente");
     }//GEN-LAST:event_btnExportActionPerformed
+
 
     private void combo_tiempoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_tiempoItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
@@ -239,9 +396,9 @@ public class Reportes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
 
-    private void combo_tiempo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_tiempo1ItemStateChanged
+    private void combo_mesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_mesItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_combo_tiempo1ItemStateChanged
+    }//GEN-LAST:event_combo_mesItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -290,8 +447,8 @@ public class Reportes extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnExport;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> combo_Establecimientos;
+    private javax.swing.JComboBox<String> combo_mes;
     private javax.swing.JComboBox<String> combo_tiempo;
-    private javax.swing.JComboBox<String> combo_tiempo1;
     private javax.swing.JComboBox<String> combo_tipo;
     private com.toedter.calendar.JDateChooser date_fin;
     private com.toedter.calendar.JDateChooser date_inicio;
