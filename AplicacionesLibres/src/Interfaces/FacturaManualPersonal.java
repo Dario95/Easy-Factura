@@ -20,14 +20,14 @@ import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 
-public class FacturaManualNew extends javax.swing.JInternalFrame {
+public class FacturaManualPersonal extends javax.swing.JInternalFrame {
 
     Conexionn conn;
     ArrayList establecimientos;
     String cedula_usuario;
     int anio;
 
-    public FacturaManualNew(Conexionn conn, String cedula, int anio) {
+    public FacturaManualPersonal(Conexionn conn, String cedula, int anio) {
         initComponents();
         this.anio = anio;
         this.conn = conn;
@@ -47,10 +47,17 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         for (Object est : establecimientos) {
             combo_Establecimientos.addItem(est.toString());
         }
-
-        //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
-        //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
-        //conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");
+        //fecha minima
+        date_fecha.setMinSelectableDate(new Date(anio-1900, 0, 1));
+        //fecha maxima
+        Date n=new Date();
+        System.out.println(n); 
+        if((n.getYear()+1900)==anio){
+            date_fecha.setMaxSelectableDate(n); 
+        }else{
+            date_fecha.setMaxSelectableDate(new Date(anio-1900, 11, 31)); 
+        }
+        
     }
 
     /**
@@ -580,16 +587,16 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                     + "VALUES('" + num_factura + "','Otro'," + totalOtros + ")");
         }
 
-        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
-            conn.insertar("UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+" + totalAlimento + "::money,"
+        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_personal=" + anio + "")) {
+            conn.insertar("UPDATE HISTORIAL_PAGOS_PERSONALES SET total_alimentacion=total_alimentacion+" + totalAlimento + "::money,"
                     + "total_salud=total_salud+" + totalSalud + "::money,"
                     + "total_vivienda=total_vivienda+" + totalVivienda + "::money,"
                     + "total_educacion=total_educacion+" + totalEducacion + "::money,"
                     + "total_vestimenta=total_vestimenta+" + totalVestimenta + "::money,"
-                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial_personal=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
 
         } else {
-            conn.insertar("INSERT INTO HISTORIAL_PAGOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalAlimento + "," + totalSalud + "," + totalVivienda + "," + totalEducacion + "," + totalVestimenta + "," + totalOtros + ")");
+            conn.insertar("INSERT INTO HISTORIAL_PAGOS_PERSONALES VALUES (" + anio + ",'" + cedula_usuario + "'," + totalAlimento + "," + totalSalud + "," + totalVivienda + "," + totalEducacion + "," + totalVestimenta + "," + totalOtros + ")");
         }
 
         JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
@@ -600,7 +607,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         txt_num_fac.setText(null);
         date_fecha.setDate(null);
         JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_otros, lbl_salud};
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             labels[i].setText("0.0");
         }
         txt_sin_iva.setText(null);
@@ -608,7 +615,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         txt_total.setText(null);
 
     }
-
+/*
     private void validar_iva() {
         double total_aux = dar_formato(txt_iva.getText()) + dar_formato(txt_sin_iva.getText()),
                 total_con_iva = dar_formato(txt_total.getText());
@@ -616,21 +623,21 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
             txt_total.setText(total_aux + "");
         }
     }
-
+*/
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
-
+    jButton9ActionPerformed(evt);
         if (!validar_vacios()) {
             try {
                 String num_factura = txt_num_fac.getText();
                 if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
                     String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
-                    validar_iva();
+                    //validar_iva();
                     double iva = dar_formato(txt_iva.getText()),
                             total_sin_iva = dar_formato(txt_sin_iva.getText()),
                             total_con_iva = dar_formato(txt_total.getText());
 
-                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
+                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura, fecha_emision, total_sin_iva, iva, total_con_iva)"
+                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText()+ "','Personal','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
                     //Registro de todos los tipos de gastos
                     registrar_gastos(num_factura);
                     borrar_campos();
@@ -701,7 +708,7 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
         JTextField campos[] = {txt_vestimenta, txt_vivienda, txt_educacion, txt_alimentacion,  txt_otros, txt_salud};
         JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_otros, lbl_salud};
         String valor;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 6; i++) {
             valor = campos[i].getText();
             if (!valor.equals("")) {
                 sumar(labels[i], campos[i]);
@@ -819,13 +826,13 @@ public class FacturaManualNew extends javax.swing.JInternalFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FacturaManualNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaManualPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FacturaManualNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaManualPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FacturaManualNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaManualPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FacturaManualNew.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FacturaManualPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         java.awt.EventQueue.invokeLater(new Runnable() {

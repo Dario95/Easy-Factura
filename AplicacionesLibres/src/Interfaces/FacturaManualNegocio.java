@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-
 public class FacturaManualNegocio extends javax.swing.JInternalFrame {
 
     Conexionn conn;
@@ -48,9 +47,16 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
             combo_Establecimientos.addItem(est.toString());
         }
 
-        //conn.ddl("SELECT nombre_establecimiento FROM establecimiento");
-        //conn.insertar("insert into ESTABLECIMIENTO values('1234958543001','Supermaxi','Cumbaya')");
-        //conn.insertar("insert into public.establecimiento values('1234958543001','Supermaxi','Cumbaya')");
+        //fecha minima
+        date_fecha.setMinSelectableDate(new Date(anio-1900, 0, 1));
+        //fecha maxima
+        Date n=new Date();
+        System.out.println(n); 
+        if((n.getYear()+1900)==anio){
+            date_fecha.setMaxSelectableDate(n); 
+        }else{
+            date_fecha.setMaxSelectableDate(new Date(anio-1900, 11, 31)); 
+        }
     }
 
     /**
@@ -86,13 +92,13 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         txt_sin_iva = new javax.swing.JTextField();
         txt_num_fac = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        txt_vivienda = new javax.swing.JTextField();
-        txt_alimentacion = new javax.swing.JTextField();
-        txt_otros = new javax.swing.JTextField();
-        txt_salud = new javax.swing.JTextField();
-        txt_vestimenta = new javax.swing.JTextField();
-        txt_educacion = new javax.swing.JTextField();
-        txt_negocio = new javax.swing.JTextField();
+        txt_mercaderia = new javax.swing.JTextField();
+        txt_arriendo = new javax.swing.JTextField();
+        txt_capacitacion = new javax.swing.JTextField();
+        txt_sueldos = new javax.swing.JTextField();
+        txt_movilizacion = new javax.swing.JTextField();
+        txt_servbasicos = new javax.swing.JTextField();
+        txt_viaticos = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -100,13 +106,13 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        lbl_vivienda = new javax.swing.JLabel();
-        lbl_alimentacion = new javax.swing.JLabel();
-        lbl_educacion = new javax.swing.JLabel();
-        lbl_otros = new javax.swing.JLabel();
-        lbl_salud = new javax.swing.JLabel();
-        lbl_vestimenta = new javax.swing.JLabel();
-        lbl_negocio = new javax.swing.JLabel();
+        lbl_mercaderia = new javax.swing.JLabel();
+        lbl_arriendo = new javax.swing.JLabel();
+        lbl_servbasicos = new javax.swing.JLabel();
+        lbl_capacitacion = new javax.swing.JLabel();
+        lbl_sueldos = new javax.swing.JLabel();
+        lbl_movilizacion = new javax.swing.JLabel();
+        lbl_viaticos = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -122,14 +128,14 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
-        txt_negocio1 = new javax.swing.JTextField();
+        txt_suministros = new javax.swing.JTextField();
         jButton17 = new javax.swing.JButton();
-        lbl_negocio1 = new javax.swing.JLabel();
+        lbl_suministros = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jButton18 = new javax.swing.JButton();
-        txt_otros1 = new javax.swing.JTextField();
+        txt_herramientas = new javax.swing.JTextField();
         jButton19 = new javax.swing.JButton();
-        lbl_otros1 = new javax.swing.JLabel();
+        lbl_herramientas = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jButton20 = new javax.swing.JButton();
         btn_RegistrarFactura = new javax.swing.JButton();
@@ -303,64 +309,71 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jLabel11);
         jLabel11.setBounds(10, 60, 150, 17);
 
-        txt_vivienda.setDisabledTextColor(new java.awt.Color(183, 183, 183));
-        txt_vivienda.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_mercaderia.setText("1");
+        txt_mercaderia.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        txt_mercaderia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_viviendaKeyTyped(evt);
+                txt_mercaderiaKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_vivienda);
-        txt_vivienda.setBounds(110, 80, 91, 29);
+        panel_establecimiento1.add(txt_mercaderia);
+        txt_mercaderia.setBounds(110, 80, 91, 29);
 
-        txt_alimentacion.setDisabledTextColor(new java.awt.Color(183, 183, 183));
-        txt_alimentacion.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_arriendo.setText("1");
+        txt_arriendo.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        txt_arriendo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_alimentacionKeyTyped(evt);
+                txt_arriendoKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_alimentacion);
-        txt_alimentacion.setBounds(110, 120, 91, 29);
+        panel_establecimiento1.add(txt_arriendo);
+        txt_arriendo.setBounds(110, 120, 91, 29);
 
-        txt_otros.setDisabledTextColor(new java.awt.Color(183, 183, 183));
-        txt_otros.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_capacitacion.setText("1");
+        txt_capacitacion.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        txt_capacitacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_otrosKeyTyped(evt);
+                txt_capacitacionKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_otros);
-        txt_otros.setBounds(110, 200, 91, 29);
+        panel_establecimiento1.add(txt_capacitacion);
+        txt_capacitacion.setBounds(110, 200, 91, 29);
 
-        txt_salud.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_sueldos.setText("1");
+        txt_sueldos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_saludKeyTyped(evt);
+                txt_sueldosKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_salud);
-        txt_salud.setBounds(490, 80, 82, 29);
+        panel_establecimiento1.add(txt_sueldos);
+        txt_sueldos.setBounds(490, 80, 82, 29);
 
-        txt_vestimenta.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_movilizacion.setText("1");
+        txt_movilizacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_vestimentaKeyTyped(evt);
+                txt_movilizacionKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_vestimenta);
-        txt_vestimenta.setBounds(490, 120, 82, 29);
+        panel_establecimiento1.add(txt_movilizacion);
+        txt_movilizacion.setBounds(490, 120, 82, 29);
 
-        txt_educacion.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_servbasicos.setText("1");
+        txt_servbasicos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_educacionKeyTyped(evt);
+                txt_servbasicosKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_educacion);
-        txt_educacion.setBounds(110, 160, 91, 29);
+        panel_establecimiento1.add(txt_servbasicos);
+        txt_servbasicos.setBounds(110, 160, 91, 29);
 
-        txt_negocio.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_viaticos.setText("1");
+        txt_viaticos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_negocioKeyTyped(evt);
+                txt_viaticosKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_negocio);
-        txt_negocio.setBounds(490, 160, 82, 29);
+        panel_establecimiento1.add(txt_viaticos);
+        txt_viaticos.setBounds(490, 160, 82, 29);
 
         jButton1.setText("+");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -425,54 +438,54 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton8);
         jButton8.setBounds(580, 160, 50, 29);
 
-        lbl_vivienda.setForeground(java.awt.Color.darkGray);
-        lbl_vivienda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_vivienda.setText("0.0");
-        lbl_vivienda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_vivienda);
-        lbl_vivienda.setBounds(320, 80, 70, 30);
+        lbl_mercaderia.setForeground(java.awt.Color.darkGray);
+        lbl_mercaderia.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_mercaderia.setText("0.0");
+        lbl_mercaderia.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_mercaderia);
+        lbl_mercaderia.setBounds(320, 80, 70, 30);
 
-        lbl_alimentacion.setForeground(java.awt.Color.darkGray);
-        lbl_alimentacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_alimentacion.setText("0.0");
-        lbl_alimentacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_alimentacion);
-        lbl_alimentacion.setBounds(320, 120, 70, 30);
+        lbl_arriendo.setForeground(java.awt.Color.darkGray);
+        lbl_arriendo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_arriendo.setText("0.0");
+        lbl_arriendo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_arriendo);
+        lbl_arriendo.setBounds(320, 120, 70, 30);
 
-        lbl_educacion.setForeground(java.awt.Color.darkGray);
-        lbl_educacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_educacion.setText("0.0");
-        lbl_educacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_educacion);
-        lbl_educacion.setBounds(320, 160, 70, 30);
+        lbl_servbasicos.setForeground(java.awt.Color.darkGray);
+        lbl_servbasicos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_servbasicos.setText("0.0");
+        lbl_servbasicos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_servbasicos);
+        lbl_servbasicos.setBounds(320, 160, 70, 30);
 
-        lbl_otros.setForeground(java.awt.Color.darkGray);
-        lbl_otros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_otros.setText("0.0");
-        lbl_otros.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_otros);
-        lbl_otros.setBounds(320, 200, 70, 30);
+        lbl_capacitacion.setForeground(java.awt.Color.darkGray);
+        lbl_capacitacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_capacitacion.setText("0.0");
+        lbl_capacitacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_capacitacion);
+        lbl_capacitacion.setBounds(320, 200, 70, 30);
 
-        lbl_salud.setForeground(java.awt.Color.darkGray);
-        lbl_salud.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_salud.setText("0.0");
-        lbl_salud.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_salud);
-        lbl_salud.setBounds(690, 80, 67, 30);
+        lbl_sueldos.setForeground(java.awt.Color.darkGray);
+        lbl_sueldos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_sueldos.setText("0.0");
+        lbl_sueldos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_sueldos);
+        lbl_sueldos.setBounds(690, 80, 67, 30);
 
-        lbl_vestimenta.setForeground(java.awt.Color.darkGray);
-        lbl_vestimenta.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_vestimenta.setText("0.0");
-        lbl_vestimenta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_vestimenta);
-        lbl_vestimenta.setBounds(690, 120, 67, 30);
+        lbl_movilizacion.setForeground(java.awt.Color.darkGray);
+        lbl_movilizacion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_movilizacion.setText("0.0");
+        lbl_movilizacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_movilizacion);
+        lbl_movilizacion.setBounds(690, 120, 67, 30);
 
-        lbl_negocio.setForeground(java.awt.Color.darkGray);
-        lbl_negocio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_negocio.setText("0.0");
-        lbl_negocio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_negocio);
-        lbl_negocio.setBounds(690, 160, 67, 30);
+        lbl_viaticos.setForeground(java.awt.Color.darkGray);
+        lbl_viaticos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_viaticos.setText("0.0");
+        lbl_viaticos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_viaticos);
+        lbl_viaticos.setBounds(690, 160, 67, 30);
 
         jButton9.setText("Calcular");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -483,19 +496,19 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton9);
         jButton9.setBounds(80, 300, 180, 60);
 
-        jLabel19.setText("Vivienda");
+        jLabel19.setText("Mercadería");
         panel_establecimiento1.add(jLabel19);
         jLabel19.setBounds(10, 90, 100, 17);
 
-        jLabel20.setText("Alimentación");
+        jLabel20.setText("Arriendo");
         panel_establecimiento1.add(jLabel20);
         jLabel20.setBounds(10, 130, 140, 17);
 
-        jLabel21.setText("Educación ");
+        jLabel21.setText("Serv. Básicos");
         panel_establecimiento1.add(jLabel21);
         jLabel21.setBounds(10, 170, 130, 17);
 
-        jLabel22.setText("Otros");
+        jLabel22.setText("Capacitación");
         panel_establecimiento1.add(jLabel22);
         jLabel22.setBounds(10, 210, 120, 17);
 
@@ -535,15 +548,15 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton13);
         jButton13.setBounds(260, 200, 50, 29);
 
-        jLabel23.setText("Salud");
+        jLabel23.setText("Sueldos");
         panel_establecimiento1.add(jLabel23);
         jLabel23.setBounds(400, 90, 100, 17);
 
-        jLabel24.setText("Vestimenta");
+        jLabel24.setText("Movilización");
         panel_establecimiento1.add(jLabel24);
         jLabel24.setBounds(400, 130, 100, 17);
 
-        jLabel25.setText("Negocio");
+        jLabel25.setText("Viáticos");
         panel_establecimiento1.add(jLabel25);
         jLabel25.setBounds(400, 170, 90, 17);
 
@@ -574,13 +587,14 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton16);
         jButton16.setBounds(630, 160, 50, 29);
 
-        txt_negocio1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_suministros.setText("1");
+        txt_suministros.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_negocio1KeyTyped(evt);
+                txt_suministrosKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_negocio1);
-        txt_negocio1.setBounds(490, 200, 82, 29);
+        panel_establecimiento1.add(txt_suministros);
+        txt_suministros.setBounds(490, 200, 82, 29);
 
         jButton17.setText("+");
         jButton17.addActionListener(new java.awt.event.ActionListener() {
@@ -591,14 +605,14 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton17);
         jButton17.setBounds(580, 200, 50, 29);
 
-        lbl_negocio1.setForeground(java.awt.Color.darkGray);
-        lbl_negocio1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_negocio1.setText("0.0");
-        lbl_negocio1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_negocio1);
-        lbl_negocio1.setBounds(690, 200, 67, 30);
+        lbl_suministros.setForeground(java.awt.Color.darkGray);
+        lbl_suministros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_suministros.setText("0.0");
+        lbl_suministros.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_suministros);
+        lbl_suministros.setBounds(690, 200, 67, 30);
 
-        jLabel26.setText("Negocio");
+        jLabel26.setText("Suministros");
         panel_establecimiento1.add(jLabel26);
         jLabel26.setBounds(400, 210, 90, 17);
 
@@ -611,14 +625,15 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton18);
         jButton18.setBounds(630, 200, 50, 29);
 
-        txt_otros1.setDisabledTextColor(new java.awt.Color(183, 183, 183));
-        txt_otros1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_herramientas.setText("1");
+        txt_herramientas.setDisabledTextColor(new java.awt.Color(183, 183, 183));
+        txt_herramientas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_otros1KeyTyped(evt);
+                txt_herramientasKeyTyped(evt);
             }
         });
-        panel_establecimiento1.add(txt_otros1);
-        txt_otros1.setBounds(110, 240, 91, 29);
+        panel_establecimiento1.add(txt_herramientas);
+        txt_herramientas.setBounds(110, 240, 91, 29);
 
         jButton19.setText("+");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
@@ -629,14 +644,14 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         panel_establecimiento1.add(jButton19);
         jButton19.setBounds(210, 240, 50, 29);
 
-        lbl_otros1.setForeground(java.awt.Color.darkGray);
-        lbl_otros1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_otros1.setText("0.0");
-        lbl_otros1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panel_establecimiento1.add(lbl_otros1);
-        lbl_otros1.setBounds(320, 240, 70, 30);
+        lbl_herramientas.setForeground(java.awt.Color.darkGray);
+        lbl_herramientas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_herramientas.setText("0.0");
+        lbl_herramientas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel_establecimiento1.add(lbl_herramientas);
+        lbl_herramientas.setBounds(320, 240, 70, 30);
 
-        jLabel27.setText("Otros");
+        jLabel27.setText("Herramientas");
         panel_establecimiento1.add(jLabel27);
         jLabel27.setBounds(10, 250, 120, 17);
 
@@ -664,7 +679,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean validar_vacios() {
-        return ((combo_Establecimientos.getSelectedItem().equals("") || txt_num_fac.getText().equals("") || txt_total.getText().equals("") || txt_sin_iva.getText().equals("") || date_fecha.getDate() == null));
+        return ((combo_Establecimientos.getSelectedItem().equals("") || txt_num_fac.getText().equals("") || date_fecha.getDate() == null));
 
     }
 
@@ -674,56 +689,71 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
 
     private void registrar_gastos(String num_factura) {
 
-        double totalVivienda = dar_formato(lbl_vivienda.getText()),
-                totalAlimento = dar_formato(lbl_alimentacion.getText()),
-                totalEducacion = dar_formato(lbl_educacion.getText()),
-                totalSalud = dar_formato(lbl_salud.getText()),
-                totalVestimenta = dar_formato(lbl_vestimenta.getText()),
-                totalNegocio = dar_formato(lbl_negocio.getText()),
-                totalOtros = dar_formato(lbl_otros.getText());
+        double totalMercaderia = dar_formato(lbl_mercaderia.getText()),
+                totalArriendo = dar_formato(lbl_arriendo.getText()),
+                totalServicios = dar_formato(lbl_servbasicos.getText()),
+                totalSueldos = dar_formato(lbl_sueldos.getText()),
+                totalMovilizacion = dar_formato(lbl_movilizacion.getText()),
+                totalViaticos = dar_formato(lbl_viaticos.getText()),
+                totalCapacitacion = dar_formato(lbl_capacitacion.getText()),
+                totalSuministros = dar_formato(lbl_suministros.getText()),
+                totalHerramientas = dar_formato(lbl_herramientas.getText());
 
-        if (totalVivienda != 0) {
+        if (totalMercaderia != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Vivienda'," + totalVivienda + ")");
+                    + "VALUES('" + num_factura + "','Mercadería'," + totalMercaderia + ")");
         }
-        if (totalAlimento != 0) {    //        
+        if (totalArriendo != 0) {    //        
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Alimentacion'," + totalAlimento + ")");
+                    + "VALUES('" + num_factura + "','Arriendo'," + totalArriendo + ")");
         }
-        if (totalEducacion != 0) {
+        if (totalServicios != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Educacion'," + totalEducacion + ")");
+                    + "VALUES('" + num_factura + "','Servicios Básicos'," + totalServicios + ")");
         }
-        if (totalSalud != 0) {
+        if (totalSueldos != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Salud'," + totalSalud + ")");
+                    + "VALUES('" + num_factura + "','Sueldos'," + totalSueldos + ")");
         }
-        if (totalVestimenta != 0) {//
+        if (totalMovilizacion != 0) {//
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Vestimenta'," + totalVestimenta + ")");
+                    + "VALUES('" + num_factura + "','Movilización'," + totalMovilizacion + ")");
         }
-        if (totalNegocio != 0) {
+        if (totalViaticos != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Negocio'," + totalNegocio + ")");
+                    + "VALUES('" + num_factura + "','Viáticos'," + totalViaticos + ")");
         }
-        if (totalOtros != 0) {
+        if (totalCapacitacion != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
-                    + "VALUES('" + num_factura + "','Otro'," + totalOtros + ")");
+                    + "VALUES('" + num_factura + "','Capacitación'," + totalCapacitacion + ")");
+        }
+               
+        if (totalSuministros != 0) {
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Suministros'," + totalSuministros + ")");
+        }
+        if (totalHerramientas != 0) {    //        
+            conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
+                    + "VALUES('" + num_factura + "','Herramientas'," + totalHerramientas + ")");
         }
 
-        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS WHERE anio_historial=" + anio + "")) {
-            conn.insertar("UPDATE HISTORIAL_PAGOS SET total_alimentacion=total_alimentacion+" + totalAlimento + "::money,"
-                    + "total_salud=total_salud+" + totalSalud + "::money,"
-                    + "total_vivienda=total_vivienda+" + totalVivienda + "::money,"
-                    + "total_educacion=total_educacion+" + totalEducacion + "::money,"
-                    + "total_vestimenta=total_vestimenta+" + totalVestimenta + "::money,"
-                    + "total_negocios=total_negocios+" + totalNegocio + "::money,"
-                    + "total_otros=total_otros+" + totalOtros + "::money WHERE anio_historial=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+        if (conn.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_NEGOCIOS WHERE anio_historial2=" + anio + "")) {
+            conn.insertar("UPDATE HISTORIAL_PAGOS_NEGOCIOS SET total_mercaderia=total_mercaderia+" + totalMercaderia + "::money,"
+                    + "total_arriendo=total_arriendo+" + totalArriendo + "::money,"
+                    + "total_servicios=total_servicios+" + totalServicios + "::money,"
+                    + "total_sueldos=total_sueldos+" + totalSueldos + "::money,"
+                    + "total_movilizacion=total_movilizacion+" + totalMovilizacion + "::money,"
+                    + "total_viaticos=total_viaticos+" + totalViaticos + "::money,"
+                    + "total_capacitacion=total_capacitacion+" + totalCapacitacion + "::money,"
+                    + "total_suministros=total_suministros+" + totalSuministros + "::money,"
+                    + "total_herramientas=total_herramientas+" + totalHerramientas+ "::money WHERE anio_historial2=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
 
         } else {
-            conn.insertar("INSERT INTO HISTORIAL_PAGOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalAlimento + "," + totalSalud + "," + totalVivienda + "," + totalEducacion + "," + totalVestimenta + "," + totalNegocio + "," + totalOtros + ")");
+            conn.insertar("INSERT INTO HISTORIAL_PAGOS_NEGOCIOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalMercaderia + "," 
+                    + totalArriendo + "," + totalServicios + "," + totalSueldos + "," + totalMovilizacion + "," + totalViaticos + ","
+                    + totalCapacitacion + "," + totalSuministros+"," + totalHerramientas + ")");
         }
-
+        
         JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
     }
 
@@ -731,8 +761,8 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         combo_Establecimientos.setSelectedIndex(0);
         txt_num_fac.setText(null);
         date_fecha.setDate(null);
-        JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_negocio, lbl_otros, lbl_salud};
-        for (int i = 0; i < 7; i++) {
+        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos,lbl_herramientas,lbl_suministros};
+        for (int i = 0; i < 9; i++) {
             labels[i].setText("0.0");
         }
         txt_sin_iva.setText(null);
@@ -741,28 +771,19 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
 
     }
 
-    private void validar_iva() {
-        double total_aux = dar_formato(txt_iva.getText()) + dar_formato(txt_sin_iva.getText()),
-                total_con_iva = dar_formato(txt_total.getText());
-        if (total_con_iva != total_aux) {
-            txt_total.setText(total_aux + "");
-        }
-    }
-
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
-
+    jButton9ActionPerformed(evt);
         if (!validar_vacios()) {
             try {
                 String num_factura = txt_num_fac.getText();
                 if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
-                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
-                    validar_iva();
+                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());                    
                     double iva = dar_formato(txt_iva.getText()),
                             total_sin_iva = dar_formato(txt_sin_iva.getText()),
                             total_con_iva = dar_formato(txt_total.getText());
 
-                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
+                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura,fecha_emision, total_sin_iva, iva, total_con_iva)"
+                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','Negocio','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
                     //Registro de todos los tipos de gastos
                     registrar_gastos(num_factura);
                     borrar_campos();
@@ -806,38 +827,38 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        restar(lbl_negocio, txt_negocio);
+        restar(lbl_viaticos, txt_viaticos);
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        restar(lbl_vestimenta, txt_vestimenta);
+        restar(lbl_movilizacion, txt_movilizacion);
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        restar(lbl_salud, txt_salud);
+        restar(lbl_sueldos, txt_sueldos);
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        restar(lbl_otros, txt_otros);
+        restar(lbl_capacitacion, txt_capacitacion);
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        restar(lbl_educacion, txt_educacion);
+        restar(lbl_servbasicos, txt_servbasicos);
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        restar(lbl_alimentacion, txt_alimentacion);
+        restar(lbl_arriendo, txt_arriendo);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        restar(lbl_vivienda, txt_vivienda);
+        restar(lbl_mercaderia, txt_mercaderia);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void agregar_todo() {
-        JTextField campos[] = {txt_vestimenta, txt_vivienda, txt_educacion, txt_alimentacion, txt_negocio, txt_otros, txt_salud};
-        JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_negocio, lbl_otros, lbl_salud};
+        JTextField campos[] = {txt_movilizacion, txt_mercaderia, txt_servbasicos, txt_arriendo, txt_viaticos, txt_capacitacion, txt_sueldos,txt_herramientas,txt_suministros};
+        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos,lbl_herramientas,lbl_suministros};
         String valor;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 9; i++) {
             valor = campos[i].getText();
             if (!valor.equals("")) {
                 sumar(labels[i], campos[i]);
@@ -847,36 +868,37 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         agregar_todo();
-        double totalNoIva = Double.parseDouble(lbl_vivienda.getText()) + Double.parseDouble(lbl_alimentacion.getText())
-                + Double.parseDouble(lbl_educacion.getText()) + Double.parseDouble(lbl_otros.getText())
-                + Double.parseDouble(lbl_salud.getText()) + Double.parseDouble(lbl_vestimenta.getText()) + Double.parseDouble(lbl_negocio.getText());
+        double totalNoIva = Double.parseDouble(lbl_mercaderia.getText()) + Double.parseDouble(lbl_arriendo.getText())
+                + Double.parseDouble(lbl_servbasicos.getText()) + Double.parseDouble(lbl_capacitacion.getText())
+                + Double.parseDouble(lbl_sueldos.getText()) + Double.parseDouble(lbl_movilizacion.getText()) + Double.parseDouble(lbl_viaticos.getText())
+                + Double.parseDouble(lbl_herramientas.getText()) + Double.parseDouble(lbl_suministros.getText());
         txt_sin_iva.setText(totalNoIva + "");   // TODO add your handling code here:
         double totalIVA = totalNoIva + Double.parseDouble(txt_iva.getText());
         txt_total.setText(totalIVA + "");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        sumar(lbl_negocio, txt_negocio);
+        sumar(lbl_viaticos, txt_viaticos);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        sumar(lbl_vestimenta, txt_vestimenta);
+        sumar(lbl_movilizacion, txt_movilizacion);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        sumar(lbl_educacion, txt_educacion);
+        sumar(lbl_servbasicos, txt_servbasicos);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        sumar(lbl_salud, txt_salud);
+        sumar(lbl_sueldos, txt_sueldos);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        sumar(lbl_otros, txt_otros);
+        sumar(lbl_capacitacion, txt_capacitacion);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        sumar(lbl_alimentacion, txt_alimentacion);
+        sumar(lbl_arriendo, txt_arriendo);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void sumar(JLabel lbl, JTextField txt) {
@@ -903,7 +925,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        sumar(lbl_vivienda, txt_vivienda);
+        sumar(lbl_mercaderia, txt_mercaderia);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void filtrar(java.awt.event.KeyEvent evt, JTextField txt) {
@@ -912,66 +934,66 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
             getToolkit();
             evt.consume();
         }
-        if ((c == '.') && (txt_vivienda.getText().contains("."))) {
+        if ((c == '.') && (txt_mercaderia.getText().contains("."))) {
             getToolkit();
             evt.consume();
         }
     }
 
-    private void txt_negocioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_negocioKeyTyped
-        filtrar(evt, txt_negocio);
-    }//GEN-LAST:event_txt_negocioKeyTyped
+    private void txt_viaticosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_viaticosKeyTyped
+        filtrar(evt, txt_viaticos);
+    }//GEN-LAST:event_txt_viaticosKeyTyped
 
-    private void txt_educacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_educacionKeyTyped
-        filtrar(evt, txt_educacion);
-    }//GEN-LAST:event_txt_educacionKeyTyped
+    private void txt_servbasicosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_servbasicosKeyTyped
+        filtrar(evt, txt_servbasicos);
+    }//GEN-LAST:event_txt_servbasicosKeyTyped
 
-    private void txt_vestimentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_vestimentaKeyTyped
-        filtrar(evt, txt_vestimenta);
-    }//GEN-LAST:event_txt_vestimentaKeyTyped
+    private void txt_movilizacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_movilizacionKeyTyped
+        filtrar(evt, txt_movilizacion);
+    }//GEN-LAST:event_txt_movilizacionKeyTyped
 
-    private void txt_saludKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_saludKeyTyped
-        filtrar(evt, txt_salud);
-    }//GEN-LAST:event_txt_saludKeyTyped
+    private void txt_sueldosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_sueldosKeyTyped
+        filtrar(evt, txt_sueldos);
+    }//GEN-LAST:event_txt_sueldosKeyTyped
 
-    private void txt_otrosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_otrosKeyTyped
-        filtrar(evt, txt_otros);
-    }//GEN-LAST:event_txt_otrosKeyTyped
+    private void txt_capacitacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_capacitacionKeyTyped
+        filtrar(evt, txt_capacitacion);
+    }//GEN-LAST:event_txt_capacitacionKeyTyped
 
-    private void txt_alimentacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_alimentacionKeyTyped
-        filtrar(evt, txt_alimentacion);
-    }//GEN-LAST:event_txt_alimentacionKeyTyped
+    private void txt_arriendoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_arriendoKeyTyped
+        filtrar(evt, txt_arriendo);
+    }//GEN-LAST:event_txt_arriendoKeyTyped
 
-    private void txt_viviendaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_viviendaKeyTyped
-        filtrar(evt, txt_vivienda);
-    }//GEN-LAST:event_txt_viviendaKeyTyped
+    private void txt_mercaderiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_mercaderiaKeyTyped
+        filtrar(evt, txt_mercaderia);
+    }//GEN-LAST:event_txt_mercaderiaKeyTyped
 
     private void txt_ivaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ivaKeyTyped
         filtrar(evt, txt_iva);
     }//GEN-LAST:event_txt_ivaKeyTyped
 
-    private void txt_negocio1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_negocio1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_negocio1KeyTyped
+    private void txt_suministrosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_suministrosKeyTyped
+        filtrar(evt, txt_suministros);
+    }//GEN-LAST:event_txt_suministrosKeyTyped
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // TODO add your handling code here:
+        sumar(lbl_suministros, txt_suministros);
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
+        restar(lbl_suministros, txt_suministros);
     }//GEN-LAST:event_jButton18ActionPerformed
 
-    private void txt_otros1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_otros1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_otros1KeyTyped
+    private void txt_herramientasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_herramientasKeyTyped
+        filtrar(evt, txt_herramientas);
+    }//GEN-LAST:event_txt_herramientasKeyTyped
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
+        sumar(lbl_herramientas, txt_herramientas);
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
+        restar(lbl_herramientas, txt_herramientas);
     }//GEN-LAST:event_jButton20ActionPerformed
 
     /**
@@ -1048,32 +1070,32 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel lbl_alimentacion;
-    private javax.swing.JLabel lbl_educacion;
-    private javax.swing.JLabel lbl_negocio;
-    private javax.swing.JLabel lbl_negocio1;
-    private javax.swing.JLabel lbl_otros;
-    private javax.swing.JLabel lbl_otros1;
-    private javax.swing.JLabel lbl_salud;
-    private javax.swing.JLabel lbl_vestimenta;
-    private javax.swing.JLabel lbl_vivienda;
+    private javax.swing.JLabel lbl_arriendo;
+    private javax.swing.JLabel lbl_capacitacion;
+    private javax.swing.JLabel lbl_herramientas;
+    private javax.swing.JLabel lbl_mercaderia;
+    private javax.swing.JLabel lbl_movilizacion;
+    private javax.swing.JLabel lbl_servbasicos;
+    private javax.swing.JLabel lbl_sueldos;
+    private javax.swing.JLabel lbl_suministros;
+    private javax.swing.JLabel lbl_viaticos;
     private javax.swing.JPanel panel_establecimiento;
     private javax.swing.JPanel panel_establecimiento1;
-    private javax.swing.JTextField txt_alimentacion;
+    private javax.swing.JTextField txt_arriendo;
+    private javax.swing.JTextField txt_capacitacion;
     private javax.swing.JTextField txt_direc_est;
-    private javax.swing.JTextField txt_educacion;
+    private javax.swing.JTextField txt_herramientas;
     private javax.swing.JTextField txt_iva;
-    private javax.swing.JTextField txt_negocio;
-    private javax.swing.JTextField txt_negocio1;
+    private javax.swing.JTextField txt_mercaderia;
+    private javax.swing.JTextField txt_movilizacion;
     private javax.swing.JTextField txt_num_fac;
-    private javax.swing.JTextField txt_otros;
-    private javax.swing.JTextField txt_otros1;
     private javax.swing.JTextField txt_ruc_est;
-    private javax.swing.JTextField txt_salud;
+    private javax.swing.JTextField txt_servbasicos;
     private javax.swing.JTextField txt_sin_iva;
+    private javax.swing.JTextField txt_sueldos;
+    private javax.swing.JTextField txt_suministros;
     private javax.swing.JTextField txt_telef;
     private javax.swing.JTextField txt_total;
-    private javax.swing.JTextField txt_vestimenta;
-    private javax.swing.JTextField txt_vivienda;
+    private javax.swing.JTextField txt_viaticos;
     // End of variables declaration//GEN-END:variables
 }
