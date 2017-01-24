@@ -17,5 +17,6 @@ public class App {
         new Login().setVisible(true);
         System.setProperty("user.dir", "/home/andreu/NetBeansProjects/AplicacionesLibres/src");
         //new VentanaPrincipal("1723123459",2016).setVisible(true);
+        //new VentanaPrincipal("1718269671",2016).setVisible(true);
     }    
 }
