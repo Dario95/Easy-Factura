@@ -225,7 +225,6 @@ public class V_Establecimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_rucKeyTyped
 
     public void recargar() {
-                
         Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();
         Interfaces.FacturaManualNegocio.combo_Establecimientos.removeAllItems();
         Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem("");

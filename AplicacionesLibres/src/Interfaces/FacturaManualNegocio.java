@@ -51,6 +51,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         date_fecha.setMinSelectableDate(new Date(anio-1900, 0, 1));
         //fecha maxima
         Date n=new Date();        
+      
         if((n.getYear()+1900)==anio){
             date_fecha.setMaxSelectableDate(n); 
         }else{

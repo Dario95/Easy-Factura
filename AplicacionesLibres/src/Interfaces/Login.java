@@ -171,6 +171,7 @@ public class Login extends javax.swing.JFrame {
 
     private void txt_cedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cedulaKeyTyped
         char c = evt.getKeyChar();
+
         if (!Character.isDigit(c) || txt_cedula.getText().length()>9) {            
             evt.consume();
         }
