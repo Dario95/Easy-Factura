@@ -128,5 +128,9 @@ public class Conexionn {
         }
         return salida;
     }
+    
+    public Connection getConn(){
+    return conexion;
+    }
 
 }

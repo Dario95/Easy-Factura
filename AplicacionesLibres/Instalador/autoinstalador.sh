@@ -17,7 +17,6 @@ tail -n +$SKIP $0 | tar xvz -C $WRKDIR
 PREV=`pwd`
 cd $WRKDIR
 sh install.sh
-sh scriptPost.sh
 
 cd $PREV
 rm -rf $WRKDIR

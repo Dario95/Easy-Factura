@@ -5,8 +5,6 @@
  */
 package Interfaces;
 
-import static Interfaces.FacturaManualPersonal.combo_Establecimientos;
-import static Interfaces.FacturaManualNegocio.combo_Establecimientos;
 import conexionBDD.Conexionn;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -207,9 +205,9 @@ public class V_Establecimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
     private void btn_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarActionPerformed
-                
-        if (!connEst.verificar_usuario(String.format("select id_establecimiento from factura where id_establecimiento='%s'",  txt_ruc.getText()))) {
-            connEst.insertar("DELETE FROM establecimiento WHERE id_establecimiento='" + txt_ruc.getText() + "'");            
+
+        if (!connEst.verificar_usuario(String.format("select id_establecimiento from factura where id_establecimiento='%s'", txt_ruc.getText()))) {
+            connEst.insertar("DELETE FROM establecimiento WHERE id_establecimiento='" + txt_ruc.getText() + "'");
             recargar();
             this.dispose();
             JOptionPane.showMessageDialog(null, "Establecimiento borrado con éxito");
@@ -220,20 +218,20 @@ public class V_Establecimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_borrarActionPerformed
 
     private void txt_rucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyTyped
-        char c = evt.getKeyChar();        
-        if (!Character.isDigit(c) || txt_ruc.getText().length()>12) {
-            getToolkit();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || txt_ruc.getText().length()>12) {            
             evt.consume();
         }
     }//GEN-LAST:event_txt_rucKeyTyped
 
     public void recargar() {
-        Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();        
-        Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem("");
+        Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();
         Interfaces.FacturaManualNegocio.combo_Establecimientos.removeAllItems();
+        Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem("");
         Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem("");
+
         auxRec = connEst.cargarEstablecimiento();
-        for (Object est : auxRec) {
+        for (Object est : auxRec) {            
             Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem(est.toString());
             Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem(est.toString());
         }
@@ -290,3 +288,4 @@ public class V_Establecimiento extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telef;
     // End of variables declaration//GEN-END:variables
 }
+
