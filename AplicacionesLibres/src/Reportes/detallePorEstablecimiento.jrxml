@@ -174,18 +174,6 @@ group by establecimiento,TIPO order by 1]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="75" height="32" rowTotalGroup="establecimiento">
-					<cellContents backcolor="#BFE1FF" mode="Opaque">
-						<box>
-							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="75" height="32"/>
-							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
-						</textField>
-					</cellContents>
-				</crosstabCell>
 				<crosstabCell width="82" height="25" columnTotalGroup="tipo">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
@@ -193,6 +181,18 @@ group by establecimiento,TIPO order by 1]]>
 						</box>
 						<textField>
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="82" height="25"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="75" height="32" rowTotalGroup="establecimiento">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="75" height="32"/>
 							<textElement verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
 						</textField>
