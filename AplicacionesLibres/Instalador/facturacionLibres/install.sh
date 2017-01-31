@@ -24,6 +24,8 @@ cp -f icono.svg /usr/share/icons/
 
 cp -Rf lib /usr/bin/
 
+cp -Rf src /usr/bin/
+
 #Crear el lanzador, este paso es muy sencillo, podemos hacerlo con un simple "echo"
 #siguiendo la estructura de abajo reemplazando por nuestro programa.
 
