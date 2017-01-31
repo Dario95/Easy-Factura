@@ -8,12 +8,6 @@ psqlpass="facturacion01"  # Database password
 psqldb="facturas"   # Database name
 
 #################
-# Dependicies
-#################
-sudo apt-get update
-sudo apt-get install postgresql postgresql-contrib
-
-#################
 # Database
 #################
 
