@@ -49,6 +49,22 @@ public class Conexionn {
         }
         return n;
     }
+    
+    public ArrayList cargarAnios() {
+        ArrayList n = new ArrayList();
+        try {
+            Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet resultado = comando.executeQuery("SELECT * FROM gastosanualespersonales");            
+            while (resultado.next()) {
+                n.add(resultado.getString("anio_gastos"));
+            }
+            resultado.close();
+            comando.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return n;
+    }
 
     public ArrayList cambiarDatosEstablecimiento(String est) {
         ArrayList n = new ArrayList();
@@ -109,6 +125,7 @@ public class Conexionn {
         return val;
     }
 
+    
     public ArrayList ddl(String sql) {
     ArrayList salida=new ArrayList();
         try {

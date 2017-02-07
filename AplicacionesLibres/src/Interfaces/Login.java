@@ -6,6 +6,7 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,10 +18,20 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    conexionBDD.Conexionn conn;
     public Login() {
         initComponents();
-        //this.setLocationRelativeTo(null);
-
+        conn = new Conexionn();        
+        cargar_anios();
+    }
+    
+    public void cargar_anios(){
+        combo_anio.removeAllItems();
+        ArrayList anios=conn.cargarAnios();
+        anios.sort(null);
+        for (Object obj:anios){
+            combo_anio.addItem(obj.toString());
+        }
     }
 
     /**
@@ -41,6 +52,10 @@ public class Login extends javax.swing.JFrame {
         btn_Registrar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         combo_anio = new javax.swing.JComboBox<>();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -75,7 +90,27 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setText("Año");
 
-        combo_anio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016", "2017" }));
+        menu.setText("Límites");
+
+        jMenuItem1.setText("Registrar límites de un nuevo año");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menu.add(jMenuItem1);
+
+        jMenuItem2.setText("Editar límites de algún año");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menu.add(jMenuItem2);
+
+        jMenuBar1.add(menu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +161,7 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -142,7 +177,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IngresarActionPerformed
-        conexionBDD.Conexionn conn = new Conexionn();
+        
 
         if (txt_cedula.getText().equals("") || txt_pass.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Es necesario llenar los campos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -176,6 +211,16 @@ public class Login extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txt_cedulaKeyTyped
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.setVisible(false);
+        new RegistroLimitesAnio(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.setVisible(false);
+        new EdicionLimitesAnio(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +265,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenu menu;
     private javax.swing.JTextField txt_cedula;
     private javax.swing.JPasswordField txt_pass;
     // End of variables declaration//GEN-END:variables
