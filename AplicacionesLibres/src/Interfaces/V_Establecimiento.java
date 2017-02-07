@@ -5,8 +5,6 @@
  */
 package Interfaces;
 
-import static Interfaces.FacturaManualPersonal.combo_Establecimientos;
-import static Interfaces.FacturaManualNegocio.combo_Establecimientos;
 import conexionBDD.Conexionn;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
