@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detallePorMes" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="183"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -10,10 +10,13 @@
 	<parameter name="tipo_factura" class="java.lang.String">
 		<defaultValueExpression><![CDATA["Negocio"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="Anio" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[2016]]></defaultValueExpression>
-	</parameter>
 	<parameter name="cliente" class="java.lang.String"/>
+	<parameter name="fechaInicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFin" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2016-12-31"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT  f.id_factura as ID
 ,e.nombre_establecimiento AS ESTABLECIMIENTO
@@ -43,7 +46,7 @@ from factura f
 join establecimiento e 
 on f.id_establecimiento=e.id_establecimiento
 where f.tipo_factura='Personal'
-and extract(year from fecha_emision)=$P{Anio}]]>
+and f.fecha_emision>= TO_DATE($P{fechaInicio},'YYYY-MM-DD') and f.fecha_emision<TO_DATE($P{fechaFin},'YYYY-MM-DD')]]>
 	</queryString>
 	<field name="id" class="java.lang.String"/>
 	<field name="establecimiento" class="java.lang.String"/>
@@ -57,6 +60,34 @@ and extract(year from fecha_emision)=$P{Anio}]]>
 	<field name="iva" class="java.math.BigDecimal"/>
 	<field name="total_sin_iva" class="java.math.BigDecimal"/>
 	<field name="total_con_iva" class="java.math.BigDecimal"/>
+	<variable name="SumAlimentacion" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{alimentacion}]]></variableExpression>
+	</variable>
+	<variable name="SumEducacion" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{educacion}]]></variableExpression>
+	</variable>
+	<variable name="SumSalud" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{salud}]]></variableExpression>
+	</variable>
+	<variable name="sumVestimenta" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vestimenta}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="sumVivienda" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vivienda}]]></variableExpression>
+	</variable>
+	<variable name="sumOtro" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{otro}]]></variableExpression>
+	</variable>
+	<variable name="sumIVA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{iva}]]></variableExpression>
+	</variable>
+	<variable name="sumSinIVa" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_sin_iva}]]></variableExpression>
+	</variable>
+	<variable name="sumConIVA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_con_iva}]]></variableExpression>
+	</variable>
 	<background>
 		<band/>
 	</background>
@@ -72,18 +103,24 @@ and extract(year from fecha_emision)=$P{Anio}]]>
 					<text><![CDATA[DETALLE DE GASTOS POR ESTABLECIMIENTO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="514" y="43" width="61" height="20" forecolor="#FFFFFF"/>
-					<textElement verticalAlignment="Middle">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Año:]]></text>
+					<reportElement x="549" y="25" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Fecha Inicio:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="549" y="45" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Fecha Fin:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="575" y="43" width="100" height="20" forecolor="#FFFFFF"/>
-					<textElement verticalAlignment="Middle">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{Anio}]]></textFieldExpression>
+					<reportElement x="649" y="25" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{fechaInicio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="649" y="45" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{fechaFin}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -293,7 +330,7 @@ and extract(year from fecha_emision)=$P{Anio}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="50">
+		<band height="21">
 			<textField>
 				<reportElement x="0" y="0" width="48" height="20"/>
 				<box>
@@ -441,8 +478,116 @@ and extract(year from fecha_emision)=$P{Anio}]]>
 		</band>
 	</detail>
 	<summary>
-		<band height="17">
+		<band height="22">
 			<elementGroup/>
+			<textField>
+				<reportElement x="208" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SumAlimentacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SumEducacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SumSalud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="604" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sumIVA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="736" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sumConIVA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sumSinIVa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sumVestimenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sumVivienda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="2" width="66" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sumOtro}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

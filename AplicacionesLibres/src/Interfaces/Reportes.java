@@ -27,6 +27,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+
 /**
  *
  * @author vengatus
@@ -255,6 +256,7 @@ public class Reportes extends javax.swing.JInternalFrame {
             parametros.put("idCliente", this.cedula_usuario);
             parametros.put("Anio", this.anio);
             Fin parametros*/
+            System.out.println("-------");
             for (Object object : parametros.entrySet()) {
                 System.out.println(object);
 
@@ -272,6 +274,25 @@ public class Reportes extends javax.swing.JInternalFrame {
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         Map parametros;
         //Gastos Personales
+        int m = combo_mes.getSelectedIndex() + 1;
+        String fecha_inicio,
+                fecha_fin;
+        switch(combo_tiempo.getSelectedIndex()) {
+                    case 0:
+                        fecha_inicio = this.anio + "-" + "01" + "-01";
+                        fecha_fin = this.anio + "-" + "12" + "-31";
+                        break;
+                    case 1:
+                        fecha_inicio = this.anio + "-" + (m) + "-01";
+                        fecha_fin = this.anio + "-" + (m) + "-31";
+                        break;
+                    default:
+                        fecha_inicio = new SimpleDateFormat("yyyy-MM-dd").format(date_inicio.getDate());
+                        fecha_fin = new SimpleDateFormat("yyyy-MM-dd").format(date_fin.getDate());
+                        break;
+                        
+        }       
+        
         switch (combo_tipo_detalle.getSelectedIndex()) {
             case 0:
                 parametros = new HashMap();
@@ -280,24 +301,27 @@ public class Reportes extends javax.swing.JInternalFrame {
                 parametros.put("cliente", this.cedula_usuario);
                 generar_reporte("detallePorMes.jasper", parametros);
                 break;
-            case 1:
+            case 1://detalle por establecimiento
                 parametros = new HashMap();
                 parametros.put("tipo_factura", combo_tipo.getSelectedItem().toString());
-                parametros.put("Anio", this.anio);
+                parametros.put("fechaInicio", fecha_inicio);
+                parametros.put("fechaFin", fecha_fin);
                 parametros.put("cliente", this.cedula_usuario);
                 generar_reporte("detallePorEstablecimiento.jasper", parametros);
                 break;
-            case 2:
+            case 2://detalle por tipo factura
                 if (combo_tipo.getSelectedIndex() == 0) {
                     parametros = new HashMap();
                     parametros.put("tipo_factura", combo_tipo.getSelectedItem().toString());
-                    parametros.put("Anio", this.anio);
+                    parametros.put("fechaInicio", fecha_inicio);
+                parametros.put("fechaFin", fecha_fin);
                     parametros.put("cliente", this.cedula_usuario);
                     generar_reporte("detallePorFacturaPersonal.jasper", parametros);
                 } else {
                     parametros = new HashMap();
                     parametros.put("tipo_factura", combo_tipo.getSelectedItem().toString());
-                    parametros.put("Anio", this.anio);
+                    parametros.put("fechaInicio", fecha_inicio);
+                    parametros.put("fechaFin", fecha_fin);
                     parametros.put("cliente", this.cedula_usuario);
                     generar_reporte("detallePorFacturaNegocio.jasper", parametros);
                     //Personal
@@ -307,11 +331,23 @@ public class Reportes extends javax.swing.JInternalFrame {
                 switch (combo_tiempo.getSelectedIndex()) {
                     case 0://Reporte anual                
                         if (combo_Establecimientos.getSelectedIndex() == 0) {
+                            if(combo_tipo.getSelectedIndex()==0){
                             parametros = new HashMap();
-                            parametros.put("tipo_factura", combo_tipo.getSelectedItem().toString());
+                            parametros.put("textoEntrada", "Reporte Anual");
                             parametros.put("Anio", this.anio);
                             parametros.put("cliente", this.cedula_usuario);
                             generar_reporte("reporteAnioDiferencia.jasper", parametros);
+                            }
+                            else
+                            {
+                            parametros = new HashMap();
+                            parametros.put("textoEntrada","Resporte anual" );
+                            parametros.put("tipoFactura", combo_tipo.getSelectedItem().toString());
+                            parametros.put("idCliente", this.cedula_usuario);
+                            parametros.put("fechaInicio", this.anio + "-01-01");
+                            parametros.put("fechaFin", this.anio + "-12-31");
+                            generar_reporte("reporteDinamico_Establecimiento.jasper", parametros);
+                            }
 
                         } else {//establecimiento especifico
                             parametros = new HashMap();
@@ -326,8 +362,8 @@ public class Reportes extends javax.swing.JInternalFrame {
 
                         break;
                     case 1://mes
-                        int m = combo_mes.getSelectedIndex() + 1;
-                        String fecha_inicio = this.anio + "-" + (m) + "-01",
+                        m = combo_mes.getSelectedIndex() + 1;
+                        fecha_inicio = this.anio + "-" + (m) + "-01";
                          fecha_fin = this.anio + "-" + (m) + "-31";
 
                         if (combo_Establecimientos.getSelectedIndex() == 0) { //todos los establecimientos
@@ -450,20 +486,43 @@ public class Reportes extends javax.swing.JInternalFrame {
 
     private void combo_tipo_detalleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_tipo_detalleItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
-            if (combo_tipo_detalle.getSelectedIndex() == 3) {
+            switch(combo_tipo_detalle.getSelectedIndex()){
+                case 3:
                 combo_mes.setEnabled(true);
                 combo_tiempo.setEnabled(true);
                 combo_Establecimientos.setEnabled(true);
-
-            } else {
-                combo_mes.setEnabled(false);
                 combo_mes.setSelectedIndex(0);
                 combo_tiempo.setSelectedIndex(0);
                 combo_Establecimientos.setSelectedIndex(0);
-                combo_tiempo.setEnabled(false);
+                break;
+                
+                case 2:
+                combo_mes.setEnabled(true);
+                combo_mes.setSelectedIndex(0);
+                combo_tiempo.setSelectedIndex(0);
+                combo_Establecimientos.setSelectedIndex(0);
                 combo_Establecimientos.setEnabled(false);
-                panel_rango.setVisible(false);
-                panel_mes.setVisible(false);
+                combo_tiempo.setEnabled(true);
+                break;
+                
+                case 1:
+                combo_mes.setEnabled(true);
+                combo_mes.setSelectedIndex(0);
+                combo_tiempo.setSelectedIndex(0);
+                combo_Establecimientos.setSelectedIndex(0);
+                combo_Establecimientos.setEnabled(false);
+                combo_tiempo.setEnabled(true);
+                break;
+                
+                default:
+                combo_mes.setEnabled(false);
+                combo_tiempo.setEnabled(false);
+                combo_mes.setSelectedIndex(0);
+                combo_tiempo.setSelectedIndex(0);
+                combo_Establecimientos.setSelectedIndex(0);
+                combo_Establecimientos.setEnabled(false);
+                break;
+                
             }
         }        // TODO add your handling code here:
     }//GEN-LAST:event_combo_tipo_detalleItemStateChanged
