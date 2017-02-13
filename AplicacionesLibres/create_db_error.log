@@ -1,0 +1,3323 @@
+
+-------
+07/51/2017 11:51:58
+-------
+
+Error executing 'CREATE DATABASE facturas
+  WITH ENCODING='UTF8'
+       OWNER=appfacturacion
+       CONNECTION LIMIT=-1 ' (line 7): ERROR: CREATE DATABASE cannot run inside a transaction block
+Error executing 'GRANT ALL PRIVILEGES ON DATABASE facturas TO appfacturacion ' (line 9): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '﻿/*==============================================================*/
+/* DBMS name:      PostgreSQL 9.x                               */
+/* Created on:     23/1/2017 19:24:16                           */
+/*==============================================================*/
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE (
+   ID_CLIENTE           CHAR(10)             not null,
+   CONTRASENA           VARCHAR(30)          not null,
+   NOMBRE_CLIENTE       VARCHAR(50)          not null,
+   EMAIL_CLIENTE        VARCHAR(30)          null,
+   constraint PK_CLIENTE primary key (ID_CLIENTE)
+) ' (line 16): ERROR: syntax error at or near "﻿"
+  Position: 1
+Error executing '/*==============================================================*/
+/* Index: CLIENTE_PK                                            */
+/*==============================================================*/
+create unique index CLIENTE_PK on CLIENTE (
+ID_CLIENTE
+) ' (line 23): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Table: ESTABLECIMIENTO                                       */
+/*==============================================================*/
+create table ESTABLECIMIENTO (
+   ID_ESTABLECIMIENTO   CHAR(13)             not null,
+   NOMBRE_ESTABLECIMIENTO VARCHAR(300)         not null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(300)         null,
+   TELEFONO_ESTABLECIMIENTO VARCHAR(10)          null,
+   constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
+) ' (line 34): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: ESTABLECIMIENTO_PK                                    */
+/*==============================================================*/
+create unique index ESTABLECIMIENTO_PK on ESTABLECIMIENTO (
+ID_ESTABLECIMIENTO
+) ' (line 41): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+create table FACTURA (
+   ID_FACTURA           VARCHAR(20)          not null,
+   ID_CLIENTE           CHAR(10)             not null,
+   ID_ESTABLECIMIENTO   CHAR(13)             not null,
+   TIPO_FACTURA         VARCHAR(10)          not null,
+   FECHA_EMISION        DATE                 not null,
+   ESTADO_FACTURA       VARCHAR(15)          null,
+   AMBIENTE_FACTURA     VARCHAR(15)          null,
+   TOTAL_SIN_IVA        MONEY                not null,
+   IVA                  MONEY                not null,
+   TOTAL_CON_IVA        MONEY                not null,
+   constraint PK_FACTURA primary key (ID_FACTURA)
+) ' (line 58): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: FACTURA_PK                                            */
+/*==============================================================*/
+create unique index FACTURA_PK on FACTURA (
+ID_FACTURA
+) ' (line 65): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_3_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_3_FK on FACTURA (
+ID_ESTABLECIMIENTO
+) ' (line 72): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_4_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_4_FK on FACTURA (
+ID_CLIENTE
+) ' (line 79): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Table: GASTOSANUALESPERSONALES                               */
+/*==============================================================*/
+create table GASTOSANUALESPERSONALES (
+   ANIO_GASTOS          INT4                 not null,
+   TOTAL_ALIMENTACION   MONEY                not null,
+   TOTAL_SALUD          MONEY                not null,
+   TOTAL_VIVIENDA       MONEY                not null,
+   TOTAL_EDUCACION      MONEY                not null,
+   TOTAL_VESTIMENTA     MONEY                not null,
+   constraint PK_GASTOSANUALESPERSONALES primary key (ANIO_GASTOS)
+) ' (line 92): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: GASTOSANUALESPERSONALES_PK                            */
+/*==============================================================*/
+create unique index GASTOSANUALESPERSONALES_PK on GASTOSANUALESPERSONALES (
+ANIO_GASTOS
+) ' (line 99): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Table: HISTORIAL_PAGOS_NEGOCIOS                              */
+/*==============================================================*/
+create table HISTORIAL_PAGOS_NEGOCIOS (
+   ANIO_HISTORIAL_N     INT4                 not null,
+   ID_CLIENTE           CHAR(10)             null,
+   TOTAL_MERCADERIA     MONEY                null,
+   TOTAL_ARRIENDO       MONEY                null,
+   TOTAL_SERVICIOS      MONEY                null,
+   TOTAL_SUELDOS        MONEY                null,
+   TOTAL_MOVILIZACION   MONEY                null,
+   TOTAL_VIATICOS       MONEY                null,
+   TOTAL_CAPACITACION   MONEY                null,
+   TOTAL_SUMINISTROS    MONEY                null,
+   TOTAL_HERRAMIENTAS   MONEY                null,
+   constraint PK_HISTORIAL_PAGOS_NEGOCIOS primary key (ANIO_HISTORIAL_N)
+) ' (line 117): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: HISTORIAL_PAGOS_NEGOCIOS_PK                           */
+/*==============================================================*/
+create unique index HISTORIAL_PAGOS_NEGOCIOS_PK on HISTORIAL_PAGOS_NEGOCIOS (
+ANIO_HISTORIAL_N
+) ' (line 124): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_6_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_6_FK on HISTORIAL_PAGOS_NEGOCIOS (
+ID_CLIENTE
+) ' (line 131): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Table: HISTORIAL_PAGOS_PERSONALES                            */
+/*==============================================================*/
+create table HISTORIAL_PAGOS_PERSONALES (
+   ANIO_HISTORIAL_P     INT4                 not null,
+   ID_CLIENTE           CHAR(10)             null,
+   TOTAL_ALIMENTACION   MONEY                null,
+   TOTAL_SALUD          MONEY                null,
+   TOTAL_VIVIENDA       MONEY                null,
+   TOTAL_EDUCACION      MONEY                null,
+   TOTAL_VESTIMENTA     MONEY                null,
+   TOTAL_OTROS          MONEY                null,
+   constraint PK_HISTORIAL_PAGOS_PERSONALES primary key (ANIO_HISTORIAL_P)
+) ' (line 146): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: HISTORIAL_PAGOS_PERSONALES_PK                         */
+/*==============================================================*/
+create unique index HISTORIAL_PAGOS_PERSONALES_PK on HISTORIAL_PAGOS_PERSONALES (
+ANIO_HISTORIAL_P
+) ' (line 153): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_5_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_5_FK on HISTORIAL_PAGOS_PERSONALES (
+ID_CLIENTE
+) ' (line 160): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Table: TIPO_GASTO                                            */
+/*==============================================================*/
+create table TIPO_GASTO (
+   ID_FACTURA           VARCHAR(20)          not null,
+   TIPO                 VARCHAR(20)          not null,
+   TOTAL                MONEY                not null
+) ' (line 169): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_1_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_1_FK on TIPO_GASTO (
+ID_FACTURA
+) ' (line 176): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing 'alter table FACTURA
+   add constraint FK_FACTURA_RELATIONS_ESTABLEC foreign key (ID_ESTABLECIMIENTO)
+      references ESTABLECIMIENTO (ID_ESTABLECIMIENTO)
+      on delete restrict on update restrict ' (line 181): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing 'alter table FACTURA
+   add constraint FK_FACTURA_RELATIONS_CLIENTE foreign key (ID_CLIENTE)
+      references CLIENTE (ID_CLIENTE)
+      on delete restrict on update restrict ' (line 186): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing 'alter table HISTORIAL_PAGOS_NEGOCIOS
+   add constraint FK_HISTORIA_RELATIONS_CLIENTE foreign key (ID_CLIENTE)
+      references CLIENTE (ID_CLIENTE)
+      on delete restrict on update restrict ' (line 191): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing 'alter table HISTORIAL_PAGOS_PERSONALES
+   add constraint FK_HISTORIA_RELATIONS_CLIENTE foreign key (ID_CLIENTE)
+      references CLIENTE (ID_CLIENTE)
+      on delete restrict on update restrict ' (line 196): ERROR: current transaction is aborted, commands ignored until end of transaction block
+Error executing 'alter table TIPO_GASTO
+   add constraint FK_TIPO_GAS_RELATIONS_FACTURA foreign key (ID_FACTURA)
+      references FACTURA (ID_FACTURA)
+      on delete restrict on update restrict ' (line 201): ERROR: current transaction is aborted, commands ignored until end of transaction block
+
+-------
+07/03/2017 12:03:39
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/03/2017 12:03:39
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/12/2017 12:12:38
+-------
+
+
+-------
+07/14/2017 12:14:35
+-------
+
+
+-------
+07/20/2017 12:20:25
+-------
+
+Error executing '/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE (
+   ID_CLIENTE           CHAR(10)             not null,
+   CONTRASENA           VARCHAR(30)          not null,
+   NOMBRE_CLIENTE       VARCHAR(50)          not null,
+   EMAIL_CLIENTE        VARCHAR(30)          null,
+   constraint PK_CLIENTE primary key (ID_CLIENTE)
+) ' (line 10): ERROR: relation "cliente" already exists
+
+-------
+07/22/2017 12:22:13
+-------
+
+
+-------
+07/25/2017 12:25:07
+-------
+
+
+-------
+07/25/2017 12:25:15
+-------
+
+
+-------
+07/31/2017 12:31:51
+-------
+
+Error executing '/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE (
+   ID_CLIENTE           CHAR(10)             not null,
+   CONTRASENA           VARCHAR(30)          not null,
+   NOMBRE_CLIENTE       VARCHAR(50)          not null,
+   EMAIL_CLIENTE        VARCHAR(30)          null,
+   constraint PK_CLIENTE primary key (ID_CLIENTE)
+) ' (line 10): ERROR: relation "cliente" already exists
+Error executing '/*==============================================================*/
+/* Index: CLIENTE_PK                                            */
+/*==============================================================*/
+create unique index CLIENTE_PK on CLIENTE (
+ID_CLIENTE
+) ' (line 17): ERROR: relation "cliente_pk" already exists
+Error executing '/*==============================================================*/
+/* Table: ESTABLECIMIENTO                                       */
+/*==============================================================*/
+create table ESTABLECIMIENTO (
+   ID_ESTABLECIMIENTO   CHAR(13)             not null,
+   NOMBRE_ESTABLECIMIENTO VARCHAR(300)         not null,
+   DIRECCION_ESTABLECIMIENTO VARCHAR(300)         null,
+   TELEFONO_ESTABLECIMIENTO VARCHAR(10)          null,
+   constraint PK_ESTABLECIMIENTO primary key (ID_ESTABLECIMIENTO)
+) ' (line 28): ERROR: relation "establecimiento" already exists
+Error executing '/*==============================================================*/
+/* Index: ESTABLECIMIENTO_PK                                    */
+/*==============================================================*/
+create unique index ESTABLECIMIENTO_PK on ESTABLECIMIENTO (
+ID_ESTABLECIMIENTO
+) ' (line 35): ERROR: relation "establecimiento_pk" already exists
+Error executing '/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+create table FACTURA (
+   ID_FACTURA           VARCHAR(20)          not null,
+   ID_CLIENTE           CHAR(10)             not null,
+   ID_ESTABLECIMIENTO   CHAR(13)             not null,
+   TIPO_FACTURA         VARCHAR(10)          not null,
+   FECHA_EMISION        DATE                 not null,
+   ESTADO_FACTURA       VARCHAR(15)          null,
+   AMBIENTE_FACTURA     VARCHAR(15)          null,
+   TOTAL_SIN_IVA        MONEY                not null,
+   IVA                  MONEY                not null,
+   TOTAL_CON_IVA        MONEY                not null,
+   constraint PK_FACTURA primary key (ID_FACTURA)
+) ' (line 52): ERROR: relation "factura" already exists
+Error executing '/*==============================================================*/
+/* Index: FACTURA_PK                                            */
+/*==============================================================*/
+create unique index FACTURA_PK on FACTURA (
+ID_FACTURA
+) ' (line 59): ERROR: relation "factura_pk" already exists
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_3_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_3_FK on FACTURA (
+ID_ESTABLECIMIENTO
+) ' (line 66): ERROR: relation "relationship_3_fk" already exists
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_4_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_4_FK on FACTURA (
+ID_CLIENTE
+) ' (line 73): ERROR: relation "relationship_4_fk" already exists
+Error executing '/*==============================================================*/
+/* Table: GASTOSANUALESPERSONALES                               */
+/*==============================================================*/
+create table GASTOSANUALESPERSONALES (
+   ANIO_GASTOS          INT4                 not null,
+   TOTAL_ALIMENTACION   MONEY                not null,
+   TOTAL_SALUD          MONEY                not null,
+   TOTAL_VIVIENDA       MONEY                not null,
+   TOTAL_EDUCACION      MONEY                not null,
+   TOTAL_VESTIMENTA     MONEY                not null,
+   constraint PK_GASTOSANUALESPERSONALES primary key (ANIO_GASTOS)
+) ' (line 86): ERROR: relation "gastosanualespersonales" already exists
+Error executing '/*==============================================================*/
+/* Index: GASTOSANUALESPERSONALES_PK                            */
+/*==============================================================*/
+create unique index GASTOSANUALESPERSONALES_PK on GASTOSANUALESPERSONALES (
+ANIO_GASTOS
+) ' (line 93): ERROR: relation "gastosanualespersonales_pk" already exists
+Error executing '/*==============================================================*/
+/* Table: HISTORIAL_PAGOS_NEGOCIOS                              */
+/*==============================================================*/
+create table HISTORIAL_PAGOS_NEGOCIOS (
+   ANIO_HISTORIAL_N     INT4                 not null,
+   ID_CLIENTE           CHAR(10)             null,
+   TOTAL_MERCADERIA     MONEY                null,
+   TOTAL_ARRIENDO       MONEY                null,
+   TOTAL_SERVICIOS      MONEY                null,
+   TOTAL_SUELDOS        MONEY                null,
+   TOTAL_MOVILIZACION   MONEY                null,
+   TOTAL_VIATICOS       MONEY                null,
+   TOTAL_CAPACITACION   MONEY                null,
+   TOTAL_SUMINISTROS    MONEY                null,
+   TOTAL_HERRAMIENTAS   MONEY                null,
+   constraint PK_HISTORIAL_PAGOS_NEGOCIOS primary key (ANIO_HISTORIAL_N)
+) ' (line 111): ERROR: relation "historial_pagos_negocios" already exists
+Error executing '/*==============================================================*/
+/* Index: HISTORIAL_PAGOS_NEGOCIOS_PK                           */
+/*==============================================================*/
+create unique index HISTORIAL_PAGOS_NEGOCIOS_PK on HISTORIAL_PAGOS_NEGOCIOS (
+ANIO_HISTORIAL_N
+) ' (line 118): ERROR: relation "historial_pagos_negocios_pk" already exists
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_6_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_6_FK on HISTORIAL_PAGOS_NEGOCIOS (
+ID_CLIENTE
+) ' (line 125): ERROR: relation "relationship_6_fk" already exists
+Error executing '/*==============================================================*/
+/* Table: HISTORIAL_PAGOS_PERSONALES                            */
+/*==============================================================*/
+create table HISTORIAL_PAGOS_PERSONALES (
+   ANIO_HISTORIAL_P     INT4                 not null,
+   ID_CLIENTE           CHAR(10)             null,
+   TOTAL_ALIMENTACION   MONEY                null,
+   TOTAL_SALUD          MONEY                null,
+   TOTAL_VIVIENDA       MONEY                null,
+   TOTAL_EDUCACION      MONEY                null,
+   TOTAL_VESTIMENTA     MONEY                null,
+   TOTAL_OTROS          MONEY                null,
+   constraint PK_HISTORIAL_PAGOS_PERSONALES primary key (ANIO_HISTORIAL_P)
+) ' (line 140): ERROR: relation "historial_pagos_personales" already exists
+Error executing '/*==============================================================*/
+/* Index: HISTORIAL_PAGOS_PERSONALES_PK                         */
+/*==============================================================*/
+create unique index HISTORIAL_PAGOS_PERSONALES_PK on HISTORIAL_PAGOS_PERSONALES (
+ANIO_HISTORIAL_P
+) ' (line 147): ERROR: relation "historial_pagos_personales_pk" already exists
+Error executing '/*==============================================================*/
+/* Index: RELATIONSHIP_5_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_5_FK on HISTORIAL_PAGOS_PERSONALES (
+ID_CLIENTE
+) ' (line 154): ERROR: relation "relationship_5
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:21
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:22
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:23
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:24
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:25
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
+
+-------
+07/38/2017 13:38:26
+-------
+
+Error executing 'CREATE DATABASE facturas WITH ENCODING='UTF8' OWNER=appfacturacion CONNECTION LIMIT=-1 ' (line 4): ERROR: CREATE DATABASE cannot run inside a transaction block
