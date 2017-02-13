@@ -7,8 +7,9 @@ Este proyecto trata de resolver el problema de gestión de facturas ya sean de t
 Se utilizan librerías para la lectura de archivos XML como lo es JDOM, y para el diseño se utilizo Java Netbeans, ademas trabaja con una base de datos en PostgreSql.
 
 ### Manual y Sitio Web del Proyecto
-[Manual de instalacion EASY FACTURA](http://aplicacioneslibresajhp.blogspot.com/p/blog-page.html)
+[Manual de instalacion EASY FACTURA para DEBIAN](http://aplicacioneslibresajhp.blogspot.com/p/blog-page.html)
 
+[Manual de instalacion EASY FACTURA para WINDOWS](http://aplicacioneslibresajhp.blogspot.com/p/instalacion-del-sistema-de-gestion-de.html)
 ### Integrantes
 
 + Arias Homero  [Contacto](https://github.com/Dario95)
