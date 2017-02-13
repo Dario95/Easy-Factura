@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\personal\Documents\NetBeansProjects\AplicacionesLibres\dist\AplicacionesLibres.jar</jar>
-  <outfile>C:\Users\personal\Documents\NetBeansProjects\AplicacionesLibres\dist\EasyFactura.exe</outfile>
+  <jar>C:\Users\personal\Desktop\InstaladorWindows\AplicacionesLibres.jar</jar>
+  <outfile>C:\Users\personal\Desktop\InstaladorWindows\EasyFactura.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>C:\Users\personal\Documents\NetBeansProjects\AplicacionesLibres\dist\facturaIcono.ico</icon>
+  <icon>C:\Users\personal\Desktop\InstaladorWindows\facturaIcono.ico</icon>
   <jre>
     <path>C:\Program Files\Java\jre1.8.0_111</path>
     <bundledJre64Bit>false</bundledJre64Bit>
@@ -24,7 +24,7 @@
     <runtimeBits>64/32</runtimeBits>
   </jre>
   <splash>
-    <file>C:\Users\personal\Documents\NetBeansProjects\AplicacionesLibres\dist\WOLF1.bmp</file>
+    <file>C:\Users\personal\Desktop\InstaladorWindows\WOLF1.bmp</file>
     <waitForWindow>true</waitForWindow>
     <timeout>120</timeout>
     <timeoutErr>true</timeoutErr>
