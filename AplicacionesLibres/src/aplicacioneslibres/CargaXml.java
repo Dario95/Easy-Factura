@@ -26,7 +26,7 @@ import org.jdom2.input.SAXBuilder;
  */
 public class CargaXml {
 
-    public void cargarXml(String name, String archivo, String cedulaCli, int anio, String tipo) {
+    public void cargarXml(String name, String cedulaCli, int anio, String tipo) {
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
 
@@ -36,18 +36,22 @@ public class CargaXml {
             Document document = (Document) builder.build(xmlFile);
             Conexionn cp = new Conexionn();
 
-            // Abre la plantilla
-            String elemento;
-
             ArrayList elementos = new ArrayList();
 
-            FileReader f = new FileReader(archivo);
-            BufferedReader b = new BufferedReader(f);
-
             int cont;
-            while ((elemento = b.readLine()) != null) {
-                elementos.add(elemento);
-            }
+            elementos.add("estado");
+            elementos.add("ambiente");
+            elementos.add("razonSocial");
+            elementos.add("dirMatriz");
+            elementos.add("ruc");
+            elementos.add("estab");
+            elementos.add("ptoEmi");
+            elementos.add("secuencial");
+            elementos.add("fechaEmision");
+            elementos.add("totalSinImpuestos");
+            elementos.add("valor");
+            elementos.add("descripcion");
+            elementos.add("precioTotalSinImpuesto");
 
             //Se obtiene la raiz 'tables'
             Element rootNode = document.getRootElement();
