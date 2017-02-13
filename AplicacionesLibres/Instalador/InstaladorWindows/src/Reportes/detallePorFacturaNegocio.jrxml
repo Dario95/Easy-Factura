@@ -55,7 +55,9 @@ from factura f
 join establecimiento e 
 on f.id_establecimiento=e.id_establecimiento
 where f.tipo_factura='Negocio'
-and f.fecha_emision>= TO_DATE($P{fechaInicio},'YYYY-MM-DD') and f.fecha_emision<TO_DATE($P{fechaFin},'YYYY-MM-DD')]]>
+and f.fecha_emision>= TO_DATE($P{fechaInicio},'YYYY-MM-DD')
+ and f.fecha_emision<TO_DATE($P{fechaFin},'YYYY-MM-DD')
+and f.id_cliente=$P{cliente}]]>
 	</queryString>
 	<field name="id" class="java.lang.String"/>
 	<field name="establecimiento" class="java.lang.String"/>
