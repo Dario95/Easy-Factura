@@ -23,6 +23,7 @@ from factura f join tipo_gasto g on f.id_factura=g.id_factura
 join establecimiento e on f.id_establecimiento=e.id_establecimiento
 where f.fecha_emision>= TO_DATE($P{fechaInicio},'YYYY-MM-DD') and f.fecha_emision<TO_DATE($P{fechaFin},'YYYY-MM-DD')
 and f.tipo_factura=$P{tipo_factura}
+and f.id_cliente=$P{cliente}
 group by establecimiento,TIPO order by 1]]>
 	</queryString>
 	<field name="establecimiento" class="java.lang.String"/>
