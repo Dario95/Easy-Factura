@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -195,9 +196,9 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
 
             jScrollPane1.setViewportView(tablaHistorialP);
         }
-        
+
         if (!historial_n.isEmpty()) {
-            
+
             String nombreCabeceras[] = {"Tipo de Gasto", "Valor Acumulado"};
             String datosTabla[][] = {{"Mercaderia", historial_n.get(2).toString()},
             {"Arriendo", historial_n.get(3).toString()},
@@ -223,7 +224,7 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
             DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
             alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
             tablaHistorialN.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
-            
+
             jScrollPane2.setViewportView(tablaHistorialN);
         }
     }//GEN-LAST:event_formComponentShown
@@ -255,16 +256,20 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
-        // String file = JOptionPane.showInputDialog(null, "Ingrese el Nombre del archivo");
-        //String path = "";
-        //JFileChooser chooser = new JFileChooser();
-        //chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        //chooser.showOpenDialog(null);
-        File f = new File("Reportes/");
-        toExcel(auxP, new File(f.getAbsolutePath() + "/ReporteGastosPersonales.xls"));
-        toExcel(auxN, new File(f.getAbsolutePath() + "/ReporteGastosNegocios.xls"));
-        
-        JOptionPane.showMessageDialog(null, "Reportes Generados Exitosamente");
+        String file = JOptionPane.showInputDialog(null, "Ingrese el Nombre del archivo");
+        String path = "";
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        path = f.getAbsolutePath();
+        if (auxP != null) {
+            toExcel(auxP, new File(path + "/" + file + "-Personal.xls"));
+        }
+        if (auxN != null) {
+            toExcel(auxN, new File(path + "/" + file + "-Negocios.xls"));
+        }
+        JOptionPane.showMessageDialog(null, "Reportes exportados exitosamente");
     }//GEN-LAST:event_btnExportActionPerformed
 
     /**
