@@ -8,6 +8,7 @@ package Interfaces;
 import conexionBDD.Conexionn;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -355,12 +356,26 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
             conTipo.insertar(query);
 
             JOptionPane.showMessageDialog(this, "Factura ingresada exitosamente");
+            recargar(conTipo);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado el tipo para cada producto");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void recargar(Conexionn conn) {
+         ArrayList auxRec = new ArrayList();
+        Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();
+        Interfaces.FacturaManualNegocio.combo_Establecimientos.removeAllItems();
+        Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem("");
+        Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem("");
+        auxRec = conn.cargarEstablecimiento();
+        for (Object est : auxRec) {            
+            Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem(est.toString());
+            Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem(est.toString());
+        }
+    }
+    
     public void restarAgregado(JTextField txtField, int row) {
         double total;
         total = Double.parseDouble(txtField.getText());
