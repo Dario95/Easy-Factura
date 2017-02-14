@@ -206,6 +206,8 @@ alter table TIPO_GASTO
      BEGIN
          delete from tipo_gasto where id_factura in (select id_factura from factura where id_cliente=$1);
          delete from factura where id_cliente=$1;
+         delete from historial_pagos_negocios where id_cliente=$1;
+         delete from historial_pagos_personales where id_cliente=$1;
          delete from cliente where id_cliente=$1;
      END;
  $$ LANGUAGE plpgsql;

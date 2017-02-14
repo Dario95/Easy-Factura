@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-
 public class FacturaManualPersonal extends javax.swing.JInternalFrame {
 
     Conexionn conn;
@@ -48,16 +47,16 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
             combo_Establecimientos.addItem(est.toString());
         }
         //fecha minima
-        date_fecha.setMinSelectableDate(new Date(anio-1900, 0, 1));
+        date_fecha.setMinSelectableDate(new Date(anio - 1900, 0, 1));
         //fecha maxima
-        Date n=new Date();         
+        Date n = new Date();
 
-        if((n.getYear()+1900)==anio){
-            date_fecha.setMaxSelectableDate(n); 
-        }else{
-            date_fecha.setMaxSelectableDate(new Date(anio-1900, 11, 31)); 
+        if ((n.getYear() + 1900) == anio) {
+            date_fecha.setMaxSelectableDate(n);
+        } else {
+            date_fecha.setMaxSelectableDate(new Date(anio - 1900, 11, 31));
         }
-        
+
     }
 
     /**
@@ -286,6 +285,12 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
         txt_sin_iva.setEnabled(false);
         panel_establecimiento1.add(txt_sin_iva);
         txt_sin_iva.setBounds(610, 260, 128, 29);
+
+        txt_num_fac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_num_facKeyTyped(evt);
+            }
+        });
         panel_establecimiento1.add(txt_num_fac);
         txt_num_fac.setBounds(190, 30, 150, 29);
 
@@ -558,7 +563,7 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
                 totalAlimento = dar_formato(lbl_alimentacion.getText()),
                 totalEducacion = dar_formato(lbl_educacion.getText()),
                 totalSalud = dar_formato(lbl_salud.getText()),
-                totalVestimenta = dar_formato(lbl_vestimenta.getText()),                
+                totalVestimenta = dar_formato(lbl_vestimenta.getText()),
                 totalOtros = dar_formato(lbl_otros.getText());
 
         if (totalVivienda != 0) {
@@ -581,7 +586,7 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
                     + "VALUES('" + num_factura + "','Vestimenta'," + totalVestimenta + ")");
         }
- 
+
         if (totalOtros != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
                     + "VALUES('" + num_factura + "','Otro'," + totalOtros + ")");
@@ -615,7 +620,8 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
         txt_total.setText(null);
 
     }
-/*
+
+    /*
     private void validar_iva() {
         double total_aux = dar_formato(txt_iva.getText()) + dar_formato(txt_sin_iva.getText()),
                 total_con_iva = dar_formato(txt_total.getText());
@@ -623,29 +629,33 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
             txt_total.setText(total_aux + "");
         }
     }
-*/
+     */
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
-    jButton9ActionPerformed(evt);
-        if (!validar_vacios()) {
-            try {
-                String num_factura = txt_num_fac.getText();
-                if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
-                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
-                    //validar_iva();
-                    double iva = dar_formato(txt_iva.getText()),
-                            total_sin_iva = dar_formato(txt_sin_iva.getText()),
-                            total_con_iva = dar_formato(txt_total.getText());
+        jButton9ActionPerformed(evt);
+        if (!validar_vacios()) {            
+            if (Double.parseDouble(txt_total.getText()) != 0) {
+                try {
+                    String num_factura = txt_num_fac.getText();
+                    if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
+                        String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
+                        //validar_iva();
+                        double iva = dar_formato(txt_iva.getText()),
+                                total_sin_iva = dar_formato(txt_sin_iva.getText()),
+                                total_con_iva = dar_formato(txt_total.getText());
 
-                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura, fecha_emision, total_sin_iva, iva, total_con_iva)"
-                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText()+ "','Personal','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
-                    //Registro de todos los tipos de gastos
-                    registrar_gastos(num_factura);
-                    borrar_campos();
-                } else {
-                    JOptionPane.showMessageDialog(null, "El numero de factura ya existe en la base de datos");
+                        conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura, fecha_emision, total_sin_iva, iva, total_con_iva)"
+                                + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','Personal','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
+                        //Registro de todos los tipos de gastos
+                        registrar_gastos(num_factura);
+                        borrar_campos();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El numero de factura ya existe en la base de datos");
+                    }
+                } catch (Exception e) {
+                    System.err.println(e);
                 }
-            } catch (Exception e) {
-                System.err.println(e);
+            } else {
+                JOptionPane.showMessageDialog(null, "La factura tiene un total de 0", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, llenar todos los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
@@ -673,9 +683,11 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
                 auxDatosEst = conn.cambiarDatosEstablecimiento(combo_Establecimientos.getSelectedItem().toString());
                 txt_ruc_est.setText(auxDatosEst.get(0).toString());
                 txt_direc_est.setText(auxDatosEst.get(1).toString());
+                txt_telef.setText(auxDatosEst.get(2).toString());
             } else {
                 txt_ruc_est.setText("");
                 txt_direc_est.setText("");
+                txt_telef.setText("");
             }
         }
     }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
@@ -705,7 +717,7 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void agregar_todo() {
-        JTextField campos[] = {txt_vestimenta, txt_vivienda, txt_educacion, txt_alimentacion,  txt_otros, txt_salud};
+        JTextField campos[] = {txt_vestimenta, txt_vivienda, txt_educacion, txt_alimentacion, txt_otros, txt_salud};
         JLabel labels[] = {lbl_vestimenta, lbl_vivienda, lbl_educacion, lbl_alimentacion, lbl_otros, lbl_salud};
         String valor;
         for (int i = 0; i < 6; i++) {
@@ -812,6 +824,16 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
     private void txt_ivaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ivaKeyTyped
         filtrar(evt, txt_iva);
     }//GEN-LAST:event_txt_ivaKeyTyped
+
+    private void txt_num_facKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_facKeyTyped
+       char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '-')) {            
+            evt.consume();
+        }
+         if(txt_num_fac.getText().length()>14){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_num_facKeyTyped
 
     /**
      * @param args the command line arguments

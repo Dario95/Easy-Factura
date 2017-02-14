@@ -7,6 +7,8 @@ package Interfaces;
 
 import conexionBDD.Conexionn;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,6 +62,12 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
         jLabel10.setBackground(java.awt.Color.black);
         jLabel10.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel10.setText("*Correo electrónico:");
+
+        txt_cedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cedulaKeyTyped(evt);
+            }
+        });
 
         jLabel7.setBackground(java.awt.Color.black);
         jLabel7.setFont(new java.awt.Font("Open Sans Extrabold", 1, 18)); // NOI18N
@@ -199,36 +207,36 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
         }
         return cedulaCorrecta;
     }
-    
+
     private boolean validarPassword(char[] pass) {
         boolean passCorrecto = false;
-        boolean esMayus = false, esNum = false, esSim = false;
-        
+        boolean esMayus = false, esNum = false/*, esSim = false*/;
+
         for (char p : pass) {
-            if(Character.isUpperCase(p)) {
+            if (Character.isUpperCase(p)) {
                 esMayus = true;
                 break;
             }
         }
-        
+
         for (char p : pass) {
-            if(Character.isDigit(p)) {
+            if (Character.isDigit(p)) {
                 esNum = true;
                 break;
             }
         }
-        
+        /*  
         for (char p : pass) {
             if(Character.getType(p) == Character.CONNECTOR_PUNCTUATION || Character.getType(p) == Character.DASH_PUNCTUATION) {
                 esSim = true;
                 break;
             }
         }
-        
-        if(esMayus == true && esNum == true && esSim == true) {
+         */
+        if (esMayus == true && esNum == true /*&& esSim == true*/) {
             passCorrecto = true;
         }
-        
+
         return passCorrecto;
     }
 
@@ -238,26 +246,38 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
         } else if (Arrays.equals(txt_pass1.getPassword(), txt_pass2.getPassword())) {
             if (validarPassword(txt_pass1.getPassword())) {
                 if (validadorDeCedula(txt_cedula.getText())) {
-                    conexionBDD.Conexionn conn = new Conexionn();
-                    if (!conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'", txt_cedula.getText()))) {
-                        //
-                        conn.insertar(String.format("insert into cliente values('%s','%s','%s','%s')", txt_cedula.getText(), txt_pass1.getText(), txt_nombre.getText(), txt_correo.getText()));
-                        JOptionPane.showMessageDialog(null, "Usuario registrado con exito");
-                        btn_salirActionPerformed(evt);
+                    if (validarCorreo(txt_correo.getText())) {
+                        conexionBDD.Conexionn conn = new Conexionn();
+                        if (!conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s'", txt_cedula.getText()))) {
+                            //
+                            conn.insertar(String.format("insert into cliente values('%s','%s','%s','%s')", txt_cedula.getText(), txt_pass1.getText(), txt_nombre.getText(), txt_correo.getText()));
+                            JOptionPane.showMessageDialog(null, "Usuario registrado con exito");
+                            btn_salirActionPerformed(evt);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Usuario ya existente", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Usuario ya existente", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Correo no es valido", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "La cedula no es valida", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos una letra mayuscula, un numero, un \'-\' o \'_\'", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos una letra mayuscula y un numero", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private boolean validarCorreo(String correo) {
+        Pattern pat = Pattern.compile("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$");
+        Matcher mat = pat.matcher(correo);
+        if (mat.matches()) {
+            return true;
+        }
+        return false;
+    }
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         new Login().setVisible(true);
@@ -265,7 +285,7 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void txt_nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreKeyTyped
-        // TODO add your handling code here:
+
         char c = evt.getKeyChar();
         if (Character.isLowerCase(c)) {
             String cad = ("" + c).toUpperCase();
@@ -273,7 +293,19 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
             evt.setKeyChar(c);
         }
 
+        if (Character.isDigit(c)) {
+            evt.consume();
+        }
+
     }//GEN-LAST:event_txt_nombreKeyTyped
+
+    private void txt_cedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cedulaKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) || txt_cedula.getText().length() > 9) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_cedulaKeyTyped
 
     /**
      * @param args the command line arguments

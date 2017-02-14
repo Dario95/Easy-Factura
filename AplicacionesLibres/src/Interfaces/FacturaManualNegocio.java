@@ -48,14 +48,14 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         }
 
         //fecha minima
-        date_fecha.setMinSelectableDate(new Date(anio-1900, 0, 1));
+        date_fecha.setMinSelectableDate(new Date(anio - 1900, 0, 1));
         //fecha maxima
-        Date n=new Date();        
-      
-        if((n.getYear()+1900)==anio){
-            date_fecha.setMaxSelectableDate(n); 
-        }else{
-            date_fecha.setMaxSelectableDate(new Date(anio-1900, 11, 31)); 
+        Date n = new Date();
+
+        if ((n.getYear() + 1900) == anio) {
+            date_fecha.setMaxSelectableDate(n);
+        } else {
+            date_fecha.setMaxSelectableDate(new Date(anio - 1900, 11, 31));
         }
     }
 
@@ -300,6 +300,12 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         txt_sin_iva.setEnabled(false);
         panel_establecimiento1.add(txt_sin_iva);
         txt_sin_iva.setBounds(610, 260, 128, 29);
+
+        txt_num_fac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_num_facKeyTyped(evt);
+            }
+        });
         panel_establecimiento1.add(txt_num_fac);
         txt_num_fac.setBounds(190, 20, 150, 29);
 
@@ -718,7 +724,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
                     + "VALUES('" + num_factura + "','Capacitacion'," + totalCapacitacion + ")");
         }
-               
+
         if (totalSuministros != 0) {
             conn.insertar("INSERT INTO tipo_gasto (id_factura,tipo, total)"
                     + "VALUES('" + num_factura + "','Suministros'," + totalSuministros + ")");
@@ -737,14 +743,14 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
                     + "total_viaticos=total_viaticos+" + totalViaticos + "::money,"
                     + "total_capacitacion=total_capacitacion+" + totalCapacitacion + "::money,"
                     + "total_suministros=total_suministros+" + totalSuministros + "::money,"
-                    + "total_herramientas=total_herramientas+" + totalHerramientas+ "::money WHERE anio_historial_n=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
+                    + "total_herramientas=total_herramientas+" + totalHerramientas + "::money WHERE anio_historial_n=" + this.anio + " AND id_cliente='" + this.cedula_usuario + "'");
 
         } else {
-            conn.insertar("INSERT INTO HISTORIAL_PAGOS_NEGOCIOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalMercaderia + "," 
+            conn.insertar("INSERT INTO HISTORIAL_PAGOS_NEGOCIOS VALUES (" + anio + ",'" + cedula_usuario + "'," + totalMercaderia + ","
                     + totalArriendo + "," + totalServicios + "," + totalSueldos + "," + totalMovilizacion + "," + totalViaticos + ","
-                    + totalCapacitacion + "," + totalSuministros+"," + totalHerramientas + ")");
+                    + totalCapacitacion + "," + totalSuministros + "," + totalHerramientas + ")");
         }
-        
+
         JOptionPane.showMessageDialog(null, "Ingreso Exitoso");
     }
 
@@ -752,7 +758,7 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
         combo_Establecimientos.setSelectedIndex(0);
         txt_num_fac.setText(null);
         date_fecha.setDate(null);
-        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos,lbl_herramientas,lbl_suministros};
+        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos, lbl_herramientas, lbl_suministros};
         for (int i = 0; i < 9; i++) {
             labels[i].setText("0.0");
         }
@@ -763,27 +769,32 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }
 
     private void btn_RegistrarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RegistrarFacturaActionPerformed
-    jButton9ActionPerformed(evt);
+        jButton9ActionPerformed(evt);
         if (!validar_vacios()) {
-            try {
-                String num_factura = txt_num_fac.getText();
-                if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
-                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());                    
-                    double iva = dar_formato(txt_iva.getText()),
-                            total_sin_iva = dar_formato(txt_sin_iva.getText()),
-                            total_con_iva = dar_formato(txt_total.getText());
+            if (Double.parseDouble(txt_total.getText()) != 0) {
+                try {
+                    String num_factura = txt_num_fac.getText();
+                    if (!conn.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + num_factura + "'")) {
+                        String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date_fecha.getDate());
+                        double iva = dar_formato(txt_iva.getText()),
+                                total_sin_iva = dar_formato(txt_sin_iva.getText()),
+                                total_con_iva = dar_formato(txt_total.getText());
 
-                    conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura,fecha_emision, total_sin_iva, iva, total_con_iva)"
-                            + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','Negocio','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
-                    //Registro de todos los tipos de gastos
-                    registrar_gastos(num_factura);
-                    borrar_campos();
-                } else {
-                    JOptionPane.showMessageDialog(null, "El numero de factura ya existe en la base de datos");
+                        conn.insertar("INSERT INTO FACTURA (id_factura, id_cliente, id_establecimiento,tipo_factura,fecha_emision, total_sin_iva, iva, total_con_iva)"
+                                + "VALUES('" + num_factura + "','" + cedula_usuario + "','" + txt_ruc_est.getText() + "','Negocio','" + fecha + "'," + total_sin_iva + "," + iva + "," + total_con_iva + ")");
+                        //Registro de todos los tipos de gastos
+                        registrar_gastos(num_factura);
+                        borrar_campos();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El numero de factura ya existe en la base de datos");
+                    }
+                } catch (Exception e) {
+                    System.err.println(e);
                 }
-            } catch (Exception e) {
-                System.err.println(e);
+            } else {
+                JOptionPane.showMessageDialog(null, "La factura tiene un total de 0", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, llenar todos los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -810,9 +821,11 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
                 auxDatosEst = conn.cambiarDatosEstablecimiento(combo_Establecimientos.getSelectedItem().toString());
                 txt_ruc_est.setText(auxDatosEst.get(0).toString());
                 txt_direc_est.setText(auxDatosEst.get(1).toString());
+                txt_telef.setText(auxDatosEst.get(2).toString());
             } else {
                 txt_ruc_est.setText("");
                 txt_direc_est.setText("");
+                txt_telef.setText("");
             }
         }
     }//GEN-LAST:event_combo_EstablecimientosItemStateChanged
@@ -846,8 +859,8 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void agregar_todo() {
-        JTextField campos[] = {txt_movilizacion, txt_mercaderia, txt_servbasicos, txt_arriendo, txt_viaticos, txt_capacitacion, txt_sueldos,txt_herramientas,txt_suministros};
-        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos,lbl_herramientas,lbl_suministros};
+        JTextField campos[] = {txt_movilizacion, txt_mercaderia, txt_servbasicos, txt_arriendo, txt_viaticos, txt_capacitacion, txt_sueldos, txt_herramientas, txt_suministros};
+        JLabel labels[] = {lbl_movilizacion, lbl_mercaderia, lbl_servbasicos, lbl_arriendo, lbl_viaticos, lbl_capacitacion, lbl_sueldos, lbl_herramientas, lbl_suministros};
         String valor;
         for (int i = 0; i < 9; i++) {
             valor = campos[i].getText();
@@ -986,6 +999,16 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         restar(lbl_herramientas, txt_herramientas);
     }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void txt_num_facKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_facKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && !(c == '-')) {
+            evt.consume();
+        }
+        if(txt_num_fac.getText().length()>14){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_num_facKeyTyped
 
     /**
      * @param args the command line arguments

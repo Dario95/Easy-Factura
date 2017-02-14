@@ -156,7 +156,7 @@ public class EdicionLimitesAnio extends javax.swing.JFrame {
                 btn_RegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 150, 50));
+        getContentPane().add(btn_Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, 150, 50));
 
         combo_anio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
