@@ -201,7 +201,7 @@ alter table TIPO_GASTO
       on delete restrict on update restrict;
 
 
----procedure para borrar clientes
+-- procedure para borrar clientes
  CREATE OR REPLACE FUNCTION borrarCliente (id varchar) RETURNS void AS $$
      BEGIN
          delete from tipo_gasto where id_factura in (select id_factura from factura where id_cliente=$1);

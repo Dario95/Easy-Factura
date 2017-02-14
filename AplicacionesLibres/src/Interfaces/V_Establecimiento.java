@@ -237,6 +237,9 @@ public class V_Establecimiento extends javax.swing.JFrame {
         if (!Character.isDigit(c)) {            
             evt.consume();
         }
+        if(txt_telef.getText().length()>9){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_telefKeyTyped
 
     public void recargar() {
