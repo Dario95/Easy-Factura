@@ -1002,11 +1002,11 @@ public class FacturaManualNegocio extends javax.swing.JInternalFrame {
 
     private void txt_num_facKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_facKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && !(c == '-')) {
+        if (!Character.isDigit(c) || txt_num_fac.getText().length()>14) {
             evt.consume();
         }
-        if(txt_num_fac.getText().length()>14){
-            evt.consume();
+        if(txt_num_fac.getText().length()==3 ||txt_num_fac.getText().length()==7){            
+            txt_num_fac.setText(txt_num_fac.getText()+"-");
         }
     }//GEN-LAST:event_txt_num_facKeyTyped
 

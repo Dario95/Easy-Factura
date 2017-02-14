@@ -24,9 +24,9 @@ public class Conexionn {
     public Conexionn() {
         //conexion=null;
         try {
-           conexion = DriverManager.getConnection(                        
+            conexion = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/facturas",
-                            "appfacturacion", "facturacion01");
+                    "appfacturacion", "facturacion01");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
@@ -49,12 +49,12 @@ public class Conexionn {
         }
         return n;
     }
-    
+
     public ArrayList cargarAnios() {
         ArrayList n = new ArrayList();
         try {
             Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultado = comando.executeQuery("SELECT * FROM gastosanualespersonales");            
+            ResultSet resultado = comando.executeQuery("SELECT * FROM gastosanualespersonales");
             while (resultado.next()) {
                 n.add(resultado.getString("anio_gastos"));
             }
@@ -75,7 +75,11 @@ public class Conexionn {
             while (resultado.next()) {
                 n.add(resultado.getString("id_establecimiento"));
                 n.add(resultado.getString("direccion_establecimiento"));
-                n.add(resultado.getString("telefono_establecimiento"));
+                if (resultado.getString("telefono_establecimiento") != null) {
+                    n.add(resultado.getString("telefono_establecimiento"));
+                }else{
+                    n.add("");
+                }
             }
             resultado.close();
             comando.close();
@@ -84,7 +88,7 @@ public class Conexionn {
         }
         return n;
     }
-    
+
     public String consultar(String tabla) {
         String n = "";
         try {
@@ -126,19 +130,18 @@ public class Conexionn {
         return val;
     }
 
-    
     public ArrayList ddl(String sql) {
-    ArrayList salida=new ArrayList();
+        ArrayList salida = new ArrayList();
         try {
             Statement comando = conexion.createStatement();
             ResultSet resultado = comando.executeQuery(sql);
-            ResultSetMetaData mt=resultado.getMetaData();
-            
-            if(resultado.next()){                
-                for (int i = 1; i <= mt.getColumnCount(); i++) {                    
-                    salida.add(resultado.getString(i));      
-               }                            
-            }                        
+            ResultSetMetaData mt = resultado.getMetaData();
+
+            if (resultado.next()) {
+                for (int i = 1; i <= mt.getColumnCount(); i++) {
+                    salida.add(resultado.getString(i));
+                }
+            }
             resultado.close();
             comando.close();
         } catch (Exception e) {
@@ -146,9 +149,9 @@ public class Conexionn {
         }
         return salida;
     }
-    
-    public Connection getConn(){
-    return conexion;
+
+    public Connection getConn() {
+        return conexion;
     }
 
 }
