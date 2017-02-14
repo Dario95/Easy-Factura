@@ -830,6 +830,9 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
         if (!Character.isDigit(c) && !(c == '-')) {            
             evt.consume();
         }
+         if(txt_num_fac.getText().length()>14){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_num_facKeyTyped
 
     /**
