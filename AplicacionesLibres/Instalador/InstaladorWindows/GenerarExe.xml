@@ -15,13 +15,13 @@
   <manifest></manifest>
   <icon>C:\Users\personal\Desktop\InstaladorWindows\facturaIcono.ico</icon>
   <jre>
-    <path>C:\Program Files\Java\jre1.8.0_111</path>
+    <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
     <bundledJreAsFallback>false</bundledJreAsFallback>
-    <minVersion></minVersion>
+    <minVersion>1.8.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
-    <runtimeBits>64/32</runtimeBits>
+    <runtimeBits>32/64</runtimeBits>
   </jre>
   <splash>
     <file>C:\Users\personal\Desktop\InstaladorWindows\WOLF1.bmp</file>
