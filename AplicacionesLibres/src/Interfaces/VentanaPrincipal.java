@@ -19,10 +19,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     FacturaManualPersonal fmp;
     FacturaElectronicaNew fe;
     FacturaManualNegocio fmn;
-    HistorialGastos hg;    
+    HistorialGastos hg;
     Reportes rp;
-    
-    String cedula_usuario;    
+
+    String cedula_usuario;
     int anio;
     Conexionn conn;
 
@@ -32,10 +32,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         conn = new Conexionn();
         fmp = new FacturaManualPersonal(conn, cedula_usuario, anio);
-        fmn=new FacturaManualNegocio(conn, cedula_usuario, anio);
+        fmn = new FacturaManualNegocio(conn, cedula_usuario, anio);
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
-        hg = new HistorialGastos(conn, cedula_usuario, anio);      
-        rp=new Reportes(conn, cedula_usuario, anio);
+        hg = new HistorialGastos(conn, cedula_usuario, anio);
+        rp = new Reportes(conn, cedula_usuario, anio);
         this.anio = anio;
         this.cedula_usuario = cedula_usuario;
         setResizable(false);
@@ -63,9 +63,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ordenador de Facturas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jDesktopPane.setPreferredSize(null);
 
@@ -131,6 +137,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         m_Usuario.add(jMenuItem3);
 
+        jMenuItem7.setText("Salir");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        m_Usuario.add(jMenuItem7);
+
         jMenuBar1.add(m_Usuario);
 
         setJMenuBar(jMenuBar1);
@@ -178,6 +192,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             if (okCxl == JOptionPane.OK_OPTION) {
                 if (conn.verificar_usuario(String.format("select * from cliente where id_cliente='%s' and contrasena='%s'", cedula_usuario, String.valueOf(pf.getPassword())))) {
                     conn.insertar(String.format("select borrarCliente('%s')", cedula_usuario));
+                    this.dispose();
+                    new Login().setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -188,7 +204,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         historial_p = conn.ddl(String.format("select * from historial_pagos_personales where anio_historial_p=%s and id_cliente='%s'", anio, cedula_usuario));
         historial_n = conn.ddl(String.format("select * from historial_pagos_negocios where anio_historial_n=%s and id_cliente='%s'", anio, cedula_usuario));
-        
+
         if (historial_p.isEmpty() && historial_n.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se tienen registros de este año");
         } else {
@@ -196,7 +212,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             fmp.setVisible(false);
             fmn.setVisible(false);
             fe.setVisible(false);
-        rp.setVisible(false);
+            rp.setVisible(false);
             hg.setVisible(true);
             jDesktopPane.add(hg);
         }
@@ -207,20 +223,35 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fe.setVisible(false);
         hg.setVisible(false);
         fmp.setVisible(false);
-        rp.setVisible(false);        
-        fmn.setVisible(true);        
+        rp.setVisible(false);
+        fmn.setVisible(true);
         jDesktopPane.add(fmn);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-         jDesktopPane.removeAll();
+        jDesktopPane.removeAll();
         fe.setVisible(false);
         hg.setVisible(false);
         fmp.setVisible(false);
-        fmn.setVisible(false);    
-        rp.setVisible(true); 
+        fmn.setVisible(false);
+        rp.setVisible(true);
         jDesktopPane.add(rp);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        salir();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void salir(){
+        if (JOptionPane.showConfirmDialog(null, "Desea salir del sistema?", "Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            this.dispose();
+            new Login().setVisible(true);
+        }
+    }
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        salir();
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -275,6 +306,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
     private javax.swing.JMenu m_Usuario;

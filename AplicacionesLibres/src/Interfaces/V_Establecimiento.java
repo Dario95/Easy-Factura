@@ -74,6 +74,12 @@ public class V_Establecimiento extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel5.setText("RUC:");
 
+        txt_telef.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_telefKeyTyped(evt);
+            }
+        });
+
         jLabel6.setBackground(java.awt.Color.black);
         jLabel6.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
         jLabel6.setText("Direccion:");
@@ -190,6 +196,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
                 } else {
                     connEst.insertar("INSERT INTO establecimiento (id_establecimiento, nombre_establecimiento, direccion_establecimiento, telefono_establecimiento) "
                             + "VALUES ('" + txt_ruc.getText() + "','" + txt_nombre.getText() + "','" + txt_direccion.getText() + "','" + txt_telef.getText() + "')");
+                    JOptionPane.showMessageDialog(null, "Establecimiento registrado con exito");
                     recargar();
                     this.dispose();
                 }
@@ -199,6 +206,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
             connEst.insertar("UPDATE establecimiento SET nombre_establecimiento='" + txt_nombre.getText() + "',"
                     + "direccion_establecimiento='" + txt_direccion.getText() + "',"
                     + "telefono_establecimiento='" + txt_telef.getText() + "' WHERE id_establecimiento='" + txt_ruc.getText() + "'");
+            JOptionPane.showMessageDialog(null, "Establecimiento modificado con exito");
             recargar();
             this.dispose();
         }
@@ -223,6 +231,13 @@ public class V_Establecimiento extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txt_rucKeyTyped
+
+    private void txt_telefKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_telefKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {            
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_telefKeyTyped
 
     public void recargar() {
         Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();

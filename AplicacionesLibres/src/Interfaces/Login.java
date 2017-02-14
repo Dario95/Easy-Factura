@@ -28,7 +28,7 @@ public class Login extends javax.swing.JFrame {
     public void cargar_anios(){
         combo_anio.removeAllItems();
         ArrayList anios=conn.cargarAnios();
-        anios.sort(null);
+        //anios.sort(null);
         for (Object obj:anios){
             combo_anio.addItem(obj.toString());
         }

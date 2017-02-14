@@ -70,11 +70,12 @@ public class Conexionn {
         ArrayList n = new ArrayList();
         try {
             Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultado = comando.executeQuery("SELECT id_establecimiento, direccion_establecimiento "
+            ResultSet resultado = comando.executeQuery("SELECT id_establecimiento, direccion_establecimiento,telefono_establecimiento "
                     + "FROM establecimiento WHERE nombre_establecimiento='" + est + "'");
             while (resultado.next()) {
                 n.add(resultado.getString("id_establecimiento"));
                 n.add(resultado.getString("direccion_establecimiento"));
+                n.add(resultado.getString("telefono_establecimiento"));
             }
             resultado.close();
             comando.close();

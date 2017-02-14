@@ -20,9 +20,10 @@ import sun.awt.WindowClosingSupport;
 public class RegistroLimitesAnio extends javax.swing.JFrame {
 
     Login login;
+
     public RegistroLimitesAnio(Login login) {
         initComponents();
-        this.login=login;
+        this.login = login;
     }
 
     /**
@@ -196,22 +197,26 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
                 || salud.equals("") || vest.equals("") || viv.equals("")) {
             JOptionPane.showMessageDialog(null, "Es necesario llenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            conexionBDD.Conexionn conn = new Conexionn();
-            if(!conn.verificar_usuario(String.format("select * from gastosanualespersonales where anio_gastos=%s",anio))){
-                conn.insertar(String.format("insert into gastosanualespersonales values(%s,%s,%s,%s,%s,%s)", anio, alim, salud, viv, edu, vest));
-                JOptionPane.showMessageDialog(null, "Registro Exitoso");
-                this.dispose();
-                this.login.cargar_anios();                
-                this.login.setVisible(true);
-            }else{
-                JOptionPane.showMessageDialog(null, "Los limites de ese año ya estan registrados", "Error", JOptionPane.ERROR_MESSAGE);
-            }                        
+            if (anio.length() == 4) {
+                conexionBDD.Conexionn conn = new Conexionn();
+                if (!conn.verificar_usuario(String.format("select * from gastosanualespersonales where anio_gastos=%s", anio))) {
+                    conn.insertar(String.format("insert into gastosanualespersonales values(%s,%s,%s,%s,%s,%s)", anio, alim, salud, viv, edu, vest));
+                    JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                    this.dispose();
+                    this.login.cargar_anios();
+                    this.login.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Los limites de ese año ya estan registrados", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Año incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btn_RegistrarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-       login.setVisible(true);
-        
+        login.setVisible(true);
+
     }//GEN-LAST:event_formWindowClosed
 
     private void filtrar(java.awt.event.KeyEvent evt, JTextField txt) {
@@ -225,7 +230,8 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
             evt.consume();
         }
     }
-/*
+
+    /*
     @Override
     public void setDefaultCloseOperation(int operation) {        
         this.login.setVisible(true);
@@ -233,8 +239,7 @@ JOptionPane.showMessageDialog(null, "se cerrara");
         super.setDefaultCloseOperation(operation); //To change body of generated methods, choose Tools | Templates.
         
     }
-   */ 
-    
+     */
 
     /**
      * @param args the command line arguments
